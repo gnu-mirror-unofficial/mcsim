@@ -15,8 +15,8 @@ Windows version, please send your modifications to
 setzer.woodrow@epamail.epa.gov.<br>
 
 Prerequisites:<br>
-
-1) <a href="http://www.murdoch-sutherland.com/Rtools">Rtools</a>:
+<nl>
+<li>1) <a href="http://www.murdoch-sutherland.com/Rtools">Rtools</a>:
    This is a collection of tools used to compile the open source
    statistical package R.  Rtools actually contains a bit more than
    you need to compile and use MCSim on Windows, but it seems to be
@@ -24,9 +24,9 @@ Prerequisites:<br>
    modify the PATH variable as instructed in Rtools.txt, so that
    c:\Rtools\bin, c:\Rtools\mingw\bin, etc. come first in the path.
    These patches were tested with Rtools version 2.7, downloaded on 15
-   April 2008.<br>
+   April 2008.</li>
 
-2) libgsl: Get a binary distribution for Windows.  This installation
+<li>2) libgsl: Get a binary distribution for Windows.  This installation
    has been tested with the GnuWin32 distribution of libgsl version
    1.8, available at http://gnuwin32.sourceforge.net as of 15 April
    2008.  There are two choices for download: an installer that
@@ -38,7 +38,8 @@ Prerequisites:<br>
    additional configuration of Windows is required.  Alternatively,
    you need to modify the Makefiles so the path to the dynamic library
    (.dll), library (.a), and include files (.h) are available to the
-   MinGW compiler.<br>
+   MinGW compiler.</li>
+</nl>
 
 To install in Windows, using MinGW and the R compilation tool set:
 (The MCSim library is statically linked in this implementation.)<br>
