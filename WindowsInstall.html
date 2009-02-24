@@ -15,8 +15,8 @@ Windows version, please send your modifications to
 setzer.woodrow@epamail.epa.gov.<br>
 
 Prerequisites:<br>
-<nl>
-<li>1) <a href="http://www.murdoch-sutherland.com/Rtools">Rtools</a>:
+<ol>
+<li> <a href="http://www.murdoch-sutherland.com/Rtools">Rtools</a>:
    This is a collection of tools used to compile the open source
    statistical package R.  Rtools actually contains a bit more than
    you need to compile and use MCSim on Windows, but it seems to be
@@ -26,7 +26,7 @@ Prerequisites:<br>
    These patches were tested with Rtools version 2.7, downloaded on 15
    April 2008.</li>
 
-<li>2) libgsl: Get a binary distribution for Windows.  This installation
+<li> libgsl: Get a binary distribution for Windows.  This installation
    has been tested with the GnuWin32 distribution of libgsl version
    1.8, available at http://gnuwin32.sourceforge.net as of 15 April
    2008.  There are two choices for download: an installer that
@@ -39,43 +39,43 @@ Prerequisites:<br>
    you need to modify the Makefiles so the path to the dynamic library
    (.dll), library (.a), and include files (.h) are available to the
    MinGW compiler.</li>
-</nl>
+</ol>
 
 To install in Windows, using MinGW and the R compilation tool set:
 (The MCSim library is statically linked in this implementation.)<br>
 
-<ul>
+<ol>
 
- <li> 1) unpack the MCSim distribution</li>
- <li>2) Determine where the package will be installed, e.g., <br>
+ <li> unpack the MCSim distribution</li>
+ <li> Determine where the package will be installed, e.g., <br>
     C:/Program Files/mcsim<br>
     Call this MCSIMHOME<br></li>
- <li>3) Set the environment variable MCSIMHOME to the location determined
+ <li> Set the environment variable MCSIMHOME to the location determined
     in (2). </li>
- <li>4) Put %MCSIMHOME%\bin in your PATH</li>
- <li> 5) Start a new CMD process, and check that steps 3 and 4 have been
+ <li> Put %MCSIMHOME%\bin in your PATH</li>
+ <li> Start a new CMD process, and check that steps 3 and 4 have been
     recognized (at the command prompt, type echo %MCSIMHOME% and then
     path)</li>
- <li> 6) CD to the folder where you have unpacked the MCSim distribution</li>
- <li> 7) copy mcsimpatches.tar to the current folder (the top folder for
+ <li> CD to the folder where you have unpacked the MCSim distribution</li>
+ <li> copy mcsimpatches.tar to the current folder (the top folder for
     MCSim, mcsim, should be a subfolder of the current folder).</li>
- <li> 8) type tar xvf mcsimpatches.tar
+ <li> type tar xvf mcsimpatches.tar
     This unpacks the patches into the MCSim distribution tree.</li>
- <li> 9) Type configmgw at the command prompt.  This sets up the appropriate
+ <li> Type configmgw at the command prompt.  This sets up the appropriate
     make files.</li>
- <li>10) type 'make' at the command prompt</li>
- <li>11) type 'make check' at the command prompt; this will run the tests. 
+ <li> type 'make' at the command prompt</li>
+ <li> type 'make check' at the command prompt; this will run the tests. 
     If the tests fail, be sure to check why; often the new program
     gives results to 1 fewer significant digit than the comparison
     result, which will cause the test to appear to fail.</li>
- <li>12) If you have a full TeX installation (e.g., MikTeX), type 
+ <li> If you have a full TeX installation (e.g., MikTeX), type 
     'make docs' to make the pdf and info versions of the documentation.</li>
- <li>13) If successful, type 'make install'; this puts everything in the
+ <li> If successful, type 'make install'; this puts everything in the
     folder pointed to by MCSIMHOME.</li>
- <li>14) If you need to move the MCsim installation somewhere else, change
+ <li> If you need to move the MCsim installation somewhere else, change
     MCSIMHOME to point to the new location.</li>
 
-</ul>
+</ol>
 
 <br>
 
