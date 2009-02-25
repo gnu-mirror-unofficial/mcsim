@@ -12,10 +12,11 @@ These are instructions for installing MCSim in Windows XP using open
 source compilation tools.  They have only been tested on Windows XP.
 If you find you need to modify anything to get it to work on any
 Windows version, please send your modifications to 
-setzer.woodrow@epamail.epa.gov.<br>
+setzer.woodrow@epamail.epa.gov.<p>
 
 Prerequisites:<br>
 <ol>
+
 <li> <a href="http://www.murdoch-sutherland.com/Rtools">Rtools</a>:
    This is a collection of tools used to compile the open source
    statistical package R.  Rtools actually contains a bit more than
@@ -48,21 +49,22 @@ To install in Windows, using MinGW and the R compilation tool set:
 
  <li> unpack the MCSim distribution</li>
  <li> Determine where the package will be installed, e.g., <br>
-    C:/Program Files/mcsim<br>
-    Call this MCSIMHOME<br></li>
+      C:/Program Files/mcsim<br>
+      Call this MCSIMHOME<br></li>
  <li> Set the environment variable MCSIMHOME to the location determined
-    in (2). </li>
+      in (2). </li>
  <li> Put %MCSIMHOME%\bin in your PATH</li>
  <li> Start a new CMD process, and check that steps 3 and 4 have been
-    recognized (at the command prompt, type echo %MCSIMHOME% and then
-    path)</li>
+      recognized (at the command prompt, type echo %MCSIMHOME% and then
+      path)</li>
  <li> CD to the folder where you have unpacked the MCSim distribution</li>
- <li> copy mcsimpatches.tar to the current folder (the top folder for
-    MCSim, mcsim, should be a subfolder of the current folder).</li>
+ <li> copy <a href="mcsimpatches.tar"> to the current folder 
+      (the top folder for
+      MCSim, mcsim, should be a subfolder of the current folder).</li>
  <li> type tar xvf mcsimpatches.tar
-    This unpacks the patches into the MCSim distribution tree.</li>
+      This unpacks the patches into the MCSim distribution tree.</li>
  <li> Type configmgw at the command prompt.  This sets up the appropriate
-    make files.</li>
+      make files.</li>
  <li> type 'make' at the command prompt</li>
  <li> type 'make check' at the command prompt; this will run the tests. 
     If the tests fail, be sure to check why; often the new program
