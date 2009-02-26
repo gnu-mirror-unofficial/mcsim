@@ -2,33 +2,584 @@
 <html>
 <head>
 <title>GNU MCSim - SBML Demonstration</title>
+<link rel="icon" href="mcsim.png" type="image/png">
 </head>
 
 <body style="color: rgb(0, 0, 128); background-color: rgb(255, 255, 255);" 
       alink="#ff7f50" link="#802040" vlink="#000000">
 
 <h1><i><font color="#ff8800">
-Supplementary material for "GNU MCSim: 
-Bayesian statistical inference for SBML-coded systems biology models"
-by Frederic Y. Bois
+Supplementary Material and Tutorial
 </font></i></h1>
+
+<b><font color="#ff8800" size="+2">
+for "GNU MCSim:
+Bayesian statistical inference for SBML-coded systems biology models"<br>
+by Frederic Y. Bois.
+</font></b></p>
 
 <br>
 
 <!---------------------------------------->
-<!-- News -->
+<!-- Summary and Table of contents      -->
 <!---------------------------------------->
 <b><font color="#ff8800" size="+2">
-To build..
+Summary
 </font></b></p>
+
+This page walks you through a demonstration of some of the tools
+integrated in <i>GNU MCSIm</i>. The same SBML model<br>
+(the yeast glycolysis
+model "YeastGlycolysisJDClean.xml" provided with JDesigner 2.1c and
+the <a href="http://sbw.kgi.edu/index.htm">Systems Biology Workbench
+2.7.8</a>) will be used throughout.<br>
+
+We use simulated data, which gives us the advantge of knowing the
+true model and true parameter values.<br>
+
+The model is calibrated with those data in the first section.<br>
+
+In section 2 we check the behavior of the MCMC algorithm by using
+narrow prior distributions for the parameters.<br>
+
+Section 3 tries to improve on section 1 results by designing an
+additional experiment, with the OptimalDesign tool.<br>
+
+The design proposed is checked in section 4, and a refined multilevel
+statistical model is proposed in section 5.<br>
+
+<ol>
+<li> <a href="supplement_bioinformatics_2009.html#SEC0">
+     Checking the model import</a>
+
+<li> <a href="supplement_bioinformatics_2009.html#SEC1">
+     MCMC sampling with wide prior</a>
+
+<li> <a href="supplement_bioinformatics_2009.html#SEC2">
+     Checking behavior with narrow priors</a>
+
+<li> <a href="supplement_bioinformatics_2009.html#SEC3">
+     Optimizing experimental design for the first two parameters</a>
+
+<li> <a href="supplement_bioinformatics_2009.html#SEC4">
+     Checking the design with MCMC simulations</a>
+
+<li> <a href="supplement_bioinformatics_2009.html#SEC5">
+     Refining the analysis with a multilevel model</a>
+</ol>
+<br>
+
+
+<!---------------------------------------->
+<!-- Section 0                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC0"></A>
+<b><font color="#ff8800" size="+2">
+Checking the model import
+</font></b></p>
+
+We start with an 
+<a href="sbml_demo_files/Yeast.xml.txt">
+SBML model of the yeast glycolysis pathway</a>. <br>
+
+<i>GNU MCSim</i> needs the intermediary of a model definition
+file <a href="sbml_demo_files/SBML_List.in">"SBML_List.in"</a>
+to read in that model.<br>
+
+<p style="color: rgb(102, 102, 204);">
+<img style="border: 1px solid ; width: 260px; height: 251px;" 
+alt="Yeast glycolysis model, JDesigner view" src="Yeast model.png" 
+align="top" hspace="2"></p>
+<u>Figure 1</u>: Graphical representation of the SBML model used.<p>
+
+
+To check that the model is correctly read and converted in C by <i>GNU
+MCSim</i>,<br> we plot the time courses of the concentrations of the
+various model species, as computed by SBW 2.7.8 and <i>GNU
+MCSim</i>.<br> Those simulations were obtained with the "true"
+parameter values. 
+<a href="sbml_demo_files/Yeast.in">Here is the MCSim input file used
+  for those simulations</a>.<br> 
+The two software give the same results, with only rounding error
+differences.<p>
+
+
+<p style="color: rgb(102, 102, 204);">
+<img style="border: 1px solid ; width: 310px; height: 251px;" 
+alt="Yeast model computation by JDesigner" src="sbml_demo_files/Yeast_SBW.png" 
+align="top" hspace="2">
+<img style="border: 1px solid ; width: 260px; height: 251px;" 
+alt="Yeast  model computation by GNU MCSim" src="sbml_demo_files/Yeast_MCSIM.png" 
+align="top" hspace="2"></p>
+<u>Figure 2</u>: Simulation of the time course of all model species
+with SBW 2.7.8 (left) and with <i>GNU MCSim 5.3.0</i> (right).<p>
+
+
+<!---------------------------------------->
+<!-- Section 1                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC1"></A>
+<b><font color="#ff8800" size="+2">
+MCMC sampling with wide prior
+</font></b></p>
+
+To calibrate the model, we need data. To generate a synthetic dataset,<br>
+Gaussian error (10% CV) was added to points along each species
+trajectories at 7 times (including time zero).<br>
+
+Here is what the data used look like:
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Simulated time course of the model's chemical species" 
+src="sbml_demo_files/Yeast_10000pts_w_data.png" align="top"><br>
+</p>
+<u>Figure 3</u>: Plot of the simulated data (dots) used for the Bayesian calibration.<p>
+
+Three files (<a href="sbml_demo_files/Yeast.MCMC.1.in">1</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.2.in">2</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.3.in">3</a>)
+were used to start the Markov chains with component by component
+sampling.<br> In those files, rather wide parameters' prior distributions are
+specified for 10 parameters (the others are left to their true value):<br>
+The lower bound is a factor of about 4 below the true value and the
+upper bound a factor 4 above.<br>
+The data likelihood is assumed lognormal, with 
+a geometric SD corresponding to a CV of about 10%.<p>
+
+The 3 next files (<a href="sbml_demo_files/Yeast.MCMC.A.in">A</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.B.in">B</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.C.in">C</a>) 
+were used to finish the Markov chains, by vectors sampling.<br> The
+outputs of the previous simulations is read in and used to construct a
+multivariate normal jump kernel, further refined in size to tune the
+acceptance rate.<br> These three files
+(<a href="sbml_demo_files/A.log">A.log</a>, 
+<a href="sbml_demo_files/B.log">B.log</a>, 
+<a href="sbml_demo_files/C.log">C.log</a>)
+captured the messages sent by the program when running.<p>
+
+After a million iterations, the first thing to do is to check the
+convergence of the 3 chains run in parallel:<br>
+<a href="sbml_demo_files/convanal.A-C.out">Here is the output of
+a script running Gelman's R diagnostic</a>
+(on that diagnostic see Gelman A., et al., 1995, <br> Bayesian Data
+Analysis, London, Chapman & Hall).<br> The script also gives a summary of the
+marginal parameters' posterior distributions.<p>
+
+The three chains have merged and mix well, but it is always useful to
+check visually the convergence by forming such plots:
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of the 3 MCMC runs for the first parameter sampled" 
+src="sbml_demo_files/J0_Vmax_3_chains.png" align="top">
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of the 3 MCMC runs for the 2nd parameter sampled" 
+src="sbml_demo_files/J0_Kglc_3_chains.png" align="top">
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of the 3 MCMC runs for the 3rd parameter sampled" 
+src="sbml_demo_files/J0_Ki_3_chains.png" align="top"><br>
+</p>
+<u>Figure 4</u>: Trajectories of 3 Markov chains for the first 3 parameter
+sampled at convergence over the last half-million runs. The 3 trajectories overlap on each panel and are indistinguishable.<p>
+
+However, univariate plots and statistics do not describe the full
+picture of the joint posterior probability distribution of the
+parameters.<br>  It is very useful to examine the correlations between
+parameters.<p> 
+
+The following Table gives the lower half of the correlation matrix of
+the 30000 parameter vectors<br>
+sampled at convergence (with only the the
+correlation coefficients higher than 0.1 in absolute value):<p>
+
+<img style="border: 1px solid" 
+alt="Posterior correlations for runs A-C" 
+src="sbml_demo_files/Correlations A-C.png" align="top"><p>
+
+We can see a very strong correlation between <i>J0_Vmax</i>
+and <i>J0_Kglc</i> (that is actually why we needed to perform<br> 
+vector sampling to reach
+convergence, component by component sampling was mixing very slowly).<br>
+Here is a plot of <i>J0_Kglc</i> versus <i>J0_Vmax</i>:<p> 
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Plot of J0_Kglc versus J0_Vmax" 
+src="sbml_demo_files/J0_Kglc = f(J0_Vmax).png" align="top">
+</p>
+<u>Figure 5</u>: Correlation between <i>J0_Kglc</i> and <i>J0_Vmax</i>
+values<br>
+sampled at convergence over the last half-million runs.<p>
+
+The above correlation is quite bad news. The estimates of the two
+<i>J0_Vmax</i> and <i>J0_Kglc</i> seem unbounded from above<br> 
+and wander
+quite far from their (expected) true values (97.24 and 1.1918,
+respectively; see 
+<a href="sbml_demo_files/Yeast.in">the true values here)</a>.<p> 
+
+The true value and box summaries of the percentiles of the marginal
+posterior<br> 
+distribution of each parameter are shown in the next
+Figure:<p>
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Parameters' true values and percentiles from runs A-C." 
+src="sbml_demo_files/Pctiles_all_params.png" align="top">
+</p>
+<u>Figure 6</u>: Percentile plot (5th, 25th, 50th, 75th and 95th
+percentiles) of the posterior sample<br> 
+obtained for each parameter,
+overlaid with their "true" value (crosses).<p>
+
+We can see that the true values can fall below the 5th percentile of
+the posterior estimates, in particular for the first two
+parameters.<p>
+
+What does the fit to the data look like?<br>
+Here is a plot of observed
+versus predicted data values 
+(<a href="sbml_demo_files/Yeast.MCMC.fit.in">input file</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.C.out.gz">run "C"  file (gzipped)</a>, and
+<a href="sbml_demo_files/Yeast.MCMC.fit.out">output file</a> here):<p>
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Observed versus predicted data values for runs A-C." 
+src="sbml_demo_files/Data vs pred.png" align="top">
+</p>
+<u>Figure 7</u>: Observed (in fact simulated) data versus
+predicted values<br>
+after MCMC model calibration.
+The last vector sampled in run "C" was used.<p>
+
+The fit to the data is excellent, despite the fact that the parameter
+vector used to produce that plot was just<br> 
+randomly sampled from the
+joint posterior distribution (the last sample of run "C" is nothing
+special).<br>
+Obviously, we also have the exact model, but still, we
+attempted the calibration of 10 parameters simultaneously.<p>
+
+Now, back to the correlation observed in Figure 5: it does not affect
+the fit to the data.<br>
+(Note that the values of <i>J0_Vmax</i>
+and <i>J0_Kglc</i> in the parameter vector used to generate Figure 7
+are 186.125 and 4.29029,<br> 
+respectively, well above their true values. So the good fit in Figure 6 is not due
+to "good" values of those parameters).<p>
+
+Therefore, the data probably do not give enough
+information about those parameters taken individually.<br>
+We have a
+parameter identifiability problem on the hands... Or do we?<p>
+
+<!---------------------------------------->
+<!-- Section 2                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC2"></A>
+<b><font color="#ff8800" size="+2">
+Checking behavior with narrow priors
+</font></b></p>
+
+Could it be that <i>GNU MCSim</i> is producing a biased sample, due to
+some bug? You never know with those free softwares!<br>
+(This section can be 
+<a href="supplement_bioinformatics_2009.html#SEC3">skipped</a>
+if you are not as paranoid as I am).<p>
+
+Let's try setting narrow priors: +/- 10% around the true values, and
+see what happens.<p>
+
+I spare you the whole set of diagnostic plots, but it turns out that in
+that case,<br> 
+the parameter values are well identified, and the fit is
+still excellent.<p>
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Parameters' true values and percentiles from runs with narrow priors." 
+src="sbml_demo_files/Pctiles_all_params_narrow.png" align="top">
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Observed versus predicted data values for runs A-C." 
+src="sbml_demo_files/Data vs pred_narrow.png" align="top">
+</p>
+<u>Figure 8</u>: Using narrow priors: On the left, percentile plot 
+(5th, 25th, 50th, 75th and 95th percentiles)<br>
+of the posterior sample obtained for each parameter,
+overlaid with their "true" value (crosses).<br>
+On the righ: Observed (in fact simulated) data versus predicted values.<p>
+
+So, <i> GNU MCSim</i> is not systematically biasing the sampling. The
+identifiability problem must be real.<br>
+The only way to overcome it is to collect new data, and we will now
+use <i>GNU MCSim</i> can help us design an efficient experiment.<p>
+
+
+<!---------------------------------------->
+<!-- Section 3                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC3"></A>
+<b><font color="#ff8800" size="+2">
+Optimizing experimental design for the first two parameters
+</font></b></p>
+
+To disentangle the estimates of <i>J0_Vmax</i> and <i>J0_Kglc</i> it
+is necessary to collect new data.<br> 
+Actually, it is well known that a
+pair of Michealis-Menten-type paramter are strongly covariant when
+jointly identified.<br> 
+It is also known that experiments performed with
+different initial conditions (at different input dose) are needed to
+identify a Vmax.<br>
+Let see how <i>GNU MCSim</i> can be used to design an efficient
+experiment (see also
+<a href="http://toxsci.oxfordjournals.org/cgi/content/abstract/49/2/213">
+Bois <i>et al.</i>, 1999</a>, Optimal design for a study of<br>
+butadiene toxicokinetics in humans, Toxicological Sciences, Vol 49,
+213-224, for another example of application).<p>
+
+We aim at better identifying <i>J0_Vmax</i> and <i>J0_Kglc</i>, only
+(we will not deal with the other parameters).<br>
+We first need to obtain a sample of values for those two
+parameters. We will use for that the posterior sample contained in
+the<br> 
+MCMC chain "C" 
+<a href="sbml_demo_files/Yeast.MCMC.C.out.gz">output file</a> (this is
+logical, because we will still make use in the end of the initial
+experiment, so we should<br>
+take into account the information it bring,
+even if not perfect). We could also have started from prior
+distributions and used any<br>
+software you like to produce a sample of <i>J0_Vmax</i>, <i>J0_Kglc</i>,
+values.<p>
+We then write an 
+<a href="sbml_demo_files/Yeast.OD.in">input file</a> for the design 
+optimization runs. We urge you to browse the
+<a href="mcsim.html">online users' manual</a> to understand the<br>
+layout of that file. The design space is a grid of glucose (GLCo)
+initial values and sampling times.<br>
+<i>GNU MCSim</i> checks
+sequentially the various points of the design grid and selects at each
+step the one giving the lowest total variance<br>
+for the estimands
+(importance reweighting is used to update the given prior with
+prospective data).<br>
+The 
+<a href="sbml_demo_files/Yeast.OD.out">result</a> 
+is a selection of design points which approximate an optimal design. The raw result file is not really nice to look at,<br>
+and a Table and a plot like these ones are preferable:<p>
+
+<p>
+<img style="border: 1px solid ; width: 500px" 
+alt="Optimal design results table." 
+src="sbml_demo_files/OD_table.png" align="top">
+<img style="border: 1px solid ; height: 269px" 
+alt="Optimal design results figure." 
+src="sbml_demo_files/Yeast.OD.png" align="top">
+</p>
+
+You can see that, at the early steps, only time points from the low
+dose experiment are included, except time zero and the last time.<br>
+You can trace on the Figure which points are included at which steps. You
+can also see the variance decrease as more points are included.<p>
+
+Points have been added one after the other ("forward" mode). You can
+also start with a full design and remove the least informative points<br>
+one by one ("backward" mode).<p>
+
+This is all good looking, and reasonable, but it's all in expectation.
+We will now check the proposed design.<p>
+
+
+<!---------------------------------------->
+<!-- Section 4                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC4"></A>
+<b><font color="#ff8800" size="+2">
+Checking the design with MCMC simulations
+</font></b></p>
+
+The above design optimization procedure suggests in essence to
+perform an additional experiment with GLCo initial value at 0.5 mM,<br>
+measuring the variable GLCi (internal glucose concentration) at times
+0.005, 0.01, 0.05, and 0.1 minutes.<br>
+We assume that we can measure with
+CV of about 10%, as specified in the optimal design 
+<a href="sbml_demo_files/Yeast.OD.in">input file</a>, over such short
+period of time.<br>
+I simulated data, with random error, in those conditions. We can now include
+them in a new calibration round,<br>
+to see what improvement they will bring to the posterior estimates of
+<i>J0_Vmax</i> and <i>J0_Kglc</i>.<p>
+
+Files <a href="sbml_demo_files/Yeast.MCMC.P1.in">P1</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.P2.in">P2</a>, and
+<a href="sbml_demo_files/Yeast.MCMC.P3.in">P3</a> use the baseline
+experiment and the new one to recalibrate the model from the
+start,<br> with component by component sampling. The same 10
+parameters are sampled, with wide priors as before.<br>
+We just use the
+last values sampled by chains A, B, and C as starting points.<p>
+
+It is absolutely exhilarating to watch  the values of <i>J0_Vmax</i> and 
+<i>J0_Kglc</i>, starting from a point in the previous posterior distribution, 
+move to a new one, much better,<br>
+and actually centered around the true values.
+The <i>XMCsim</i> tools allows you to see that in real time:
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of 3 MCMC runs for the first 2000 iterations" 
+src="sbml_demo_files/Vmax and Km at iteration_12000.png" align="top">
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of 3 MCMC runs for the first 5000 iterations" 
+src="sbml_demo_files/Vmax and Km at iteration_15000.png" align="top">
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Trajectory of 3 MCMC runs for the first 10000 iterations" 
+src="sbml_demo_files/Vmax and Km at iteration_20000.png" align="top"><br>
+</p>
+<u>Figure 8</u>: Trajectories of 3 Markov chains for in the <i>J0_Vmax</i> and 
+<i>J0_Kglc</i> space, as iterations progress.<p>
+
+Adding the new experiment's data does improve dramatically the posterior 
+estimates of <i>J0_Vmax</i> and <i>J0_Kglc</i>.<br>
+Files
+<a href="sbml_demo_files/Yeast.MCMC.PA.in">PA</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.PB.in">PB</a>, and
+<a href="sbml_demo_files/Yeast.MCMC.PC.in">PC</a>
+were used to finish the Markov chains, by vectors sampling.<p>
+
+After convergence of the 3 news chains, we can form a new 
+<a href="sbml_demo_files/convanal.PA-PC.out">summary of the
+marginal parameters' posterior distributions</a>.<br>
+The posterior estimates of the 7 last parameters have not improved 
+much, but the additional experiment was not designed to do so...<br>
+The estimates of <i>J0_Vmax</i> and <i>J0_Kglc</i> are much better now:<br>
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Posterior correlations of Vmax and Km for reaction J0" 
+src="sbml_demo_files/J0_Kglc = f(J0_Vmax)_nice.png" align="top">
+</p>
+<u>Figure 9</u>: Correlation between <i>J0_Kglc</i> and <i>J0_Vmax</i>
+values<br>
+sampled at convergence over the last half-million of
+the recalibration runs<br>
+(with additional data). The positions of true values are given for reference.<p>
+
+In conclusion, it seems that an additional experiment
+at low glucose concentration and for a few time points would bring<br>
+enough data to greatly improve our parameter estimates. 
+But have we done the best possible job in the last analysis?<p>
+
+<!---------------------------------------->
+<!-- Section 5                          -->
+<!---------------------------------------->
+<hr>
+<A NAME="SEC5"></A>
+<b><font color="#ff8800" size="+2">
+Refining the analysis with a multilevel model
+</font></b></p>
+
+What if the next experiment has been performed with yeasts from a different
+batch or lab?<br>
+If we suspect that genetic variability has changed some of the
+parameter values between the two experiments, we ought to take that into 
+account.<br>
+Assuming that a single value can describe correctly both experiments might
+be just wrong. Calibrating the model wih both data sets separately<br>
+would be problematic however: there is not much information in the
+latest experiment about the parameters of reaction 5 (the last 7
+parameters).<br>
+The best way to solve that problem is to use multilevel (aka
+hierarchical) modeling (see again Gelman A., et al., 1995,
+Bayesian Data Analysis,<br>
+London, Chapman & Hall).<p>
+
+<i>GNU MCSim</i> allows you to define levels in your statistical
+model.  Please refer to the
+<a href="mcsim.html">online users' manual</a> to understand the
+construction of Levels {}<br>
+in a <i>GNU MCSim</i> simulation input file.<p>
+
+Files <a href="sbml_demo_files/Yeast.MCMC.Hier.1.in">H1</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.Hier.2.in">H2</a>, and
+<a href="sbml_demo_files/Yeast.MCMC.Hier.3.in">H3</a> define a 2-level 
+model (yeast as a species, and two sub-populations with an experiment on 
+each one).<br>
+They instruct for recalibration of the the model from the start, with
+component by component sampling. The same 10 parameters are
+sampled,<br>
+with wide priors, as before.<p>
+
+Again, we get to convergence but running 1 million MCMC simulations in 
+Metropolis mode (whole vector sampling). 
+This requires about 2 millions<br>
+model evaluations, but our compiled code
+runs <i>very</i> fast... (about 90 minutes per chain on an i686 machine 
+clocked at 3.6 GHz). Files
+<a href="sbml_demo_files/Yeast.MCMC.PA.in">PA</a>, 
+<a href="sbml_demo_files/Yeast.MCMC.PB.in">PB</a>, and
+<a href="sbml_demo_files/Yeast.MCMC.PC.in">PC</a><br>
+were used to that effect.<p>
+
+After convergence, we compute a new 
+<a href="sbml_demo_files/convanal.HA-HC.out">summary of the
+marginal parameters' posterior distributions</a>.<br>
+Well, everything has degraded... The model has improved, but not the 
+results!<br>
+The estimates of <i>J0_Vmax</i> and <i>J0_Kglc</i> at the population leve 
+are quite uncertain and higher than the true values:<br>
+
+<p>
+<img style="border: 1px solid ; width: 299px; height: 251px;" 
+alt="Posterior correlations of population Vmax and Km." 
+src="sbml_demo_files/J0_Kglc = f(J0_Vmax)_population.png" align="top">
+</p>
+<u>Figure 10</u>: Correlation between <i>J0_Kglc</i>
+and <i>J0_Vmax</i> values<br> sampled at convergence over the last
+half-million of the recalibration runs<br> (with additional data and a
+multilevel model). True values are about 100 for Vmax and 1.2 for Kglc.<p>
+
+The fact that the population estimates are quite uncertain is expected: we 
+have only two sub-populations to characterize the whole population and<br>
+sampling uncertainty kicks in. The increased covariance and bias is 
+disappointing, but think a minute: each sub-population has its own set of 
+paramters<br>
+estimated from one experiment at only one dose level. That will 
+produce a highly correlated and biased (barely bounded above) pair of 
+<i>J0_Vmax</i> and<br>
+<i>J0_Kglc</i> estimates for each sub-population. Two badly identified 
+sub-populations do not make for a superb population estimate (at least not
+with<br>
+2 sub-populations only, but I suspect that the problem would persist
+with one thousand sub-populations.<p>
+
+The conclusion here is that if genetic variability is expected across 
+experiments, then the new experiment needs to include several dose levels
+(in essence,<br>
+the first experiment has to be redone with the yeast 
+population used for the second experiment). This is actually very useful 
+information,<br>
+all gathered in a few hours of computing, preliminary to long 
+and expensive real life experiments.<p>
+
+I hope that you enjoyed as I did the peripeties of this model analysis...<p>
 
 
 <hr>
-<p>
 <!---------------------------------------->
-<!-- Leave this junk alone -->
+<!-- Leave this junk alone              -->
 <!---------------------------------------->
-</p>
 
 </body>
 </html>
