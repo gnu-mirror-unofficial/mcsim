@@ -1,0 +1,44 @@
+
+________________________________________
+
+MCSim v5.3.0
+
+Copyright (c) 1993-2008 Free Software Foundation, Inc.
+
+MCSim comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions; see the GNU General Public License.
+
+* Using `SBML_List.in' model in file "model.c" created by mod v5.3.0
+
+New level - depth 1, instance 1
+Simulation 1 - depth 2, instance 1
+
+Doing analysis - 1000000 MCMC sampling iterations 
+Monitoring: iter	220	success rate	0.05	spread	0.531263
+Monitoring: iter	250	success rate	0.133333	spread	0.371884
+Monitoring: iter	295	success rate	0.311111	spread	0.557826
+Monitoring: iter	362	success rate	0.149254	spread	0.390478
+Monitoring: iter	462	success rate	0.18	spread	0.390478
+Monitoring: iter	612	success rate	0.16	spread	0.390478
+Monitoring: iter	837	success rate	0.195556	spread	0.390478
+Monitoring: iter	1174	success rate	0.243323	spread	0.390478
+Monitoring: iter	1679	success rate	0.324752	spread	0.585717
+Monitoring: iter	2436	success rate	0.110964	spread	0.410002
+Monitoring: iter	3571	success rate	0.313656	spread	0.615003
+Monitoring: iter	5273	success rate	0.110458	spread	0.430502
+Monitoring: iter	7826	success rate	0.187231	spread	0.430502
+Monitoring: iter	11655	success rate	0.198746	spread	0.430502
+Monitoring: iter	17398	success rate	0.141215	spread	0.301351
+Monitoring: iter	26012	success rate	0.220339	spread	0.301351
+Monitoring: iter	38933	success rate	0.221887	spread	0.301351
+Monitoring: iter	58314	success rate	0.183375	spread	0.301351
+Monitoring: iter	87385	success rate	0.186131	spread	0.301351
+Monitoring: iter	130991	success rate	0.206095	spread	0.301351
+Monitoring: iter	196400	success rate	0.182161	spread	0.301351
+Monitoring: iter	294513	success rate	0.191249	spread	0.301351
+Monitoring: iter	441682	success rate	0.194097	spread	0.301351
+Monitoring: iter	662435	success rate	0.191082	spread	0.301351
+Monitoring: iter	993564	success rate	0.186248	spread	0.301351
+
+Wrote results to "Yeast.MCMC.C.out"

@@ -1,0 +1,44 @@
+
+________________________________________
+
+MCSim v5.3.0
+
+Copyright (c) 1993-2008 Free Software Foundation, Inc.
+
+MCSim comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions; see the GNU General Public License.
+
+* Using `SBML_List.in' model in file "model.c" created by mod v5.3.0
+
+New level - depth 1, instance 1
+Simulation 1 - depth 2, instance 1
+
+Doing analysis - 1000000 MCMC sampling iterations 
+Monitoring: iter	220	success rate	0.05	spread	0.531263
+Monitoring: iter	250	success rate	0.0666667	spread	0.371884
+Monitoring: iter	295	success rate	0.222222	spread	0.371884
+Monitoring: iter	362	success rate	0.268657	spread	0.371884
+Monitoring: iter	462	success rate	0.29	spread	0.371884
+Monitoring: iter	612	success rate	0.286667	spread	0.371884
+Monitoring: iter	837	success rate	0.253333	spread	0.371884
+Monitoring: iter	1174	success rate	0.204748	spread	0.371884
+Monitoring: iter	1679	success rate	0.160396	spread	0.371884
+Monitoring: iter	2436	success rate	0.114927	spread	0.260319
+Monitoring: iter	3571	success rate	0.287225	spread	0.260319
+Monitoring: iter	5273	success rate	0.288484	spread	0.260319
+Monitoring: iter	7826	success rate	0.361535	spread	0.390478
+Monitoring: iter	11655	success rate	0.123792	spread	0.273335
+Monitoring: iter	17398	success rate	0.247432	spread	0.273335
+Monitoring: iter	26012	success rate	0.256443	spread	0.273335
+Monitoring: iter	38933	success rate	0.230942	spread	0.273335
+Monitoring: iter	58314	success rate	0.242764	spread	0.273335
+Monitoring: iter	87385	success rate	0.229713	spread	0.273335
+Monitoring: iter	130991	success rate	0.219947	spread	0.273335
+Monitoring: iter	196400	success rate	0.203198	spread	0.273335
+Monitoring: iter	294513	success rate	0.210594	spread	0.273335
+Monitoring: iter	441682	success rate	0.209942	spread	0.273335
+Monitoring: iter	662435	success rate	0.209347	spread	0.273335
+Monitoring: iter	993564	success rate	0.206953	spread	0.273335
+
+Wrote results to "Yeast.MCMC.A.out"
