@@ -388,8 +388,14 @@ src="sbml_demo_files/Yeast.OD.png" align="top">
 
 You can see that, at the early steps, only time points from the low
 dose experiment are included, except time zero and the last time.<br>
-You can trace on the Figure which points are included at which steps. You
-can also see the variance decrease as more points are included.<p>
+You can trace on the Figure which points are included at which steps. 
+The expected variance decreases as more points are included,<br>
+but only up to a certain point: That is due to the thining of the
+parameter sample as more "data" points are included.<br>
+That degradation of the sample is a well known phenomenon in
+importance sampling. The suggestions for design points at that late
+stage<br>
+should not be taken too seriously.<p>
 
 Points have been added one after the other ("forward" mode). You can
 also start with a full design and remove the least informative points<br>
