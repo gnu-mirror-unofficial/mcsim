@@ -47,7 +47,7 @@ To install in Windows, using MinGW and the R compilation tool set:
 
 <ol>
 
- <li> unpack the MCSim distribution</li>
+ <li> Unpack the MCSim distribution</li>
  <li> Determine where the package will be installed, e.g., <br>
       C:/Program Files/mcsim<br>
       Call this MCSIMHOME<br></li>
@@ -55,27 +55,30 @@ To install in Windows, using MinGW and the R compilation tool set:
       in (2). </li>
  <li> Put %MCSIMHOME%\bin in your PATH</li>
  <li> Start a new CMD process, and check that steps 3 and 4 have been
-      recognized (at the command prompt, type echo %MCSIMHOME% and then
-      path)</li>
- <li> CD to the folder where you have unpacked the MCSim distribution</li>
- <li> copy <a href="mcsim_patches.tar">mcsim_patches.tar</a> to the current 
+      recognized (at the command prompt, type 'echo %MCSIMHOME%' and then
+      'path')</li>
+ <li> Go ('cd') to the folder where you have unpacked the MCSim 
+      distribution</li>
+ <li> Copy <a href="mcsim_patches.tar">mcsim_patches.tar</a> to the current 
       folder (the top folder for
-      MCSim, mcsim, should be a subfolder of the current folder).</li>
- <li> type tar xvf mcsim_patches.tar
+      MCSim, mcsim/, should be a subfolder of the current folder).</li>
+ <li> Type 'tar xvf mcsim_patches.tar'. 
       This unpacks the patches into the MCSim distribution tree.</li>
- <li> Type configmgw at the command prompt.  This sets up the appropriate
+ <li> CD to the top folder of the MCSim distribution (probably mcsim)
+ <li> Type 'configmgw' at the command prompt.  This sets up the appropriate
       make files.</li>
- <li> type 'make' at the command prompt</li>
- <li> type 'make check' at the command prompt; this will run the tests. 
-    If the tests fail, be sure to check why; often the new program
-    gives results to 1 fewer significant digit than the comparison
-    result, which will cause the test to appear to fail.</li>
+ <li> Type 'make' at the command prompt</li>
+ <li> Type 'make check' at the command prompt; this will run the tests. 
+      If the tests fail, be sure to check why (look at the .out and .log 
+      files created in the corresponding sample/ folder; often the new program
+      gives results to 1 fewer significant digit than the comparison
+      result, which will cause the test to appear to fail.</li>
  <li> If you have a full TeX installation (e.g., MikTeX), type 
-    'make docs' to make the pdf and info versions of the documentation.</li>
+      'make docs' to make the pdf and info versions of the documentation.</li>
  <li> If successful, type 'make install'; this puts everything in the
-    folder pointed to by MCSIMHOME.</li>
+      folder pointed to by MCSIMHOME.</li>
  <li> If you need to move the MCsim installation somewhere else, change
-    MCSIMHOME to point to the new location.</li>
+      MCSIMHOME to point to the new location.</li>
 
 </ol>
 
