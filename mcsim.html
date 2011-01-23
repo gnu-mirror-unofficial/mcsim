@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on January, 20 2011 by texi2html 1.70 -->
+<!-- Created on January, 23 2011 by texi2html 1.70 -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -48,18 +48,9 @@ ul.toc {list-style: none}
 </tr></table>
 <h1 class="settitle">GNU MCSim User's Manual
 </h1>
-</P><P>
-GNU MCSim manual, version 5.4.1
-</P><P>
 
-<EM>GNU MCSim</EM> is a general purpose modeling and simulation program
-which can performs "standard" or "Markov chain" Monte Carlo
-simulations. It allows you to specify a set of linear or nonlinear
-algebraic equations or ordinary differential equations. They are
-solved numerically using parameter values you choose or parameter
-values sampled from statistical distributions. Simulation outputs can
-be compared to experimental data for Bayesian parameter estimation
-(model calibration).</P><P>
+
+
 
 <table class="menu" border="0" cellspacing="0">
 <p>Reference Manual
@@ -3318,13 +3309,16 @@ setup:
 </p><ul class="toc">
 <li>- 
 <p>a <i>structural model</i> (see section <a href="#SEC15">Setting-up Structural Models</a>),
+
 </p></li><li>- 
 <p>a <i>statistical model</i> (see section <a href="#SEC49">Setting-up statistical models</a>),
+
 </p></li><li>- 
 <p><i>prior distributions</i> for the model parameters you want to sample and
 &quot;<em>data likelihoods</em>&quot; (defining the probability of some observed
 realizations of the modeled process, conditionally to the model)
 (see section <a href="#SEC42"><code>Distrib()</code> specification</a>).
+
 </p></li></ul>
 
 <p>Setting-up a statistical model requires <code>Level</code> sections and
@@ -3374,29 +3368,61 @@ entire library.
 performed, including the runs eventually read in the restart file.
 
 </p><p>The next field, <var>&lt;simTypeFlag&gt;</var> should be between 0 and 4
-(included). It should be set at zero to start a chain of MCMC
-simulations. In that case, parameters are updated by Metropolis steps,
-one at a time. If the value of <var>&lt;simTypeFlag&gt;</var> is set to 1 or 2, a
-restart file must also be specified. In the case of 1, the output file
-will contain codes for the level sequence, simulation numbers,
-printing times, data values and the corresponding model predictions,
-computed using the last parameter vector of the restart file. This is
-useful to quickly check the model fit to the data. If
-<var>&lt;simTypeFlag&gt;</var> is equal to 2, the entire restart file is used to
-compute the parameters' covariance matrix. All parameters are then
-updated at once using a multivariate normal kernel as proposal
-distribution of the Metropolis steps. This may result in large
-improvement in speed. However, we recommend that this option be used
-only when convergence is approximately obtained (therefore, you should
-run MCMC simulations with <var>&lt;simTypeFlag&gt;</var> set to 0 first, up to
-approximate convergence, and then restart the chain with the flag at
-2). With <var>&lt;simTypeFlag&gt;</var> equal to 3 'tempered' component by
-component MCMC is performed MCMC. Finally with <var>&lt;simTypeFlag&gt;</var> set
-to 4, GNU MCSim does stochastic optimization (an MCMC in which only,
-but all, jumps leading posterior density improvement are
-accepted).
+(included):
 
-</p><p>The integer <var>&lt;printFrequency&gt;</var> should be set to 1 if you want an
+</p><ul>
+<li>
+<p>It should be set at zero to start a chain of MCMC simulations. In that
+case, parameters are updated by Metropolis steps, one at a
+time.
+
+</p></li><li>
+<p>If <var>&lt;simTypeFlag&gt;</var> = 1, a restart file must also be specified. The
+output file will contain codes for the level sequence, simulation
+numbers, printing times, data values and the corresponding model
+predictions, computed using the last parameter vector of the restart
+file. This is useful to quickly check the model fit to the
+data.
+
+</p></li><li>
+<p>If <var>&lt;simTypeFlag&gt;</var> is equal to 2, a restart file must also be
+specified and that entire file is used to compute the parameters'
+covariance matrix. All parameters are then updated at once using a
+multivariate normal kernel as proposal distribution of the Metropolis
+steps. This may result in large improvement in speed. However, we
+recommend that this option be used only when convergence is
+approximately obtained (therefore, you should run MCMC simulations
+with <var>&lt;simTypeFlag&gt;</var> set to 0 first, up to approximate
+convergence, and then restart the chain with the flag at 2).
+
+</p></li><li>
+<a name="IDX146"></a>
+<a name="IDX147"></a>
+<p>With <var>&lt;simTypeFlag&gt;</var> equal to 3 'tempered' component by component
+MCMC is performed MCMC (Geyer and Thompson, 1995)
+(see section <a href="#SEC56">Bibliographic References</a>). In that case a grid of inverse
+temperatures is used (along an annealing scheme). By default 5 inverse
+temperatures are used (0.4, 0.512, 0.64, 0.8, 1), but you can define
+your own scale with the <code>InvTemperature()</code> specification, with
+the following syntax:
+
+</p><table><tr><td>&nbsp;</td><td><pre class="example">InvTemperature(&lt;nValues&gt;, &lt;value 1&gt;, &lt;...&gt;, &lt;value n&gt;);
+</pre></td></tr></table>
+<p>The first number of the specification gives the number of inverse
+temperatures to use and is followed by a list of them. Those should be
+numbers in the interval ]0,1]. You usually would want to end with a
+value of 1 (since temperature = 1 is the cold end of the temperature
+scale, corresponding to your target distribution.)
+
+</p></li><li>
+<p>Finally with <var>&lt;simTypeFlag&gt;</var> set to 4, GNU MCSim does stochastic
+optimization (an MCMC in which only, but all, jumps leading posterior
+density improvement are accepted).
+
+</p></li></ul>
+
+
+<p>The integer <var>&lt;printFrequency&gt;</var> should be set to 1 if you want an
 output at each iteration, to 2 if you want an output at every other
 iteration etc. The parameter <var>&lt;itersToPrint&gt;</var> is the number of
 final iterations for which output is required (<i>e.g.</i>, 1000 will
@@ -3648,142 +3674,142 @@ sample. The <var>&lt;distribution-name&gt;</var> and the corresponding
 
 </p><ul>
 <li>
-<a name="IDX146"></a>
-<a name="IDX147"></a>
+<a name="IDX148"></a>
+<a name="IDX149"></a>
 <p><code>Beta</code>, takes at least two strictly positive real shape parameters:
 <var>A</var> and <var>B</var>. By default the Beta distribution is defined over
 the interval [0;1]. If a range is given for the beta distribution, the
 [0;1] interval is mapped onto the specified range.
 
 </p></li><li>
-<a name="IDX148"></a>
-<a name="IDX149"></a>
+<a name="IDX150"></a>
+<a name="IDX151"></a>
 <p><code>Binomial</code>, needs two strictly positive numbers: the probability
 <var>p</var> (a real in the interval [0;1]), and the sample size <var>N</var>, an
 integer. If <var>N</var> is not given as an integer it will be rounded down
 during the computations.
 
 </p></li><li>
-<a name="IDX150"></a>
-<a name="IDX151"></a>
 <a name="IDX152"></a>
 <a name="IDX153"></a>
+<a name="IDX154"></a>
+<a name="IDX155"></a>
 <p><code>Cauchy</code>, takes one strictly positive real number as parameter:
 its scale <var>s</var>.
 
 </p></li><li>
-<a name="IDX154"></a>
-<a name="IDX155"></a>
 <a name="IDX156"></a>
 <a name="IDX157"></a>
+<a name="IDX158"></a>
+<a name="IDX159"></a>
 <p><code>Chi2</code>, takes one strictly positive real number as parameter:
 <var>n</var>. This distribution is the same as Gamma(<var>n</var>/2, 1/2).
 
 </p></li><li>
-<a name="IDX158"></a>
-<a name="IDX159"></a>
+<a name="IDX160"></a>
+<a name="IDX161"></a>
 <p><code>Exponential</code>, uses one strictly positive real number: the
 inverse-scale <var>b</var>. 
 
 </p></li><li>
-<a name="IDX160"></a>
-<a name="IDX161"></a>
+<a name="IDX162"></a>
+<a name="IDX163"></a>
 <p><code>Gamma</code>, uses two strictly positive real parameter: the shape and
 the inverse scale.
 
 </p></li><li>
-<a name="IDX162"></a>
-<a name="IDX163"></a>
+<a name="IDX164"></a>
+<a name="IDX165"></a>
 <p><code>HalfCauchy</code>, takes one strictly positive real number as
 parameter: the scale <var>s</var>. The mode is at zero, on the lower
 boundary. The random variates returned are strictly positive.
 
 </p></li><li>
-<a name="IDX164"></a>
-<a name="IDX165"></a>
+<a name="IDX166"></a>
+<a name="IDX167"></a>
 <p><code>HalfNormal</code>, takes one reals number as parameter: the standard
 deviation, strictly positive.  The mode is at zero, on the lower
 boundary. The random variates returned are strictly positive.
 
 </p></li><li>
-<a name="IDX166"></a>
-<a name="IDX167"></a>
 <a name="IDX168"></a>
 <a name="IDX169"></a>
+<a name="IDX170"></a>
+<a name="IDX171"></a>
 <p><code>InvGamma</code> (inverse gamma distribution), needs two strictly
 positive real parameters: the shape and the scale.
 
 </p></li><li>
-<a name="IDX170"></a>
-<a name="IDX171"></a>
+<a name="IDX172"></a>
+<a name="IDX173"></a>
 <p><code>LogNormal</code>, takes two reals numbers as parameters: the geometric
 mean (exponential of the mean in log-space) and the geometric standard
 deviation (exponential, strictly superior to 1, of the standard
 deviation in log-space).
 
 </p></li><li>
-<a name="IDX172"></a>
-<a name="IDX173"></a>
+<a name="IDX174"></a>
+<a name="IDX175"></a>
 <p><code>LogNormal_v</code>, is the lognormal distribution with the variance (in
 log space!) instead of the standard deviation as second parameter. You
 can use it to specify a hierarchical model with a conjugate prior on the
 variance (see section <a href="#SEC49">Setting-up statistical models</a>).
 
 </p></li><li>
-<a name="IDX174"></a>
-<a name="IDX175"></a>
+<a name="IDX176"></a>
+<a name="IDX177"></a>
 <p><code>LogUniform</code>, with two shape parameters: the minimum and the
 maximum of the sampling range (real numbers) in natural space.
 
 </p></li><li>
-<a name="IDX176"></a>
-<a name="IDX177"></a>
+<a name="IDX178"></a>
+<a name="IDX179"></a>
 <p><code>Normal</code>, takes two reals numbers as parameters: the mean and the
 standard deviation, the latter being strictly positive.
 
 </p></li><li>
-<a name="IDX178"></a>
-<a name="IDX179"></a>
+<a name="IDX180"></a>
+<a name="IDX181"></a>
 <p><code>Normal_v</code>, is also the normal distribution with the variance
 instead of the standard deviation as second parameter. You can use it to
 specify a hierarchical model with a conjugate prior on the variance
 (see section <a href="#SEC49">Setting-up statistical models</a>).
 
 </p></li><li>
-<a name="IDX180"></a>
-<a name="IDX181"></a>
 <a name="IDX182"></a>
 <a name="IDX183"></a>
+<a name="IDX184"></a>
+<a name="IDX185"></a>
 <p><code>Piecewise</code>, uses four reals as parameters: the <var>minimum</var>,
 <var>A</var>, <var>B</var>, and the <var>maximum</var>. The distribution has the form
 of a truncated triangle, with a plateau between <var>A</var> and <var>B</var>. If
 the distribution is the triangular distribution.
 
 </p></li><li>
-<a name="IDX184"></a>
-<a name="IDX185"></a>
-<p><code>Poisson</code>, needs a strictly positive real: the rate <var>A</var>.
-
-</p></li><li>
 <a name="IDX186"></a>
 <a name="IDX187"></a>
-<p><code>StudentT</code>, requires three parameters: its number of degrees of
-freedom (an integer), its mean, and its standard deviation.
+<p><code>Poisson</code>, needs a strictly positive real: the rate <var>A</var>.
 
 </p></li><li>
 <a name="IDX188"></a>
 <a name="IDX189"></a>
+<p><code>StudentT</code>, requires three parameters: its number of degrees of
+freedom (an integer), its mean, and its standard deviation.
+
+</p></li><li>
 <a name="IDX190"></a>
 <a name="IDX191"></a>
+<a name="IDX192"></a>
+<a name="IDX193"></a>
 <p><code>TruncInvGamma</code> (truncated inverse gamma distribution), needs
 four strictly positive real parameters: the shape, the scale, the
 minimum and the maximum.
 
 </p></li><li>
-<a name="IDX192"></a>
-<a name="IDX193"></a>
 <a name="IDX194"></a>
 <a name="IDX195"></a>
+<a name="IDX196"></a>
+<a name="IDX197"></a>
 <p><code>TruncLogNormal</code> (truncated lognormal distribution), uses four real
 numbers: the geometric mean and geometric standard deviation (strictly
 superior to 1), the minimum and the maximum in natural space. For
@@ -3796,31 +3822,31 @@ example:
 while `<samp>Var</samp>' is truncated to fall between 0.01 to 10.
 
 </p></li><li>
-<a name="IDX196"></a>
-<a name="IDX197"></a>
+<a name="IDX198"></a>
+<a name="IDX199"></a>
 <p><code>TruncLogNormal_v</code>, is like the truncated lognormal, except that it
 takes the variance (in log space!) instead of the standard deviation as
 second parameter. You can use it to specify a hierarchical model with a
 conjugate prior on the variance (see section <a href="#SEC49">Setting-up statistical models</a>).
 
 </p></li><li>
-<a name="IDX198"></a>
-<a name="IDX199"></a>
 <a name="IDX200"></a>
 <a name="IDX201"></a>
+<a name="IDX202"></a>
+<a name="IDX203"></a>
 <p><code>TruncNormal</code> (truncated normal distribution), takes four real
 parameters: the mean, the standard deviation (strictly positive), the
 minimum and the maximum.
 
 </p></li><li>
-<a name="IDX202"></a>
-<a name="IDX203"></a>
+<a name="IDX204"></a>
+<a name="IDX205"></a>
 <p><code>TruncNormal_v</code>, is like the truncated normal distribution with the
 variance instead of the standard deviation as second parameter.
 
 </p></li><li>
-<a name="IDX204"></a>
-<a name="IDX205"></a>
+<a name="IDX206"></a>
+<a name="IDX207"></a>
 <p><code>Uniform</code>, with two shape parameters: the minimum and the maximum
 of the sampling range (real numbers).
 
@@ -3837,14 +3863,14 @@ Distrib(B, Normal, A, 2);
 
 <p><strong>In the context of MCMC sampling</strong>, <em>GNU MCSim</em> provides
 extensions of the above <code>Distrib()</code> specification syntax.
-<a name="IDX206"></a>
-<a name="IDX207"></a>
 <a name="IDX208"></a>
 <a name="IDX209"></a>
 <a name="IDX210"></a>
 <a name="IDX211"></a>
 <a name="IDX212"></a>
 <a name="IDX213"></a>
+<a name="IDX214"></a>
+<a name="IDX215"></a>
 
 </p><p>First, when <code>Distrib()</code> is used to specify the distribution of a
 model parameter, that parameter can also appear as a shape
@@ -4761,6 +4787,10 @@ Bayesian Data Analysis. Chapman &amp; Hall, London.
 using multiple sequences (with discussion). Statistical Science 
 <b>7</b>:457-511.
 
+</p><p>Geyer C.J. and Thompson E.A. (1995). Annealing Markov chain Monte
+Carlo with applications to ancestral inference. Journal of the
+American Statistical Association<b>90</b>: 909-920.
+
 </p><p>Gilks W.R., Richardson S. and Spiegelhalter D.J. (1996). Markov Chain
 Monte Carlo In Practice. Chapman &amp; Hall, London.
 
@@ -5467,22 +5497,22 @@ END.
 <tr><td></td><td valign="top"><a href="#IDX14">Assignment</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_2">B</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX146"><code>Beta</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX148"><code>Beta</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX45"><code>BetaRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC56">Bibliographic references</a></td><td valign="top"><a href="#SEC56">Bibliographic References</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX148"><code>Binomial</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX150"><code>Binomial</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX48"><code>BinomialBetaRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX51"><code>BinomialRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX10">Blank lines</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_3">C</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC27"><code>CalcOutputs</code>, output section</a></td><td valign="top"><a href="#SEC27">5.3.9 Output calculations</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX150"><code>Cauchy</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX151">Cauchy distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX152"><code>Cauchy</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX153">Cauchy distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX54"><code>CauchyRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX57"><code>CDFNormal()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX155">Chi-square distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX154"><code>Chi2</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX157">Chi-square distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX156"><code>Chi2</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX61"><code>Chi2Random()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX20">Colon conditional assignment</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX8">Comments</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
@@ -5494,46 +5524,46 @@ END.
 <tr><td></td><td valign="top"><a href="#IDX60">Cumulative density function, Normal</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_4">D</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX206"><code>Data()</code> qualifier, for use in <code>Distrib()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX208"><code>Data()</code> qualifier, for use in <code>Distrib()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC51"><code>Data()</code> specification</a></td><td valign="top"><a href="#SEC51"><code>Data()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX1">Default</a></td><td valign="top"><a href="#SEC6">2.2 Types of simulations</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC15">Defining models</a></td><td valign="top"><a href="#SEC15">5. Setting-up Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX86">Density function, Normal</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX212"><code>Density()</code> specification</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX214"><code>Density()</code> specification</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX132">Derivative specification</a></td><td valign="top"><a href="#SEC26">5.3.8 Dynamics section</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC21">Differential models</a></td><td valign="top"><a href="#SEC21">5.3.3 Model types</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC21">Discrete-time models</a></td><td valign="top"><a href="#SEC21">5.3.3 Model types</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX147">Distribution, <code>Beta</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX149">Distribution, <code>Binomial</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX152">Distribution, <code>Cauchy</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX153">Distribution, Cauchy</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX157">Distribution, Chi-square</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX156">Distribution, <code>Chi2</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX159">Distribution, <code>Exponential</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX161">Distribution, <code>Gamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX163">Distribution, <code>HalfCauchy</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX165">Distribution, <code>HalfNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX168">Distribution, inverse-gamma</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX169">Distribution, <code>InvGamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX171">Distribution, <code>Lognormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX173">Distribution, <code>Lognormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX175">Distribution, <code>Loguniform</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX177">Distribution, <code>Normal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX179">Distribution, <code>Normal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX181">Distribution, <code>Piecewise</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX185">Distribution, <code>Poisson</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX187">Distribution, <code>StudentT</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX183">Distribution, triangular</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX190">Distribution, truncated inverse-gamma</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX195">Distribution, truncated lognormal</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX201">Distribution, truncated normal</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX191">Distribution, <code>TruncInvGamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX193">Distribution, <code>TruncLogNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX197">Distribution, <code>Trunclognormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX199">Distribution, <code>TruncNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX203">Distribution, <code>Truncnormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX205">Distribution, <code>Uniform</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX149">Distribution, <code>Beta</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX151">Distribution, <code>Binomial</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX154">Distribution, <code>Cauchy</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX155">Distribution, Cauchy</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX159">Distribution, Chi-square</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX158">Distribution, <code>Chi2</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX161">Distribution, <code>Exponential</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX163">Distribution, <code>Gamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX165">Distribution, <code>HalfCauchy</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX167">Distribution, <code>HalfNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX170">Distribution, inverse-gamma</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX171">Distribution, <code>InvGamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX173">Distribution, <code>Lognormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX175">Distribution, <code>Lognormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX177">Distribution, <code>Loguniform</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX179">Distribution, <code>Normal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX181">Distribution, <code>Normal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX183">Distribution, <code>Piecewise</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX187">Distribution, <code>Poisson</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX189">Distribution, <code>StudentT</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX185">Distribution, triangular</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX192">Distribution, truncated inverse-gamma</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX197">Distribution, truncated lognormal</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX203">Distribution, truncated normal</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX193">Distribution, <code>TruncInvGamma</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX195">Distribution, <code>TruncLogNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX199">Distribution, <code>Trunclognormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX201">Distribution, <code>TruncNormal</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX205">Distribution, <code>Truncnormal_v</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX207">Distribution, <code>Uniform</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC1">Documentation license</a></td><td valign="top"><a href="#SEC1">1. Software and Documentation Licenses</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX131"><code>Dt()</code> operator</a></td><td valign="top"><a href="#SEC26">5.3.8 Dynamics section</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC26">Dynamics section</a></td><td valign="top"><a href="#SEC26">5.3.8 Dynamics section</a></td></tr>
@@ -5547,7 +5577,7 @@ END.
 <tr><td></td><td valign="top"><a href="#SEC58">Examples</a></td><td valign="top"><a href="#SEC58">B. Examples</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC45"><code>Experiment</code> sections</a></td><td valign="top"><a href="#SEC45"><code>Simulation</code> sections</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX6">Experimental design optimization</a></td><td valign="top"><a href="#SEC6">2.2 Types of simulations</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX158"><code>Exponential</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX160"><code>Exponential</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX68"><code>ExpRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_6">F</a></th><td></td><td></td></tr>
@@ -5592,7 +5622,7 @@ END.
 <tr><td></td><td valign="top"><a href="#SEC22">Functions, special</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_7">G</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX160"><code>Gamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX162"><code>Gamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX89">Gamma function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX71"><code>GammaRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC33">General input file syntax</a></td><td valign="top"><a href="#SEC33">6.2.1 General input file syntax</a></td></tr>
@@ -5601,8 +5631,8 @@ END.
 <tr><td></td><td valign="top"><a href="#SEC35">Global specifications</a></td><td valign="top"><a href="#SEC35">6.2.3 Global specifications</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_8">H</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX162"><code>HalfCauchy</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX164"><code>HalfNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX164"><code>HalfCauchy</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX166"><code>HalfNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_9">I</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC25">Initialize, initialization section,</a></td><td valign="top"><a href="#SEC25">5.3.7 Model initialization</a></td></tr>
@@ -5616,9 +5646,10 @@ END.
 <tr><td></td><td valign="top"><a href="#SEC37">Integration routine, <code>Euler</code></a></td><td valign="top"><a href="#SEC37"><code>Integrate()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC37">Integration routine, <code>Lsodes</code></a></td><td valign="top"><a href="#SEC37"><code>Integrate()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX133">Integration variable</a></td><td valign="top"><a href="#SEC26">5.3.8 Dynamics section</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX167">Inverse-gamma distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX166"><code>InvGamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX169">Inverse-gamma distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX168"><code>InvGamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX80"><code>InvGGammaRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX146"><code>InvTemperature()</code> specification</a></td><td valign="top"><a href="#SEC39"><code>MCMC()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_10">K</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX135">Keyword, <code>Compartment</code></a></td><td valign="top"><a href="#SEC29">5.4 Reading SBML models and applying a template</a></td></tr>
@@ -5627,14 +5658,14 @@ END.
 <tr><th><a name="SEC63_11">L</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC50"><code>Level</code> sections</a></td><td valign="top"><a href="#SEC50"><code>Level</code> sections</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC1">Licenses</a></td><td valign="top"><a href="#SEC1">1. Software and Documentation Licenses</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX210"><code>Likelihood()</code> specification</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX212"><code>Likelihood()</code> specification</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX83"><code>lnDFNormal()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX87"><code>lnGamma()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX24">Logical tests</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX170"><code>Lognormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX172"><code>LogNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX172"><code>Lognormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX174"><code>LogNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX90"><code>LogNormalRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX174"><code>LogUniform</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX176"><code>LogUniform</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX93"><code>LogUniformRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC37"><code>Lsodes</code> integrator</a></td><td valign="top"><a href="#SEC37"><code>Integrate()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
@@ -5663,8 +5694,8 @@ END.
 <tr><td></td><td valign="top"><a href="#IDX142"><code>NDoses()</code> function</a></td><td valign="top"><a href="#SEC34">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX59">Normal cumulative density function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX85">Normal density function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX176"><code>Normal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX178"><code>Normal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX178"><code>Normal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX180"><code>Normal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX96"><code>NormalRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_14">O</a></th><td></td><td></td></tr>
@@ -5681,18 +5712,18 @@ END.
 <tr><td></td><td valign="top"><a href="#IDX138"><code>PerDose()</code> function</a></td><td valign="top"><a href="#SEC34">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX125"><code>PerExp()</code> function</a></td><td valign="top"><a href="#SEC23">5.3.5 Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX140"><code>PerExp()</code> function</a></td><td valign="top"><a href="#SEC34">6.2.2 Input functions (revisited)</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX180"><code>Piecewise</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX182"><code>Piecewise</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX99"><code>PiecewiseRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC54">Pitfalls</a></td><td valign="top"><a href="#SEC54">7. Common Pitfalls</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX184"><code>Poisson</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX186"><code>Poisson</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX102"><code>PoissonRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX208"><code>Prediction()</code> qualifier, for use in <code>Distrib()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX210"><code>Prediction()</code> qualifier, for use in <code>Distrib()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC47"><code>Print()</code> specification</a></td><td valign="top"><a href="#SEC47"><code>Print()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC48"><code>PrintStep()</code> specification</a></td><td valign="top"><a href="#SEC48"><code>PrintStep()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_16">Q</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX207">Qualifier, <code>Data()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX209">Qualifier, <code>Prediction()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX209">Qualifier, <code>Data()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX211">Qualifier, <code>Prediction()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_17">R</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX47">Random number, beta</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
@@ -5736,10 +5767,11 @@ END.
 <tr><td></td><td valign="top"><a href="#IDX16">Special functions</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC22">Special functions</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC51">Specification, <code>Data()</code></a></td><td valign="top"><a href="#SEC51"><code>Data()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX213">Specification, <code>Density()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX215">Specification, <code>Density()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC42">Specification, <code>Distrib()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC37">Specification, <code>Integrate()</code></a></td><td valign="top"><a href="#SEC37"><code>Integrate()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX211">Specification, <code>Likelihood()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX147">Specification, <code>InvTemperature()</code></a></td><td valign="top"><a href="#SEC39"><code>MCMC()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX213">Specification, <code>Likelihood()</code></a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC39">Specification, <code>MCMC()</code></a></td><td valign="top"><a href="#SEC39"><code>MCMC()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC38">Specification, <code>MonteCarlo()</code></a></td><td valign="top"><a href="#SEC38"><code>MonteCarlo()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC41">Specification, <code>OptimalDesign()</code></a></td><td valign="top"><a href="#SEC41"><code>OptimalDesign()</code> specification</a></td></tr>
@@ -5759,7 +5791,7 @@ END.
 <tr><td></td><td valign="top"><a href="#SEC49">Statistical models</a></td><td valign="top"><a href="#SEC49">6.2.5 Setting-up statistical models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC15">Structural models</a></td><td valign="top"><a href="#SEC15">5. Setting-up Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC21">Structural models</a></td><td valign="top"><a href="#SEC21">5.3.3 Model types</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX186"><code>StudentT</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX188"><code>StudentT</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX108"><code>StudentTRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC28">Style</a></td><td valign="top"><a href="#SEC28">5.3.10 Comments on style</a></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC18">Syntax for <code>mod</code></a></td><td valign="top"><a href="#SEC18">5.3 Syntax of the model description file</a></td></tr>
@@ -5768,23 +5800,23 @@ END.
 <tr><th><a name="SEC63_19">T</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#SEC29">Template models</a></td><td valign="top"><a href="#SEC29">5.4 Reading SBML models and applying a template</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX25">Tests, logical</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX182">Triangular distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX189">Truncated Inverse-gamma distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX194">Truncated lognormal distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX200">Truncated normal distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX188"><code>TruncInvGamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX184">Triangular distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX191">Truncated Inverse-gamma distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX196">Truncated lognormal distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX202">Truncated normal distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX190"><code>TruncInvGamma</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX111"><code>TruncInvGGammaRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX192"><code>TruncLogNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX196"><code>TruncLogNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX194"><code>TruncLogNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX198"><code>TruncLogNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX114"><code>TruncLogNormalRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX198"><code>TruncNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX202"><code>TruncNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX200"><code>TruncNormal</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX204"><code>TruncNormal_v</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX117"><code>TruncNormalRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_20">U</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX41">Underscore syntax for vectors</a></td><td valign="top"><a href="#SEC19">5.3.1 General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX137">Underscore use for template models</a></td><td valign="top"><a href="#SEC29">5.4 Reading SBML models and applying a template</a></td></tr>
-<tr><td></td><td valign="top"><a href="#IDX204"><code>Uniform</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#IDX206"><code>Uniform</code> distribution</a></td><td valign="top"><a href="#SEC42"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#IDX120"><code>UniformRandom()</code> function</a></td><td valign="top"><a href="#SEC22">5.3.4 Special functions</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="SEC63_21">V</a></th><td></td><td></td></tr>
@@ -5962,7 +5994,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>Frederic Bois</em> on <em>January, 20 2011</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.70</em></a>.
+  This document was generated by <em>Frederic Bois</em> on <em>January, 23 2011</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.70</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6064,7 +6096,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>Frederic Bois</em> on <em>January, 20 2011</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.70</em></a>.
+  This document was generated by <em>Frederic Bois</em> on <em>January, 23 2011</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.70</em></a>.
  </font>
  <br>
 
