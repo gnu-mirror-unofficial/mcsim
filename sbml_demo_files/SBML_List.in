@@ -4,6 +4,6 @@
 # to use for the circulating species.
 #------------------------------------------------------------------------------
 
-SBMLModels = {"Yeast.xml"};
+SBMLModels = {"Yeast.xml.txt"};
 
 End.
