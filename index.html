@@ -50,38 +50,35 @@ you to:
 <h3 id="news">News</h3>
 
 <p>
-<font><b>GNU MCSim mod to perform random graph simulations.
+<font><b>
+GNU MCSim and R (even under Microsoft Windows)
 </font></b>
 </p>
 
 <p>
-The newest code for the model generator mod 
-(see http://cvs.savannah.gnu.org/viewvc/mcsim/mod/?root=mcsim)
-now accept the "-G" option to generate random graph from specified 
-through a "script.txt" file. 
+The basic tools needed to build and run GNU MCSim are not available to
+most users of Windows systems.<br> Fortunately, the R software (see
+http://www.r-project.org/), when properly installed with its Rtools
+(this requires administrator's rights), can compile and run GNU MCSim
+models. We have developed code and R scripts to compile GNU MCSim
+models to C code usable by the R package deSolve (to do that use the
+GNU MCSim "mod" model generator with the -R option) or by itself. This
+works under any operating system. You can then use deSolve to perform
+simulations of your models. The integators provided by deSolve are
+improved implementations of the lsode family of integrators (used also
+by GNU MCSim), and provide a few more options than GNU MCSim (in
+particular, "events", see the deSolve user manuals). However, if you
+need raw speed (say, for Markov chain Monte Carlo simulations) GNU
+MCSim is the fastest option.
 </p> 
 
 <p>
-<font><b>GNU MCSim can now generate C code to work with R deSolve package. 
-</font></b>
+<a href="mcsim_under_R.zip">Follow this link to download the corresponding 
+scripts and code.</a></p>
+<p>
+You need to have R and its Rtools (and optionally the deSolve package) installed.
 </p>
 
-<p>
-The latest version
-of the model generator "mod" can now<br>
-generate C code directly usable with the R package deSolve.
-Simply use the "-R" option for that. 
-</p> 
-
-<p>
-<a href="mod_for_R_examples.zip">Follow this link for a couple of examples.</a>
-You need to have R and its deSolve package installed.
-</p>
-
-<p>
-Version 5.5.0 also fixes a potential security problem at the installation phase<br>
-(originating from automake).
-</p>
 
 <!---------------------------------------->
 <!-- Download links -->
@@ -392,7 +389,7 @@ Commons Attribution-NoDerivs 3.0 United States License</a>.</p>
 
 <p>Updated:
 <!-- timestamp start -->
-$Date: 2014/11/24 08:07:57 $
+$Date: 2015/06/14 09:37:18 $
 <!-- timestamp end -->
 </p>
 </div>
