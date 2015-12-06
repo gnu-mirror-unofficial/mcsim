@@ -50,17 +50,32 @@ you to:
 <h3 id="news">News</h3>
 
 <p>
-<font><b>
-Delay differential equations in GNU MCSim
+<font color="red"><b> December 6 2015 - Santa Claus brought you a new version of
+GNU MCSim (version 5.6.0) is now available!
 </font></b>
 </p>
 
 <p>
-GNU MCSim can now rather easily solve delay differential equations.
-This is not perfect as it requires the use of Inline statements in the
-model, but we are working on a cleaner implementation. You can still try 
-it now. New code (in the sim/ directory) and a new example 
-(examples/delay_diff_eqns/) are available on the <a href="http://savannah.gnu.org/projects/mcsim">MCSim project page on Savannah</a>.
+<font><b>
+"Events" (state variables discontinuities) in GNU MCSim
+</font></b>
+</p>
+
+<p>
+State variables disconstinuities can now be requested at
+given times. See the <a href="mcsim.html#Events_0028_0029-specification"> 
+online user's manual.</a>
+</p> 
+
+<p>
+<font><b>
+Delay differential equations
+</font></b>
+</p>
+
+<p>
+GNU MCSim can now easily solve delay differential equations.  A new
+example (examples/delay_diff_eqns/) is available.
 </p> 
 
 <p>
@@ -81,7 +96,7 @@ works under any operating system. You can then use deSolve to perform
 simulations of your models. The integators provided by deSolve are
 improved implementations of the lsode family of integrators (used also
 by GNU MCSim), and provide a few more options than GNU MCSim (in
-particular, "events", see the deSolve user manuals). However, if you
+particular, "events", see the deSolve user's manuals). However, if you
 need raw speed (say, for Markov chain Monte Carlo simulations) GNU
 MCSim is the fastest option.
 </p> 
@@ -101,22 +116,23 @@ You need to have R and its Rtools (and optionally the deSolve package) installed
 <h3 id="download">Downloading GNU MCSim</h3>
 
 <p>
-The latest version of GNU MCSim (5.5.0) can be found on the main GNU ftp server:
-<a href="http://ftp.gnu.org/gnu/mcsim/">http://ftp.gnu.org/gnu/mcsim/</a>
-(via HTTP) and
-<a href="ftp://ftp.gnu.org/gnu/mcsim/">ftp://ftp.gnu.org/gnu/mcsim/</a>
-(via FTP).  It can also be found
-on the <a href="/prep/ftp.html">GNU mirrors</a>;
-please
-<a href="http://ftpmirror.gnu.org/mcsim/">use
-a mirror</a> if possible.
-</p>
+The latest version of GNU MCSim (5.6.0) can be
+found <a href="mcsim-5.6.0.tar.gz"> here</a> and on any
+<a href="http://ftpmirror.gnu.org/mcsim/">GNU mirror</a>.<br> 
+
+You can also download it from the main GNU ftp server:<br>
+
+- via HTTP at
+<a href="http://ftp.gnu.org/gnu/mcsim/">http://ftp.gnu.org/gnu/mcsim/</a><br>
+
+- via FTP at
+<a href="ftp://ftp.gnu.org/gnu/mcsim/">ftp://ftp.gnu.org/gnu/mcsim/</a>.</p>
 
 The gzipped tar archive contains:
 
 <ul>
 
-  <li>A User's Manual (in Texinfo and HTML formats) </li>
+  <li>A User's Manual (in Texinfo, pdf and HTML formats) </li>
 
   <li>The ASCII source code of the Mod program (to preprocess your
       models) </li>
@@ -176,9 +192,9 @@ but standard C compilers should also work.
 
 <p>
 Versions 5.0.0 up to 5.3.1 required 
-<a href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a> (gsl) to be
-installed. With version 5.4.0, GNU gsl becomes optional (but
-recommended).
+<a href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a>
+(gsl, and its companion gslcblas) to be installed. With version 5.4.0,
+GNU gsl becomes optional (but recommended).
 </p>
 
 <p>
@@ -403,7 +419,7 @@ Commons Attribution-NoDerivs 3.0 United States License</a>.</p>
 
 <p>Updated:
 <!-- timestamp start -->
-$Date: 2015/11/29 20:30:04 $
+$Date: 2015/12/06 08:37:00 $
 <!-- timestamp end -->
 </p>
 </div>
