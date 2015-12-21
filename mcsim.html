@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December 5, 2015 by texi2html 1.82
+<!-- Created on December 21, 2015 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <h1 class="settitle">GNU MCSim User&rsquo;s Manual</h1>
 
 
-<p>GNU MCSim manual, version 5.6.0
+<p>GNU MCSim manual, version 5.6.1
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -5422,89 +5422,90 @@ for random numbers in simulations. Physical Review Letters
 <p>You should use the following reserved keywords as prescribed when building
 your models and input files:
 </p>
-<table>
-<tr><td width="100%">Add</td></tr>
-<tr><td width="100%">Beta</td></tr>
-<tr><td width="100%">BetaRandom</td></tr>
-<tr><td width="100%">Binomial</td></tr>
-<tr><td width="100%">BinomialBetaRandom</td></tr>
-<tr><td width="100%">BinomialRandom</td></tr>
-<tr><td width="100%">CDFNormal</td></tr>
-<tr><td width="100%">CalcOutputs</td></tr>
-<tr><td width="100%">CauchyRandom</td></tr>
-<tr><td width="100%">Chi2</td></tr>
-<tr><td width="100%">Chi2Random</td></tr>
-<tr><td width="100%">Data</td></tr>
-<tr><td width="100%">DefaultSim</td></tr>
-<tr><td width="100%">Density</td></tr>
-<tr><td width="100%">Distrib</td></tr>
-<tr><td width="100%">dt</td></tr>
-<tr><td width="100%">Dynamics</td></tr>
-<tr><td width="100%">End</td></tr>
-<tr><td width="100%">Euler</td></tr>
-<tr><td width="100%">ExpRandom</td></tr>
-<tr><td width="100%">Experiment</td></tr>
-<tr><td width="100%">Exponential</td></tr>
-<tr><td width="100%">GGammaRandom</td></tr>
-<tr><td width="100%">Gamma</td></tr>
-<tr><td width="100%">GammaRandom</td></tr>
-<tr><td width="100%">GetSeed</td></tr>
-<tr><td width="100%">Gibbs</td></tr>
-<tr><td width="100%">IFN</td></tr>
-<tr><td width="100%">Initialize</td></tr>
-<tr><td width="100%">Inputs</td></tr>
-<tr><td width="100%">Integrate</td></tr>
-<tr><td width="100%">InvGGammaRandom</td></tr>
-<tr><td width="100%">InvGamma</td></tr>
-<tr><td width="100%">Level</td></tr>
-<tr><td width="100%">Likelihood</td></tr>
-<tr><td width="100%">lnDFNormal</td></tr>
-<tr><td width="100%">lnGamma</td></tr>
-<tr><td width="100%">LogNormal</td></tr>
-<tr><td width="100%">LogNormalRandom</td></tr>
-<tr><td width="100%">LogNormal_v</td></tr>
-<tr><td width="100%">LogUniform</td></tr>
-<tr><td width="100%">LogUniformRandom</td></tr>
-<tr><td width="100%">Lsodes</td></tr>
-<tr><td width="100%">MCMC</td></tr>
-<tr><td width="100%">MonteCarlo</td></tr>
-<tr><td width="100%">Multiply</td></tr>
-<tr><td width="100%">NDoses</td></tr>
-<tr><td width="100%">Normal</td></tr>
-<tr><td width="100%">NormalRandom</td></tr>
-<tr><td width="100%">Normal_v</td></tr>
-<tr><td width="100%">OptimalDesign</td></tr>
-<tr><td width="100%">OutputFile</td></tr>
-<tr><td width="100%">Outputs</td></tr>
-<tr><td width="100%">PerDose</td></tr>
-<tr><td width="100%">PerExp</td></tr>
-<tr><td width="100%">Piecewise</td></tr>
-<tr><td width="100%">PiecewiseRandom</td></tr>
-<tr><td width="100%">Poisson</td></tr>
-<tr><td width="100%">PoissonRandom</td></tr>
-<tr><td width="100%">Prediction</td></tr>
-<tr><td width="100%">Print</td></tr>
-<tr><td width="100%">PrintStep</td></tr>
-<tr><td width="100%">Replace</td></tr>
-<tr><td width="100%">Scale</td></tr>
-<tr><td width="100%">SetPoints</td></tr>
-<tr><td width="100%">SetSeed</td></tr>
-<tr><td width="100%">SimType</td></tr>
-<tr><td width="100%">Simulation</td></tr>
-<tr><td width="100%">Spikes</td></tr>
-<tr><td width="100%">StartTime</td></tr>
-<tr><td width="100%">States</td></tr>
-<tr><td width="100%">StudentTRandom</td></tr>
-<tr><td width="100%">t</td></tr>
-<tr><td width="100%">TruncLogNormal</td></tr>
-<tr><td width="100%">TruncLogNormalRandom</td></tr>
-<tr><td width="100%">TruncLogNormal_v</td></tr>
-<tr><td width="100%">TruncNormal</td></tr>
-<tr><td width="100%">TruncNormalRandom</td></tr>
-<tr><td width="100%">TruncNormal_v</td></tr>
-<tr><td width="100%">Uniform</td></tr>
-<tr><td width="100%">UniformRandom</td></tr>
-</table>
+<ul>
+<li>  Add
+</li><li>  Beta                         
+</li><li>  BetaRandom                   
+</li><li>  Binomial                     
+</li><li>  BinomialBetaRandom           
+</li><li>  BinomialRandom               
+</li><li>  CDFNormal                    
+</li><li>  CalcOutputs                  
+</li><li>  CauchyRandom                 
+</li><li>  Chi2                         
+</li><li>  Chi2Random                   
+</li><li>  Data                         
+</li><li>  DefaultSim                   
+</li><li>  Density                      
+</li><li>  Distrib                      
+</li><li>  dt                           
+</li><li>  Dynamics                     
+</li><li>  End                          
+</li><li>  Euler                        
+</li><li>  ExpRandom                    
+</li><li>  Experiment                   
+</li><li>  Exponential                  
+</li><li>  GGammaRandom                 
+</li><li>  Gamma                        
+</li><li>  GammaRandom                  
+</li><li>  GetSeed                      
+</li><li>  Gibbs                        
+</li><li>  IFN                          
+</li><li>  Initialize                   
+</li><li>  Inputs                       
+</li><li>  Integrate                    
+</li><li>  InvGGammaRandom              
+</li><li>  InvGamma                     
+</li><li>  Level                        
+</li><li>  Likelihood                   
+</li><li>  lnDFNormal                   
+</li><li>  lnGamma                      
+</li><li>  LogNormal                    
+</li><li>  LogNormalRandom              
+</li><li>  LogNormal_v                  
+</li><li>  LogUniform
+</li><li>  LogUniformRandom
+</li><li>  Lsodes
+</li><li>  MCMC
+</li><li>  MonteCarlo
+</li><li>  Multiply
+</li><li>  NDoses
+</li><li>  Normal
+</li><li>  NormalRandom
+</li><li>  Normal_v
+</li><li>  OptimalDesign
+</li><li>  OutputFile
+</li><li>  Outputs
+</li><li>  PerDose
+</li><li>  PerExp
+</li><li>  Piecewise
+</li><li>  PiecewiseRandom
+</li><li>  Poisson
+</li><li>  PoissonRandom
+</li><li>  Prediction
+</li><li>  Print
+</li><li>  PrintStep
+</li><li>  Replace
+</li><li>  Scale
+</li><li>  SetPoints
+</li><li>  SetSeed
+</li><li>  SimType
+</li><li>  Simulation
+</li><li>  Spikes
+</li><li>  StartTime
+</li><li>  States
+</li><li>  StudentTRandom
+</li><li>  t
+</li><li>  TruncLogNormal
+</li><li>  TruncLogNormalRandom
+</li><li>  TruncLogNormal_v
+</li><li>  TruncNormal
+</li><li>  TruncNormalRandom
+</li><li>  TruncNormal_v
+</li><li>  Uniform
+</li><li>  UniformRandom
+
+</li></ul>
 
 
 <hr size="6">
@@ -6596,7 +6597,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>fbois</em> on <em>December 5, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>December 21, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6698,7 +6699,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>fbois</em> on <em>December 5, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>December 21, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
