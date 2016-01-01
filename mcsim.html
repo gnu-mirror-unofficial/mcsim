@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December 24, 2015 by texi2html 1.82
+<!-- Created on January 1, 2016 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <h1 class="settitle">GNU MCSim User&rsquo;s Manual</h1>
 
 
-<p>GNU MCSim manual, version 5.6.2
+<p>GNU MCSim manual, version 5.6.3
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -1569,19 +1569,25 @@ Initialize {
 Dynamics {
   &lt;Equations for computing derivatives of the state variables&gt;
 }
+Jacobian {
+  &lt;Equation for the Jacobian of the state derivatives&gt;
+}
 CalcOutputs {
   &lt;Equations for computing output variables&gt;
 }
+End. # mandatory ending keyword
 
 </pre></td></tr></table>
 
-<p><code>Initialize</code>, <code>Dynamics</code> and <code>CalcOutputs</code> are reserved
-keywords and, if used, must appear as shown, followed by the curly
-braces which delimit each section (see section <a href="#Model-initialization">Model initialization</a>;
-<a href="#Dynamics-section">Dynamics section</a>; <a href="#Output-calculations">Output calculations</a>). Please note that at
-least one of the sections <code>Dynamics</code> or <code>CalcOutputs</code> should
-be defined, and that <code>Dynamics</code> must be used if the model includes
-differential equations.
+<p><code>Initialize</code>, <code>Dynamics</code>, <code>Jacobian</code> and
+<code>CalcOutputs</code> are reserved keywords and, if used, must appear as
+shown, followed by the curly braces which delimit each section
+(see section <a href="#Model-initialization">Model initialization</a>; <a href="#Dynamics-section">Dynamics section</a>; <a href="#Output-calculations">Output calculations</a>). Please note that at least one of the sections
+<code>Dynamics</code> or <code>CalcOutputs</code> should be defined, and that
+<code>Dynamics</code> must be used if the model includes differential
+equations. Finally the model definition file must have the <code>End</code>
+keyword at the beggining of a line, eventually preceeded by white spaces
+or tabs. Text after the <code>End</code> keyword is ignored.
 </p>
 
 <table class="menu" border="0" cellspacing="0">
@@ -1867,6 +1873,10 @@ way to refer to it in the simulation input file will be through its
 individual components &lsquo;<samp>beta_1</samp>&rsquo;, &lsquo;<samp>beta_2</samp>&rsquo;, ... <i>etc</i>. This
 limitation will be removed in a future release of the software.
 </p>
+</li><li>
+<a name="index-End-keyword"></a>
+The <code>End</code> keyword must used to indicate model termination.
+
 </li></ul>
 
 
@@ -1917,7 +1927,7 @@ chemical).
 <a name="index-Output-variables"></a>
 Outputs are dependent model variables (obtainable at any time as
 analytical functions of the states, inputs or parameters) that do not
-have dynamics. They can receive assignments in the <code>Dynamics</code>
+have dynamics. They must receive assignments in either the <code>Dynamics</code>
 or <code>CalcOutputs</code> sections.
 
 </li></ul>
@@ -3244,7 +3254,7 @@ Simulation {
   &lt;Specifications for second simulation&gt;
 }
 # Unlimited number of simulation specifications
-End. # Mandatory End statement. Everything after this line is ignored
+End. # Mandatory End keyword. Everything after this line is ignored
 
 </pre></td></tr></table>
 
@@ -3268,7 +3278,7 @@ Level {
   }
   # Unlimited number of simulation specifications
 } # end Level
-End. # Mandatory statement.
+End. # Mandatory keyword.
 
 </pre></td></tr></table>
 
@@ -3351,7 +3361,7 @@ executed.
 <p>Structural changes to the model (<i>e.g.</i>, addition of a state, input,
 output or parameter) cannot be done here and must be done in the model
 description file. The simulation specification file is read until a
-mandatory <code>End</code> command is reached.
+mandatory <code>End</code> keyword is reached.
 </p>
 
 
@@ -6160,6 +6170,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Dynamics-section">Dynamics section</a></td><td valign="top"><a href="#Dynamics-section">5.3.8 Dynamics section</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="Concept-Index-1_cp_letter-E">E</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-End-keyword">End keyword</a></td><td valign="top"><a href="#General-syntax">5.3.1 General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-erfc_0028_0029-function"><code>erfc()</code> function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Error-function_002c-complementary">Error function, complementary</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Error-handling">Error handling</a></td><td valign="top"><a href="#Error-handling">6.4 Error handling</a></td></tr>
@@ -6597,7 +6608,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>fbois</em> on <em>December 24, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>January 1, 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6699,7 +6710,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>fbois</em> on <em>December 24, 2015</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>January 1, 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
