@@ -4726,9 +4726,7 @@ list of increasing times at which to output their values:
 </pre></td></tr></table>
 
 <p>where <var>&lt;identifier1&gt;</var>, <var>&lt;identifier2&gt;</var> etc. correspond to
-valid input, state or output model variables. Model parameters cannot
-be used (but you can assign a parameter value to an output variable in
-your model definition file and use that output here).
+valid input, state or output model variables, or parameter.
 </p>
 <p>The same output times are used for all the variables specified. The size
 of the time list is only limited by the available memory at run
@@ -4737,7 +4735,7 @@ MAX_PRINT_VARS in the header file &lsquo;<tt>sim.h</tt>&rsquo; and re-installing
 whole software. The number of <code>Print()</code> statements you can used in
 a given <code>Simulation</code> section is only limited by the available
 memory at run time. The same variable or parameter can appear in more
-than one <code>PrintStep()</code> in a given <code>Simulation</code> section.
+than one <code>Print()</code> in a given <code>Simulation</code> section.
 </p>
 
 
@@ -4765,7 +4763,7 @@ than one <code>PrintStep()</code> in a given <code>Simulation</code> section.
 <a name="index-Specification_002c-PrintStep_0028_0029"></a>
 
 
-<p>The value of any model variable can be also output with
+<p>The value of any model variable or parameter can be also output with
 <code>PrintStep()</code> specifications. They allow dense printing, suitable
 for smooth plots, for example. Their arguments are: a comma-separated
 list of variable names (at least one and up to MAX_PRINT_VARS, which is
