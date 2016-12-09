@@ -50,9 +50,40 @@ you to:
 
 <p>
 <b>
-<span style="color: red"> September 14th, 2016 - A new input function,
- PerTransit(), is available.
+<span style="color: red"> 
+December 9th, 2016 - Using GNU MCSim under Microsoft Windows
 </span>
+</b>
+</p>
+<p>
+The basic tools needed to build and run GNU MCSim are not available to
+most users of Windows systems. At least two options exists:
+</p>
+<p>
+<ul>
+  <li>
+  The R software (http://www.r-project.org/), installed together with
+  Rtools (this requires administrator's rights), can compile and run GNU
+  MCSim models.
+  <p>
+  <a href="mcsim_under_R.zip">Follow this link to download the corresponding 
+  scripts, code, and README detailed instructions file.</a></p>
+  </li>
+
+  <li>
+  Pr. W. Chiu, of Texas A&M, proposes an alternative (using minGW). It requires
+  no administrator's rights. However, only 32 bits code is generated (it is at 
+  bit slower).
+  <p>
+  <a href="mcsim_with_minGW.pdf">Follow this link to download the  
+  detailed instructions file.</a></p>
+  </li>
+</ul>
+</p>
+
+<p>
+<b>
+September 14th, 2016 - A new input function, PerTransit(), is available.
 </b>
 </p>
 <p>
@@ -65,7 +96,7 @@ It extends the PerExp() input function. The new code and example files
 
 <p>
 <b>
-Febuary 27th, 2016 - release of GNU MCSim version 5.6.5.
+Febuary 27th, 2016 - Release of GNU MCSim version 5.6.5.
 </b>
 </p>
 <p>
@@ -75,7 +106,7 @@ a PerDose() or PerExp() input functions.
 
 <p>
 <b>
-"Events" (state variables discontinuities) in GNU MCSim
+Febuary 27th, 2016 - "Events" (state variables discontinuities) in GNU MCSim
 </b>
 </p>
 <p>
@@ -86,46 +117,13 @@ online user's manual.</a>
 
 <p>
 <b>
-Delay differential equations
+Febuary 27th, 2016 - Delay differential equations
 </b>
 </p>
 <p>
 GNU MCSim can now easily solve delay differential equations.  A new
 example (examples/delay_diff_eqns/) is available.
 </p> 
-
-<p>
-<b>
-GNU MCSim and R (even under Microsoft Windows)
-</b>
-</p>
-<p>
-The basic tools needed to build and run GNU MCSim are not available to
-most users of Windows systems.
-</p>
-<p>
-Fortunately, the R software (see
-http://www.r-project.org/), when properly installed with its Rtools
-(this requires administrator's rights), can compile and run GNU MCSim
-models. We have developed code and R scripts to compile GNU MCSim
-models to C code usable by the R package deSolve (to do that use the
-GNU MCSim "mod" model generator with the -R option) or by itself. This
-works under any operating system. You can then use deSolve to perform
-simulations of your models. The integators provided by deSolve are
-improved implementations of the lsode family of integrators (used also
-by GNU MCSim), and provide a few more options than GNU MCSim (in
-particular, "events", see the deSolve user's manuals). However, if you
-need raw speed (say, for Markov chain Monte Carlo simulations) GNU
-MCSim is the fastest option.
-</p> 
-<p>
-<a href="mcsim_under_R.zip">Follow this link to download the corresponding 
-scripts and code.</a></p>
-<p>
-You need to have R and its Rtools (and optionally the deSolve package)
-installed. Follow the simple instructions given in the included README
-text file.
-</p>
 
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -440,7 +438,7 @@ Commons Attribution-NoDerivatives 4.0 International License</a>.</p>
 
 <p class="unprintable">Updated:
 <!-- timestamp start -->
-$Date: 2016/09/14 09:25:06 $
+$Date: 2016/12/09 12:50:58 $
 <!-- timestamp end -->
 </p>
 </div>
