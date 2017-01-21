@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on February 27, 2016 by texi2html 1.82
+<!-- Created on January 21, 2017 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <h1 class="settitle">GNU MCSim User&rsquo;s Manual</h1>
 
 
-<p>GNU MCSim manual, version 5.6.5
+<p>GNU MCSim manual, version 5.6.6
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -798,9 +798,9 @@ Systems Biology Markup Language (SBML) models are processed by libSBML
 if it is installed.
 
 </li><li>
-Tempered MCMC (for hard, multimodal posterior densities) and
-stochastic optimizations are offered as options of the <code>MCMCx()</code>
-specification.
+Tempered MCMC (for hard, multimodal posterior densities, and also for
+rapid and guaranteed convergence) and stochastic optimizations are
+offered as options of the <code>MCMC()</code> specification.
 
 </li></ul>
 
@@ -880,8 +880,9 @@ print (as <code>Print()</code> does).
 </li><li>
 In MCMC simulation, the jump kernel is now output in a file with the
 <var>.kernel</var> extension. If the simulations are restarted in a
-continuation mode and if the kernel file is present the jump kernel will
-restored to its saved value.
+continuation mode and if a kernel file with the same name as the restart
+file (with an added <var>.kernel</var> extension) is present, the jump kernel
+will restored to its saved value.
 
 </li><li>
 Delay differential equations can now be coded and solved using the
@@ -1687,14 +1688,15 @@ Variable assignments have the following syntax:
 <table><tr><td>&nbsp;</td><td><pre class="example">&lt;variable-name&gt; '=' &lt;constant-value-or-expression&gt; ';'
 </pre></td></tr></table>
 
-<p>The equal sign is needed. The right-hand side expression can be a
-valid C mathematical expression including numerical constants, already
-defined variables, standard ANSI C mathematical functions, and
+<p>The equal sign is needed. The right-hand side expression can be a valid
+C mathematical expression including numerical constants, already defined
+variables, standard ANSI C mathematical functions (see
+<a href="https://en.wikipedia.org/wiki/C_mathematical_functions">https://en.wikipedia.org/wiki/C_mathematical_functions</a>), and
 <em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot; (see section <a href="#Special-functions">Special functions</a>)
-or &quot;<em>input functions</em>&quot; (see section <a href="#Input-functions">Input functions</a>). Special
-functions can take already defined variables, constant values or
-expressions as parameters. Input functions can only be used on the
-right hand side of assignments to input variables.
+or &quot;<em>input functions</em>&quot; (see section <a href="#Input-functions">Input functions</a>). Special functions
+can take already defined variables, constant values or expressions as
+parameters. Input functions can only be used on the right hand side of
+assignments to input variables.
 </p>
 <p>Colon conditional assignments have the following syntax:
 <a name="index-Colon-conditional-assignment"></a>
@@ -1971,7 +1973,7 @@ Q = PerExp(1, 60, 0, 1); # Magnitude of 1.0,
 <p>If a state, input, or output variable is not explicitly given an initial
 value, that value will be set to zero by default. Initial values are
 reset to their specified value by the simulation program at the start of
-each simulation of an <code>Experiment</code> (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>).
+each <code>Simulation</code> (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>).
 </p>
 <p>All the other variables are &quot;<em>parameters</em>&quot;. Model parameters you
 want to be able to change in simulation input files should be declared
@@ -2367,7 +2369,8 @@ functions:
 <var>&lt;period&gt;</var> and lasts for <var>&lt;exposure-time&gt;</var> time
 units. Syntax:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerDose(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, &lt;exposure-time&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerDose(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, 
+                           &lt;exposure-time&gt;);
 </pre></td></tr></table>
 
 </li><li>
@@ -2381,7 +2384,8 @@ the magnitude reaches a negligible fraction
 of its original value. Note that the input does not accumulate across
 periods, it resets at each period start. Syntax:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerExp(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, &lt;decay-constant&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerExp(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;,
+                          &lt;decay-constant&gt;);
 </pre></td></tr></table>
 
 </li><li>
@@ -2397,7 +2401,8 @@ function can only be used in the simulation description file, and not
 in the model description file (which simply implies that you cannot
 use it as a default). Syntax:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = NDoses(&lt;n&gt;, &lt;list-of-magnitudes&gt;, &lt;list-of-initial-times&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = NDoses(&lt;n&gt;, &lt;list-of-magnitudes&gt;,
+                          &lt;list-of-initial-times&gt;);
 </pre></td></tr></table>
 
 <p>Note that the list of times <em>must</em> begin at the starting time of
@@ -2415,7 +2420,8 @@ Currently this function can only be used in the simulation description
 file, and not in the model description file (which simply implies that
 you cannot use it as a default). Syntax:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = Spikes(&lt;n&gt;, &lt;list-of-magnitudes&gt;, &lt;list-of-times&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = Spikes(&lt;n&gt;, &lt;list-of-magnitudes&gt;,
+                          &lt;list-of-times&gt;);
 </pre></td></tr></table>
 
 </li></ul>
@@ -2432,8 +2438,8 @@ as:
 <p>In this way the parameters of input functions can, for example, be
 assigned statistical distributions in Monte Carlo simulations
 (see section <a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a>). Variable dependencies are resolved
-before each simulation specified by an <code>Experiment</code>
-(see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>).
+before each simulation specified by a <code>Simulation</code> section
+(equivalently <code>Experiment</code>) (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>).
 </p>
 <p>For each of the periodic functions, a single exposure beginning at time
 <var>initial-time</var> can be specified by giving an effectively infinite
@@ -2522,11 +2528,11 @@ or not you are using the <code>-R</code> option of <code>mod</code>.
 <code>Initialize</code> (the keyword <code>Scale</code> is obsolete but is still
 understood) and is enclosed in curly braces. The equations given in this
 section will define a function (subroutine) that will be called by
-<em>GNU MCSim</em> after the assignments specified in each <code>Experiment</code>
-are done (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>). They are the last
-initializations performed. The model file in &lsquo;<tt>mcsim/samples/perc</tt>&rsquo;
-gives an example of the use of <code>Initialize</code> (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a>, in
-Appendix).
+<em>GNU MCSim</em> after the assignments specified in each
+<code>Simulation</code> section are done (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>). They
+are the last initializations performed. The model file in
+&lsquo;<tt>mcsim/samples/perc</tt>&rsquo; gives an example of the use of
+<code>Initialize</code> (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a>, in Appendix).
 </p>
 <p>All model variables and parameters, except inputs, can be changed in
 this section. Modifications to state variables affect initial values
@@ -3832,25 +3838,41 @@ convergence, and then restart the chain with the flag at 2).
 </li><li>
 <a name="index-InvTemperature_0028_0029-specification"></a>
 <a name="index-Specification_002c-InvTemperature_0028_0029"></a>
-With <var>&lt;simTypeFlag&gt;</var> equal to 3 &rsquo;tempered&rsquo; component by component
-MCMC is performed MCMC (Geyer and Thompson, 1995)
-(see section <a href="#Bibliographic-References">Bibliographic References</a>). In that case a grid of inverse
-temperatures is used (along an annealing scheme). By default 5 inverse
-temperatures are used (0.4, 0.512, 0.64, 0.8, 1), but you can define
-your own scale with the <code>InvTemperature()</code> specification, with
-the following syntax:
+<a name="index-Tempered-MCMC"></a>
+With <var>&lt;simTypeFlag&gt;</var> equal to 3 or 4, component by component
+simulated tempering is performed (Geyer and Thompson, 1995)
+(see section <a href="#Bibliographic-References">Bibliographic References</a>). With option 3, the whole posterior
+is tempered (as in Geyer and Thompson) (see section <a href="#Bibliographic-References">Bibliographic References</a>). With option 4, only the likelihood is tempered
+(thermodynamic integration, as in Calderhead and Girolami (2009). In
+those cases, a grid of inverse temperatures (perks) is used (along an
+annealing scheme). By default 5 inverse temperatures are used (0.4,
+0.512, 0.64, 0.8, 1), but you can define your own scale with the
+<code>InvTemperature()</code> specification, with the following syntax:
 
 <table><tr><td>&nbsp;</td><td><pre class="example">InvTemperature(&lt;nValues&gt;, &lt;value 1&gt;, &lt;...&gt;, &lt;value n&gt;);
 </pre></td></tr></table>
 
-<p>The first number of the specification gives the number of inverse
-temperatures to use and is followed by a list of them. Those should be
-numbers in the interval ]0,1]. You usually would want to end with a
-value of 1 (since temperature = 1 is the cold end of the temperature
-scale, corresponding to your target distribution.)
+<p>The first number of the specification gives the number of perks to use
+and is followed by a list of them. Those should be numbers in the
+interval ]0,infinity[. Values above 1 lead in fact to simulated
+annealing (sharpening of the posterior distribution), suitable for
+optimization (see Amzal et al. 2006) (see section <a href="#Bibliographic-References">Bibliographic References</a>). For simulated tempering (including thermodynamic
+integration you will want to keep perks lower or equal to 1. You usually
+want to include the value 1 (since temperature = 1 corresponds to your
+target distribution.) At perk zero, the posterior distribution is
+uniform for all parameters (in the case of posterior tempering), or to
+the prior (in the case of likelihood tempering). Each time the simulated
+Markov chain reaches perk zero is a regeneration time (Geyer and
+Thompson, 1995). Samples obtained at perk 1 between regeneration times
+are guaranteed to be from the posterior distribution, so that only one
+chains needs to be run and convergence need not to be checked (a
+significant advantage of simulated tempering). Simulated tempering is
+also adapted to problems with multiple maxima of the posterior
+distribution, in which standard samplers or Hamiltonian MCMC usually get
+stuck in a local mode.
 </p>
 </li><li>
-Finally with <var>&lt;simTypeFlag&gt;</var> set to 4, GNU MCSim does stochastic
+Finally with <var>&lt;simTypeFlag&gt;</var> set to 5, GNU MCSim does stochastic
 optimization (an MCMC in which only, but all, jumps leading posterior
 density improvement are accepted).
 
@@ -3869,12 +3891,13 @@ regardless of the value of <var>&lt;itersToPrint&gt;</var>. Finally, the seed
 positive real number. Seeds between 1.0 and 2147483646.0 are used as
 is, others are rescaled silently within those bounds.
 </p>
-<p>In the case of component by component jumps (<var>&lt;simTypeFlag&gt;</var> set
-to 0), tempered or stochastic optimization (<var>&lt;simTypeFlag&gt;</var> set to
-3 or higher), the jump kernel is saved with the same name as the
-output file, with a <var>.kernel</var> extension. If the simulations are
-restarted in a continuation mode and if the kernel file is present
-that file will be read so that the jump kernel is restored.
+<p>In the case of component by component jumps (<var>&lt;simTypeFlag&gt;</var> set to
+0), tempered or stochastic optimization (<var>&lt;simTypeFlag&gt;</var> set to 3 or
+higher), the jump kernel is saved with the same name as the output file,
+with a <var>.kernel</var> extension. If the simulations are restarted in a
+continuation mode and if a kernel file with the same name as the restart
+file (with an added <var>.kernel</var> extension) is present, the jump kernel
+is restored.
 </p>
 <p>Finally, the format of the output file of MCMC simulations is quite
 similar to that of straight Monte Carlo simulations and will discussed
@@ -4115,7 +4138,8 @@ context. A simulation specification file can include any number of
 <p><code>Distrib()</code> specifies the name of the parameter to sample, and its
 sampling distribution. Its syntax is:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="example">Distrib(&lt;parameter identifier&gt;, &lt;distribution-name&gt;, [&lt;shape parameters&gt;]);
+<table><tr><td>&nbsp;</td><td><pre class="example">Distrib(&lt;parameter identifier&gt;, &lt;distribution-name&gt;,
+        [&lt;shape parameters&gt;]);
 </pre></td></tr></table>
 
 <p>The <var>&lt;parameter identifier&gt;</var> gives the name of the parameter to
@@ -4178,7 +4202,7 @@ boundary. The random variates returned are strictly positive.
 </li><li>
 <a name="index-HalfNormal-distribution"></a>
 <a name="index-Distribution_002c-HalfNormal"></a>
-<code>HalfNormal</code>, takes one reals number as parameter: the standard
+<code>HalfNormal</code>, takes one real number as parameter: the standard
 deviation, strictly positive.  The mode is at zero, on the lower
 boundary. The random variates returned are strictly positive.
 
@@ -4601,7 +4625,8 @@ fact a special type of input function that resets a state variable,
 hence the need to assign it to a (dummy) input variable. Its syntax
 is:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = Events(&lt;state variable&gt;, &lt;n&gt;, &lt;list-of-times&gt;, &lt;list-of-operation&gt;, &lt;list-of-scalars&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = Events(&lt;state variable&gt;, &lt;n&gt;, &lt;list-of-times&gt;,
+                          &lt;list-of-operation&gt;, &lt;list-of-scalars&gt;);
 </pre></td></tr></table>
 
 <p>The first argument, <var>&lt;state variable&gt;</var>, is the state whose value you
@@ -4771,7 +4796,8 @@ list of variable names (at least one and up to MAX_PRINT_VARS, which is
 set to 10 by default), the first output time, the last one, and a time
 increment:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="example">PrintStep(&lt;identifier1&gt;, &lt;identifier2&gt;, ..., &lt;start-time&gt;, &lt;end-time&gt;, &lt;time-step&gt;);
+<table><tr><td>&nbsp;</td><td><pre class="example">PrintStep(&lt;identifier1&gt;, &lt;identifier2&gt;, ..., &lt;start-time&gt;, &lt;end-time&gt;,
+          &lt;time-step&gt;);
 </pre></td></tr></table>
 
 <p>The final time has to be superior to the initial time and the time step
@@ -5336,6 +5362,10 @@ clothes and cars, and write poems, but for now, that&rsquo;s all, folks!
 <a name="index-Bibliographic-references"></a>
 
 
+<p>Amzal B., Bois F., Parent E. and Robert C.P. (2006). Bayesian optimal
+design via interacting MCMC, Journal of the American Statistical
+Association, <b>101</b>:773-785.
+</p>
 <p>Barry T.M. (1996). Recommendations on the testing and use of
 pseudo-random number generators used in Monte Carlo analysis for risk
 assessment. Risk Analysis <b>16</b>:93-105.
@@ -5355,6 +5385,10 @@ humans. Toxicological Sciences <b>49</b>:213-224.
 sensitivity analysis of pharmacokinetic models for cancer risk
 assessment: tetrachloroethylene in mice, rats and humans. Toxicology and
 Applied Pharmacology <b>102</b>:300-315.
+</p>
+<p>Calderhead B. and Girolami M. (2009). Estimating Bayes factors via
+thermodynamic integration and population MCMC. Computational Statistics
+and Data Analysis <b>53</b>:4028-4045.
 </p>
 <p>Gear C.W. (1971a). Algorithm 407 - DIFSUB for solution of ordinary
 differential equations [D2]. Communications of the ACM <b>14</b>:185-190.
@@ -5442,21 +5476,26 @@ your models and input files:
 </li><li>  Beta                         
 </li><li>  BetaRandom                   
 </li><li>  Binomial                     
-</li><li>  BinomialBetaRandom           
+</li><li>  BinomialBetaRandom
 </li><li>  BinomialRandom               
-</li><li>  CDFNormal                    
-</li><li>  CalcOutputs                  
-</li><li>  CauchyRandom                 
+</li><li>  CDFNormal
+</li><li>  CalcDelay
+</li><li>  CalcOutputs
+</li><li>  Cauchy
+</li><li>  CauchyRandom
 </li><li>  Chi2                         
-</li><li>  Chi2Random                   
+</li><li>  Chi2Random
+</li><li>  Compartment
 </li><li>  Data                         
 </li><li>  DefaultSim                   
 </li><li>  Density                      
 </li><li>  Distrib                      
 </li><li>  dt                           
 </li><li>  Dynamics                     
-</li><li>  End                          
-</li><li>  Euler                        
+</li><li>  End
+</li><li>  erfc
+</li><li>  Euler
+</li><li>  Events
 </li><li>  ExpRandom                    
 </li><li>  Experiment                   
 </li><li>  Exponential                  
@@ -5464,13 +5503,18 @@ your models and input files:
 </li><li>  Gamma                        
 </li><li>  GammaRandom                  
 </li><li>  GetSeed                      
-</li><li>  Gibbs                        
-</li><li>  IFN                          
-</li><li>  Initialize                   
+</li><li>  Gibbs
+</li><li>  HalfCauchy
+</li><li>  HalfNormal
+</li><li>  IFN
+</li><li>  Initialize
+</li><li>  Inline
 </li><li>  Inputs                       
 </li><li>  Integrate                    
 </li><li>  InvGGammaRandom              
-</li><li>  InvGamma                     
+</li><li>  InvGamma
+</li><li>  InvTemperature
+</li><li>  Jacobian
 </li><li>  Level                        
 </li><li>  Likelihood                   
 </li><li>  lnDFNormal                   
@@ -5495,12 +5539,14 @@ your models and input files:
 </li><li>  PerExp
 </li><li>  Piecewise
 </li><li>  PiecewiseRandom
+</li><li>  PKTemplate
 </li><li>  Poisson
 </li><li>  PoissonRandom
 </li><li>  Prediction
 </li><li>  Print
 </li><li>  PrintStep
 </li><li>  Replace
+</li><li>  SBMLModels
 </li><li>  Scale
 </li><li>  SetPoints
 </li><li>  SetSeed
@@ -5509,8 +5555,11 @@ your models and input files:
 </li><li>  Spikes
 </li><li>  StartTime
 </li><li>  States
+</li><li>  StudentT
 </li><li>  StudentTRandom
 </li><li>  t
+</li><li>  TruncInvGamma
+</li><li>  TruncInvGGammaRandom
 </li><li>  TruncLogNormal
 </li><li>  TruncLogNormalRandom
 </li><li>  TruncLogNormal_v
@@ -5519,6 +5568,7 @@ your models and input files:
 </li><li>  TruncNormal_v
 </li><li>  Uniform
 </li><li>  UniformRandom
+</li><li>  useID
 
 </li></ul>
 
@@ -6410,6 +6460,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Syntax-of-simulation-files">Syntax of simulation files</a></td><td valign="top"><a href="#Syntax-of-simulation-files">6.2 Syntax of the simulation definition file</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="Concept-Index-1_cp_letter-T">T</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Tempered-MCMC">Tempered MCMC</a></td><td valign="top"><a href="#MCMC_0028_0029-specification"><code>MCMC()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Template-models">Template models</a></td><td valign="top"><a href="#Reading-SBML-models">5.4 Reading SBML models and applying a template</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Tests_002c-logical">Tests, logical</a></td><td valign="top"><a href="#General-syntax">5.3.1 General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Triangular-distribution">Triangular distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
@@ -6613,7 +6664,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>fbois</em> on <em>February 27, 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>January 21, 2017</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6715,7 +6766,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>fbois</em> on <em>February 27, 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>fbois</em> on <em>January 21, 2017</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
