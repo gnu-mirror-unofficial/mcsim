@@ -51,8 +51,19 @@ you to:
 <p>
 <b>
 <span style="color: red"> 
-December 9th, 2016 - Using GNU MCSim under Microsoft Windows
+January 21st, 2017 - Release of GNU MCSim version 5.6.6.
 </span>
+</b>
+</p>
+<p>
+Version 5.6.6 fixes a bug that affected the code generated for R by
+mod, introduces the PerTransit input function, allows symbols in
+Events times and magnitudes, and extends the tempered MCMC specification.
+</p>
+
+<p>
+<b>
+December 9th, 2016 - Using GNU MCSim under Microsoft Windows
 </b>
 </p>
 <p>
@@ -81,50 +92,6 @@ most users of Windows systems. At least two options exists:
 </ul>
 </p>
 
-<p>
-<b>
-September 14th, 2016 - A new input function, PerTransit(), is available.
-</b>
-</p>
-<p>
-PerTransit implements a model proposed by Savic et al. 
-(J Pharmacokinet Pharmacodyn. 2007, 34:711). 
-It extends the PerExp() input function. The new code and example files 
-(test_transit_input/) are available on 
-<a href="http://savannah.gnu.org/projects/mcsim">Savannah</a>,
-</p>
-
-<p>
-<b>
-Febuary 27th, 2016 - Release of GNU MCSim version 5.6.5.
-</b>
-</p>
-<p>
-Version 5.6.5 fixes a bug that got simulations stuck when using
-a PerDose() or PerExp() input functions.
-</p>
-
-<p>
-<b>
-Febuary 27th, 2016 - "Events" (state variables discontinuities) in GNU MCSim
-</b>
-</p>
-<p>
-State variables disconstinuities can now be requested at
-given times. See the <a href="mcsim.html#Events_0028_0029-specification"> 
-online user's manual.</a>
-</p> 
-
-<p>
-<b>
-Febuary 27th, 2016 - Delay differential equations
-</b>
-</p>
-<p>
-GNU MCSim can now easily solve delay differential equations.  A new
-example (examples/delay_diff_eqns/) is available.
-</p> 
-
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!-- Download links -->
@@ -132,7 +99,7 @@ example (examples/delay_diff_eqns/) is available.
 <h3 id="download">Downloading GNU MCSim</h3>
 
 <p>
-The latest version of GNU MCSim (5.6.5) can be
+The latest version of GNU MCSim (5.6.6) can be
 found on any
 <a href="http://ftpmirror.gnu.org/mcsim/">GNU mirror</a>.</p>
 
@@ -242,6 +209,32 @@ provides detailed instructions for installation for several
 platforms.
 </p>
 
+<p>
+The basic tools needed to build and run GNU MCSim are not available to
+most users of Windows systems. At least two simple options exists for them:
+</p>
+<p>
+<ul>
+  <li>
+  The R software (http://www.r-project.org/), installed together with
+  Rtools (this requires administrator's rights), can compile and run GNU
+  MCSim models.
+  <p>
+  <a href="mcsim_under_R.zip">Follow this link to download the corresponding 
+  scripts, code, and README detailed instructions file.</a></p>
+  </li>
+
+  <li>
+  Pr. W. Chiu, of Texas A&M, proposes an alternative (using minGW). It requires
+  no administrator's rights. However, only 32 bits code is generated (it is at 
+  bit slower).
+  <p>
+  <a href="mcsim_with_minGW.pdf">Follow this link to download the  
+  detailed instructions file.</a></p>
+  </li>
+</ul>
+</p>
+
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!-- Mailing lists -->
@@ -292,28 +285,47 @@ GNU MCSim bug report</a>, on the gmane portal which has spam control.
 <h3 id="contributed">Contributed material and related links</h3>
 
 <ul>
-  <li> <p><a href="mcsim_links.html"> GNU MCSim-related links</a></p></li>
+  <li> 
+  <p><a href="mcsim_old_news.html"> GNU MCSim older news</a></p>
+  </li>
 
-  <li> <p><a href="supplement_bioinformatics_2009.html">Supplementary material</a> 
-          for the article
-          "GNU MCSim: Bayesian statistical inference for SBML-coded systems biology models"
-          <a href="http://bioinformatics.oxfordjournals.org/">Bioinformatics</a>,
-          1 June 2009; 25: 1453 - 1454. 
-          That paper demonstrates the application of GNU MCSim MCMC sampling,
-          optimal design and multilevel modeling to SBML models.</p></li>
+  <li> 
+  <p><a href="mcsim_links.html"> GNU MCSim-related links</a></p>
+  </li>
 
-  <li> <p><a href="supplement_EHP_2011.tar.gz">Supplementary material</a>
-          containing all model and input files for predicting interactions between benzene, 
-          toluene, ethylbenzene and xylene via PBPK and systems biology coupling.</p></li>
+  <li>
+  <p><a href="supplement_bioinformatics_2009.html">Supplementary
+     material</a> for the article "GNU MCSim: Bayesian statistical
+     inference for SBML-coded systems biology models"
+     <a href="http://bioinformatics.oxfordjournals.org/">Bioinformatics</a>,
+     1 June 2009; 25: 1453 - 1454.  That paper demonstrates the
+     application of GNU MCSim MCMC sampling, optimal design and
+     multilevel modeling to SBML models.</p>
+  </li>
 
-  <li> <p><a href="MCSim_validation_report.pdf">A PDF software validation report </a>
-          for version 5.0.0 can be found here. (The bug with the half-normal distribution
-          it mentions has been fixed in version 5.1.0 and later versions.)</p></li>
+  <li>
+  <p><a href="supplement_EHP_2011.tar.gz">Supplementary material</a>
+     containing all model and input files for predicting interactions
+     between benzene, toluene, ethylbenzene and xylene via PBPK and
+     systems biology coupling.</p>
+  </li>
 
-  <li> <p><a href="mcsim_5.4.0-1_amd64.deb">A Debian package of version 5.4.0, 
-          prepared by Bill Harris (mcsim_5.4.0-1_amd64.deb, 2.7 MB, 25/02/2012).</a></p></li>
+  <li>
+  <p><a href="MCSim_validation_report.pdf">A PDF software validation
+     report </a> for version 5.0.0 can be found here. (The bug with
+     the half-normal distribution it mentions has been fixed in
+     version 5.1.0 and later versions.)</p>
+  </li>
 
-  <li> <p><a href="mcsimqrc.pdf"> A nice quick reference card, again by Bill</a>.</p></li>
+  <li>
+  <p><a href="mcsim_5.4.0-1_amd64.deb">A Debian package of version
+     5.4.0, prepared by Bill Harris (mcsim_5.4.0-1_amd64.deb, 2.7 MB,
+     25/02/2012).</a></p>
+  </li>
+
+  <li>
+  <p><a href="mcsimqrc.pdf"> A nice quick reference card, again by Bill</a>.</p>
+  </li>
        
 </ul>
 
@@ -438,7 +450,7 @@ Commons Attribution-NoDerivatives 4.0 International License</a>.</p>
 
 <p class="unprintable">Updated:
 <!-- timestamp start -->
-$Date: 2016/12/09 12:50:58 $
+$Date: 2017/01/21 22:23:05 $
 <!-- timestamp end -->
 </p>
 </div>
