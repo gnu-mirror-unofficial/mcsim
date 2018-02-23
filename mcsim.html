@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on January 21, 2017 by texi2html 1.82
+<!-- Created on February 23, 2018 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -843,7 +843,7 @@ with the R package <code>deSolve</code>. Use <code>mod -R</code> for that.
 <a name="Major-changes-introduced-with-version-5_002e6_002e0"></a>
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-5_002e5_002e0" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Installation" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-X_002eY_002eZ" title="Next section in reading order"> &gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="#Overview" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
 <td valign="middle" align="left">[<a href="#Overview" title="Up section"> Up </a>]</td>
@@ -896,9 +896,81 @@ predefined times through the <code>Events()</code> specification.
 
 
 <hr size="6">
-<a name="Installation"></a>
+<a name="Major-changes-introduced-with-version-X_002eY_002eZ"></a>
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-5_002e6_002e0" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Overview" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Overview" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="#Installation" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="#Concept-Index" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section">2.6 Major changes introduced with version X.Y.Z</h2>
+<a name="index-Major-changes-in-version-X_002eY_002eZ"></a>
+
+<ul>
+<li>
+The <code>Prediction()</code> specification can be used as a synonym for
+<code>Print()</code>.
+
+</li><li>
+The Sundials&rsquo; library <code>Cvodes</code> integrator can be called in a
+<code>Integrate</code> specification.
+
+</li><li>
+The new <code>Normal_cv</code> and <code>TruncNormal_cv</code> distributions can
+be used to draw normal random variates with specified mean and
+coefficient of variation.
+
+</li><li>
+The vector notation (see <a href="#Vectors">Vectors</a>) can now be used in input
+files.
+
+</li><li>
+In mod: added fmax and fmin std functions.
+
+</li><li>
+The Jacobian can be specified.
+
+</li><li>
+Improved the R code script
+
+</li><li>
+Created PerTransit input function
+
+</li><li>
+Fixed jump kernel imbalance bug
+
+</li><li>
+Allow symbols in Events times and magnitude
+
+</li><li>
+Removed N_TAU_EXPOSE leading to fatal discontinuity
+
+</li><li>
+Introduce sundials cvodes integrator
+
+</li><li>
+Extend tempered MCMC specification and allow infinite temperature
+
+</li><li>
+Introduce gsl random number generator
+
+</li></ul>
+
+
+<hr size="6">
+<a name="Installation"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-X_002eY_002eZ" title="Previous section in reading order"> &lt; </a>]</td>
 <td valign="middle" align="left">[<a href="#System-requirements" title="Next section in reading order"> &gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="#Overview" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
@@ -1690,8 +1762,11 @@ Variable assignments have the following syntax:
 
 <p>The equal sign is needed. The right-hand side expression can be a valid
 C mathematical expression including numerical constants, already defined
-variables, standard ANSI C mathematical functions (see
-<a href="https://en.wikipedia.org/wiki/C_mathematical_functions">https://en.wikipedia.org/wiki/C_mathematical_functions</a>), and
+variables, standard ANSI C mathematical functions ( <code>acos</code>,
+<code>asin</code>, <code>atan</code>, <code>atan2</code>, <code>ceil</code>, <code>cos</code>,
+<code>cosh</code>, <code>exp</code>, <code>fabs</code>, <code>floor</code>, <code>fmax</code>,
+<code>fmin</code>, <code>fmod</code>, <code>log</code>, <code>log10</code>, <code>pow</code>,
+<code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, ), and
 <em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot; (see section <a href="#Special-functions">Special functions</a>)
 or &quot;<em>input functions</em>&quot; (see section <a href="#Input-functions">Input functions</a>). Special functions
 can take already defined variables, constant values or expressions as
@@ -1745,14 +1820,12 @@ and NOT operations have not yet been implemented. You can use:
 <a name="index-Square-brackets"></a>
 <a name="index-_0027_005b_005d_0027-_0028square-brackets_0029-notation"></a>
 <a name="index-_0027_002d_0027-_0028hyphen_0029-sign"></a>
-Vectors: (Warning: for now, the square bracket notation can be only
-used in the model definition file. It is not recognized in simulation
-specification files; for those, the underscore ((<kbd>_</kbd>) unrolling
-syntax can be used to address vector components. This limits the
-usefulness of this feature).
+<a name="Vectors"></a>
+Vectors: You can use vectors (arrays) in your code to simplify it.
 
-<p><i>Vectors&rsquo; declaration</i>: To declare a variable as a vector use the one
-of the two following syntaxes when you first define it:
+<p><i>Declaring vectors</i>: To declare a state variable, an input, an
+output, or a parameter as a vector, use the one of the two following
+syntaxes when you first define it:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">&lt;variable-name&gt; '[' &lt;integer&gt; ']'
 &lt;variable-name&gt; '[' &lt;integer&gt; '-' &lt;integer&gt; ']'
@@ -1874,12 +1947,7 @@ following syntax:
 <p>The integer indicates which component of the vector is referred
 to. For example &lsquo;<samp>x_1</samp>&rsquo; is strictly equivalent to
 &lsquo;<samp>x[1]</samp>&rsquo;. Note!: No space are allowed between the variable name,
-the underscore and the integer. Note also!: This syntax is the only
-one that can be used in simulation specification files. If you declare
-a parameter &lsquo;<samp>beta[1-10]</samp>&rsquo; in your model definition file, the only
-way to refer to it in the simulation input file will be through its
-individual components &lsquo;<samp>beta_1</samp>&rsquo;, &lsquo;<samp>beta_2</samp>&rsquo;, ... <i>etc</i>. This
-limitation will be removed in a future release of the software.
+the underscore and the integer.
 </p>
 </li><li>
 <a name="index-End-keyword"></a>
@@ -2379,10 +2447,9 @@ units. Syntax:
 <code>PerExp()</code> specifies a periodic exponential input. At time
 <var>&lt;initial-time&gt;</var> in the <var>&lt;period&gt;</var> the input rises
 instantaneously to <var>&lt;magnitude&gt;</var> and begins to decay exponentially
-with the constant <var>&lt;decay-constant&gt;</var>. The input is turned off once
-the magnitude reaches a negligible fraction
-of its original value. Note that the input does not accumulate across
-periods, it resets at each period start. Syntax:
+with the constant <var>&lt;decay-constant&gt;</var>. Note that the input does not
+accumulate across periods, it resets at each period
+start. Syntax:
 
 <table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerExp(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;,
                           &lt;decay-constant&gt;);
@@ -2641,6 +2708,12 @@ change with time, you can declare it as an output variable in the global
 section. Assignments to states, inputs or parameters in this section
 causes an error message like the following to be issued:
 </p>
+<p>Note also that, in <code>Dynamics</code>, output variables should be assigned
+a value or equation before being used. You cannot assume that the value
+computed during a previous call to the function is valid, because the
+integrator may have taken too long a time step, for example. The
+integrator keeps track of state variables only.
+</p>
 <table><tr><td>&nbsp;</td><td><pre class="example">Error: line 48: 'YourParm' used in invalid context.
 Parameters cannot be defined in Dynamics{} section.
 </pre></td></tr></table>
@@ -2737,9 +2810,11 @@ statement (see section <a href="#Print_0028_0029-specification"><code>Print()</c
 efficiently, only when values are to be saved.
 </p>
 <p>Only variables that have been declared with the keyword <code>Outputs</code>,
-or local temporary variables, can receive assignments in this section.
-Assignments to other types of variables cause an error message like the
-following to be issued:
+or local temporary variables, can receive assignments in this
+section. As in the <code>Dynamics</code> section, output variables should be
+assigned a value or equation before being used. Assignments to other
+types of variables cause an error message like the following to be
+issued:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">Error: line 56: 'Qb_fat' used in invalid context.
 Only output and local variables can be defined in CalcOutputs section.
@@ -3360,6 +3435,15 @@ specification or a constant values.
 </li><li>
 Output variables cannot receive assignments.
 </li></ul>
+
+<p>Note that vectors (see <a href="#Vectors">Vectors</a>) can be used, as in:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">Simulation {
+  y[1-10] = 1.00;
+  PrintStep (y[1-5],  0, 10, 0.5);
+  Print     (y[6-10], 0, 5, 10);
+}
+</pre></td></tr></table>
 
 <p>At the program start, all model parameters are initialized to the
 nominal values specified in the model description file. Next, after the
@@ -4243,6 +4327,13 @@ maximum of the sampling range (real numbers) in natural space.
 standard deviation, the latter being strictly positive.
 
 </li><li>
+<a name="index-Normal_005fcv-distribution"></a>
+<a name="index-Distribution_002c-Normal_005fcv"></a>
+<code>Normal_cv</code>, is the normal distribution with the coefficient of
+variation instead of the standard deviation as second
+parameter.
+
+</li><li>
 <a name="index-Normal_005fv-distribution"></a>
 <a name="index-Distribution_002c-Normal_005fv"></a>
 <code>Normal_v</code>, is also the normal distribution with the variance
@@ -4315,6 +4406,13 @@ conjugate prior on the variance (see section <a href="#Setting_002dup-statistica
 <code>TruncNormal</code> (truncated normal distribution), takes four real
 parameters: the mean, the standard deviation (strictly positive), the
 minimum and the maximum.
+
+</li><li>
+<a name="index-TruncNormal_005fcv-distribution"></a>
+<a name="index-Distribution_002c-Truncnormal_005fcv"></a>
+<code>TruncNormal_cv</code>, is like the truncated normal distribution with
+the coefficient of variation instead of the standard deviation as
+second parameter.
 
 </li><li>
 <a name="index-TruncNormal_005fv-distribution"></a>
@@ -4581,7 +4679,7 @@ can be used:
 <li>
 <code>StartTime()</code>,
 </li><li>
-<code>Print()</code>,
+<code>Print()</code> (or its synonym, <code>Prediction()</code>)
 </li><li>
 <code>PrintStep()</code>,
 </li><li>
@@ -4738,16 +4836,19 @@ time.
 <a name="Print_0028_0029-specification-1"></a>
 <h4 class="unnumberedsubsubsec"><code>Print()</code> specification</h4>
 <a name="index-Print_0028_0029-specification"></a>
+<a name="index-Prediction_0028_0029-specification-_0028in-Simulation-context_0029"></a>
 <a name="index-Specification_002c-Print_0028_0029"></a>
 
 
 <p>The value of any model variable or parameter can be requested for output
-with <code>Print()</code> specifications. Their arguments are a
-comma-separated list of variable names (at least one and up to
-MAX_PRINT_VARS, which is set to 10 by default), and a comma-separated
-list of increasing times at which to output their values:
+with <code>Print()</code> or <code>Prediction()</code> specifications. Their
+arguments are a comma-separated list of variable names (at least one and
+up to MAX_PRINT_VARS, which is set to 10 by default), and a
+comma-separated list of increasing times at which to output their
+values:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">Print(&lt;identifier1&gt;, &lt;identifier2&gt;, ..., &lt;time1&gt;, &lt;time2&gt;, ...);
+Prediction(&lt;identifier3&gt;, &lt;identifier4&gt;, ..., &lt;time1&gt;, &lt;time2&gt;, ...);
 </pre></td></tr></table>
 
 <p>where <var>&lt;identifier1&gt;</var>, <var>&lt;identifier2&gt;</var> etc. correspond to
@@ -5531,6 +5632,7 @@ your models and input files:
 </li><li>  NDoses
 </li><li>  Normal
 </li><li>  NormalRandom
+</li><li>  Normal_cv
 </li><li>  Normal_v
 </li><li>  OptimalDesign
 </li><li>  OutputFile
@@ -5565,6 +5667,7 @@ your models and input files:
 </li><li>  TruncLogNormal_v
 </li><li>  TruncNormal
 </li><li>  TruncNormalRandom
+</li><li>  TruncNormal_cv
 </li><li>  TruncNormal_v
 </li><li>  Uniform
 </li><li>  UniformRandom
@@ -6206,6 +6309,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Lognormal_005fv">Distribution, <code>Lognormal_v</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Loguniform">Distribution, <code>Loguniform</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal">Distribution, <code>Normal</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal_005fcv">Distribution, <code>Normal_cv</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal_005fv">Distribution, <code>Normal_v</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Piecewise">Distribution, <code>Piecewise</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Poisson">Distribution, <code>Poisson</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
@@ -6218,6 +6322,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-TruncLogNormal">Distribution, <code>TruncLogNormal</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Trunclognormal_005fv">Distribution, <code>Trunclognormal_v</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-TruncNormal">Distribution, <code>TruncNormal</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Distribution_002c-Truncnormal_005fcv">Distribution, <code>Truncnormal_cv</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Truncnormal_005fv">Distribution, <code>Truncnormal_v</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Uniform">Distribution, <code>Uniform</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Documentation-license">Documentation license</a></td><td valign="top"><a href="#Licenses">1. Software and Documentation Licenses</a></td></tr>
@@ -6331,6 +6436,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e4_002e0">Major changes in version 5.4.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e4_002e0">2.3 Major changes introduced with version 5.4.0</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e5_002e0">2.4 Major changes introduced with version 5.5.0</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-X_002eY_002eZ">Major changes in version X.Y.Z</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-X_002eY_002eZ">2.6 Major changes introduced with version X.Y.Z</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-makemcsim-script"><code>makemcsim</code> script</a></td><td valign="top"><a href="#Using-makemcsim">5.2 Using <code>makemcsim</code> to fully process model files</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations">Markov-chain Monte Carlo simulations</a></td><td valign="top"><a href="#Types-of-simulations">2.2 Types of simulations</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations-1">Markov-chain Monte Carlo simulations</a></td><td valign="top"><a href="#MCMC_0028_0029-specification"><code>MCMC()</code> specification</a></td></tr>
@@ -6356,6 +6462,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Normal-density-function">Normal density function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Normal-distribution"><code>Normal</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-NormalRandom_0028_0029-function"><code>NormalRandom()</code> function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Normal_005fcv-distribution"><code>Normal_cv</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Normal_005fv-distribution"><code>Normal_v</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="Concept-Index-1_cp_letter-O">O</a></th><td></td><td></td></tr>
@@ -6378,6 +6485,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Poisson-distribution"><code>Poisson</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PoissonRandom_0028_0029-function"><code>PoissonRandom()</code> function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Prediction_0028_0029-qualifier_002c-for-use-in-Distrib_0028_0029"><code>Prediction()</code> qualifier, for use in <code>Distrib()</code></a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Prediction_0028_0029-specification-_0028in-Simulation-context_0029"><code>Prediction()</code> specification (in <code>Simulation</code> context)</a></td><td valign="top"><a href="#Print_0028_0029-specification"><code>Print()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Print_0028_0029-specification"><code>Print()</code> specification</a></td><td valign="top"><a href="#Print_0028_0029-specification"><code>Print()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PrintStep_0028_0029-specification"><code>PrintStep()</code> specification</a></td><td valign="top"><a href="#PrintStep_0028_0029-specification"><code>PrintStep()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
@@ -6474,6 +6582,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-TruncLogNormal_005fv-distribution"><code>TruncLogNormal_v</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-TruncNormal-distribution"><code>TruncNormal</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-TruncNormalRandom_0028_0029-function"><code>TruncNormalRandom()</code> function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-TruncNormal_005fcv-distribution"><code>TruncNormal_cv</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-TruncNormal_005fv-distribution"><code>TruncNormal_v</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td colspan="3"> <hr></td></tr>
 <tr><th><a name="Concept-Index-1_cp_letter-U">U</a></th><td></td><td></td></tr>
@@ -6570,6 +6679,7 @@ END.
     <li><a name="toc-Major-changes-introduced-with-version-5_002e4_002e0" href="#Major-changes-introduced-with-version-5_002e4_002e0">2.3 Major changes introduced with version 5.4.0</a></li>
     <li><a name="toc-Major-changes-introduced-with-version-5_002e5_002e0" href="#Major-changes-introduced-with-version-5_002e5_002e0">2.4 Major changes introduced with version 5.5.0</a></li>
     <li><a name="toc-Major-changes-introduced-with-version-5_002e6_002e0" href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></li>
+    <li><a name="toc-Major-changes-introduced-with-version-X_002eY_002eZ" href="#Major-changes-introduced-with-version-X_002eY_002eZ">2.6 Major changes introduced with version X.Y.Z</a></li>
   </ul></li>
   <li><a name="toc-Installation-1" href="#Installation">3. Installation</a>
   <ul class="toc">
@@ -6664,7 +6774,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>fbois</em> on <em>January 21, 2017</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>February 23, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6766,7 +6876,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>fbois</em> on <em>January 21, 2017</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>February 23, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
