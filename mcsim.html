@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on February 23, 2018 by texi2html 1.82
+<!-- Created on February 24, 2018 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <h1 class="settitle">GNU MCSim User&rsquo;s Manual</h1>
 
 
-<p>GNU MCSim manual, version 5.6.6
+<p>GNU MCSim manual, version 6.0.0
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -604,9 +604,8 @@ as a draft) by the Free Software Foundation.
 
 
 <p><em>GNU MCSim</em> is a simulation and statistical inference tool for
-algebraic or differential equation systems. Other programs have been
-created to the same end, the Matlab family of graphical interactive
-programs being some of the more general and easy to use. Still, many
+algebraic or differential equation systems. Other programs, such as
+<em>GNU Octave</em>, have been created to the same end. Still, most
 available tools are not optimal for performing computer intensive and
 sophisticated Monte Carlo analyses. <em>GNU MCSim</em> was created
 specifically to this end: to perform Monte Carlo analyses in an
@@ -618,10 +617,10 @@ structural model definition and maintenance, while keeping execution
 time short. You code your model using a simplified syntax and
 <code>mod</code> translates it in C.
 </p>
-<p>- The simulation engine is a set of routines are linked to your model
-to produce executable code. After linking, you will be able to run
-simulations of your structural model under a variety of conditions,
-specify an associated statistical model, and perform Monte Carlo
+<p>- The simulation engine is a set of routines which are linked to your
+model during compilation to produce executable code. After that you
+can run simulations of your model under a variety of conditions,
+specify an associated statistical model, and perform
 simulations.
 </p>
 
@@ -794,7 +793,7 @@ The installation scripts have been rewritten using GNU
 portable.
 
 </li><li>
-Systems Biology Markup Language (SBML) models are processed by libSBML
+Systems Biology Markup Language (SBML) models are read by libSBML
 if it is installed.
 
 </li><li>
@@ -830,7 +829,7 @@ offered as options of the <code>MCMC()</code> specification.
 <li>
 The installation scripts have been regenerated using GNU
 <code>autoconf</code> version 2.69 which fixes a potential security problem in the
-installation. That should be transparent to the user.
+installation.
 
 </li><li>
 The <code>mod</code> utility can now generate C model files suitable for use
@@ -843,7 +842,7 @@ with the R package <code>deSolve</code>. Use <code>mod -R</code> for that.
 <a name="Major-changes-introduced-with-version-5_002e6_002e0"></a>
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-5_002e5_002e0" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-X_002eY_002eZ" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-6_002e0_002e0" title="Next section in reading order"> &gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="#Overview" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
 <td valign="middle" align="left">[<a href="#Overview" title="Up section"> Up </a>]</td>
@@ -864,14 +863,13 @@ with the R package <code>deSolve</code>. Use <code>mod -R</code> for that.
 <li>
 The keyword <code>End</code> is now mandatory at the end of every
 model. This is not backward compatible (you will need to modify your
-older models accordingly) but we had to implement this for technical
-reasons.
+older models accordingly).
 
 </li><li>
-The <code>StartTime()</code> specification, setting the initial time for
-integration can now accept a symbolic parameter. That allows you to
-treat the initial time as a random variable in error-in-variable
-problems (when the initial time is an unknown).
+The <code>StartTime()</code> specification can now accept a symbolic
+parameter. That allows you to treat the initial time as a random
+variable in error-in-variable problems (when the initial time is an
+unknown).
 
 </li><li>
 The <code>PrintStep()</code> specification can read a list of variables to
@@ -879,10 +877,8 @@ print (as <code>Print()</code> does).
 
 </li><li>
 In MCMC simulation, the jump kernel is now output in a file with the
-<var>.kernel</var> extension. If the simulations are restarted in a
-continuation mode and if a kernel file with the same name as the restart
-file (with an added <var>.kernel</var> extension) is present, the jump kernel
-will restored to its saved value.
+<var>.kernel</var> extension. If simulations are restarted, the jump kernel
+can be restored to its saved value.
 
 </li><li>
 Delay differential equations can now be coded and solved using the
@@ -896,7 +892,7 @@ predefined times through the <code>Events()</code> specification.
 
 
 <hr size="6">
-<a name="Major-changes-introduced-with-version-X_002eY_002eZ"></a>
+<a name="Major-changes-introduced-with-version-6_002e0_002e0"></a>
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-5_002e6_002e0" title="Previous section in reading order"> &lt; </a>]</td>
 <td valign="middle" align="left">[<a href="#Installation" title="Next section in reading order"> &gt; </a>]</td>
@@ -913,56 +909,69 @@ predefined times through the <code>Events()</code> specification.
 <td valign="middle" align="left">[<a href="#Concept-Index" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
-<h2 class="section">2.6 Major changes introduced with version X.Y.Z</h2>
-<a name="index-Major-changes-in-version-X_002eY_002eZ"></a>
+<h2 class="section">2.6 Major changes introduced with version 6.0.0</h2>
+<a name="index-Major-changes-in-version-6_002e0_002e0"></a>
 
+<p>In <code>mod</code>:
+</p>
 <ul>
 <li>
+You can now specify the Jacobian matrix of the model&rsquo;s
+derivatives with respect to state variables in a <code>Jacobian</code>
+section. It will then be used by the <code>Lsodes</code> integrator instead
+of numerical differentiation, see section <a href="#Syntax-of-mod-files">Syntax of the model description file</a>.
+
+</li><li>
+The standard C function <code>fmax</code> and <code>fmin</code> can be
+used in your models, see <a href="#Standard-functions">Standard functions</a>.
+
+</li></ul>
+
+<p>In <code>sim</code>:
+</p>
+<ul>
+<li>
+The vector notation (see <a href="#Vectors">Vectors</a>) can now be used in
+input simulation files.
+
+</li><li>
+If you use the GNU Scientific Library (<code>libgsl</code>), the
+very long-period “Mersenne twister” random number generator is now
+used, see <a href="#Random-Generator">Random Generator</a>. Otherwise the Park and Miller
+generator is used, as before.
+
+</li><li>
+A new input function, <code>PerTransit</code>, is available to
+simulate delayed gut absorption, for example
+(see <a href="#PerTransit">PerTransit</a>).
+
+</li><li>
+The Sundials library <code>Cvodes</code> integrator
+<a href="https://computation.llnl.gov/projects/sundials">https://computation.llnl.gov/projects/sundials</a> can be called in
+a <code>Integrate</code> specification, see section <a href="#Integrate_0028_0029-specification"><code>Integrate()</code> specification</a>.
+
+</li><li>
+Specifications for tempered MCMC simulations have been
+extended to include thermodynamic integration and allow infinite
+temperature (<i>i.e.</i>, perk 0), see <a href="#Tempered-MCMC">Tempered MCMC</a>.
+
+</li><li>
+Two new distributions, <code>Normal_cv</code> and
+<code>TruncNormal_cv</code>, can be used to draw normal random variates with
+specified mean and coefficient of variation, see <a href="#Normal_005fcv">Normal_cv</a>.
+
+</li><li>
+Symbols (denoting previously defined variables) can be
+used to specify times and magnitudes in <code>Events</code> (see section <a href="#Events_0028_0029-specification"><code>Events()</code> specification for state discontinuities</a>).
+
+</li><li>
 The <code>Prediction()</code> specification can be used as a synonym for
-<code>Print()</code>.
+<code>Print()</code>, see section <a href="#Print_0028_0029-specification"><code>Print()</code> specification</a>.
 
 </li><li>
-The Sundials&rsquo; library <code>Cvodes</code> integrator can be called in a
-<code>Integrate</code> specification.
-
-</li><li>
-The new <code>Normal_cv</code> and <code>TruncNormal_cv</code> distributions can
-be used to draw normal random variates with specified mean and
-coefficient of variation.
-
-</li><li>
-The vector notation (see <a href="#Vectors">Vectors</a>) can now be used in input
-files.
-
-</li><li>
-In mod: added fmax and fmin std functions.
-
-</li><li>
-The Jacobian can be specified.
-
-</li><li>
-Improved the R code script
-
-</li><li>
-Created PerTransit input function
-
-</li><li>
-Fixed jump kernel imbalance bug
-
-</li><li>
-Allow symbols in Events times and magnitude
-
-</li><li>
-Removed N_TAU_EXPOSE leading to fatal discontinuity
-
-</li><li>
-Introduce sundials cvodes integrator
-
-</li><li>
-Extend tempered MCMC specification and allow infinite temperature
-
-</li><li>
-Introduce gsl random number generator
+Minor bugs were fixed (see the
+<a href="http://savannah.gnu.org/projects/mcsim">http://savannah.gnu.org/projects/mcsim</a> repository for
+details).
 
 </li></ul>
 
@@ -970,7 +979,7 @@ Introduce gsl random number generator
 <hr size="6">
 <a name="Installation"></a>
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-X_002eY_002eZ" title="Previous section in reading order"> &lt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="#Major-changes-introduced-with-version-6_002e0_002e0" title="Previous section in reading order"> &lt; </a>]</td>
 <td valign="middle" align="left">[<a href="#System-requirements" title="Next section in reading order"> &gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="#Overview" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
@@ -1016,9 +1025,11 @@ any system, provided you have an ANSI C compliant compiler.
 <p>Starting with version 5.0.0 <em>GNU MCSim</em> is using a few routines
 from the GNU Scientific Library (<code>libgsl</code>). We recommend that you
 install version 1.5 (or higher) of the shared GSL library, gslcblas
-library, and GSL include files on your system. Otherwise a few obscure
-features will not be available (you&rsquo;ll get a error message if you are
-trying to use them.)
+library, and GSL include files on your system. Otherwise, some
+features (the <code>TruncInvGamma</code> density, and the “Mersenne twister”
+random number generator, see <a href="#Random-Generator">Random Generator</a>) will not be
+available (you&rsquo;ll get a error message if you are trying to use
+them.)
 </p>
 <p>Version 5.4.0 and higher of <em>GNU MCSim</em> can take advantage of
 (<code>libSBML</code>) to read SBML models. If you choose to install libSBML
@@ -1187,7 +1198,7 @@ typing at the shell prompt:
 <code>mod</code>, <code>makemcsim</code>, <code>xmcsim</code> are installed in
 &lsquo;<tt>/usr/local/bin</tt>&rsquo;. The library <code>libmcsim</code> is placed in
 &lsquo;<tt>/usr/local/lib</tt>&rsquo;. A copy of the &lsquo;<tt>mcsim</tt>&rsquo; source directory
-(with the &lsquo;<tt>mod</tt>&rsquo;, &lsquo;<tt>sim</tt>&rsquo;, &lsquo;<tt>doc</tt>&rsquo;, &lsquo;<tt>samples</tt>&rsquo;, and
+(with the &lsquo;<tt>mod</tt>&rsquo;, &lsquo;<tt>sim</tt>&rsquo;, &lsquo;<tt>doc</tt>&rsquo;, &lsquo;<tt>examples</tt>&rsquo;, and
 &lsquo;<tt>xmcsim</tt>&rsquo; subdirectories) is placed in &lsquo;<tt>/usr/local/share</tt>&rsquo;. If
 you have the GNU <code>info</code> system available, an <code>mcsim</code> node is
 added to the main <code>info</code> menu, so that <code>info mcsim</code> will
@@ -1210,7 +1221,7 @@ it if necessary. The library <code>libmcsim.so</code> will be moved to the
 <p>On certain platforms (Linux...), you will also need to do one of
 the following:<br>
 1) run &rsquo;ldconfig&rsquo; (see the man page if this is unfamiliar)<br>
-2) set the LD_LIBRARY_PATH (or equivalent) environment variable to 
+2) set the LD_LIBRARY_PATH (or equivalent) environment variable to
 contain the path &quot;/usr/local/lib&quot; or whatever you set so that programs can
 find the libSBML library at run-time.
 </p>
@@ -1294,7 +1305,7 @@ example of model building and running.
 
 
 <p>Several models and simulation specification files are provided with
-the package as examples (they are in the &lsquo;<tt>samples</tt>&rsquo; directory.
+the package as examples (they are in the &lsquo;<tt>examples</tt>&rsquo; directory.
 You can try any of them. The linear regression model is particularly
 simple, but to be more complete we will try here a nonlinear implicit
 model, specified through differential equations.
@@ -1306,12 +1317,12 @@ from our own work on the kinetics of tetrachloroethylene (a solvent)
 in the human body (Bois et al., 1996; Bois et al., 1990)
 (see section <a href="#Bibliographic-References">Bibliographic References</a>).
 </p>
-<p>Go to the &lsquo;<tt>mcsim/samples/perc</tt>&rsquo; directory (installed either
+<p>Go to the &lsquo;<tt>mcsim/examples/perc</tt>&rsquo; directory (installed either
 locally or by default in &lsquo;<tt>usr/share</tt>&rsquo; under Unix or
 GNU/Linux). Open the file &lsquo;<tt>perc.model</tt>&rsquo; with any text editor
 (<i>e.g.</i>, <code>emacs</code> or <code>vi</code> under Unix). This file is an
 example of a model definition file. It is also printed at in Appendix
-the end of this manual (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a>). You can use it as a
+the end of this manual (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</a>). You can use it as a
 template for your own model, but you should leave it unchanged for
 now. In that file, the pound signs (<kbd>#</kbd>) indicate the start of
 comments. Notice that the file defines:
@@ -1422,7 +1433,7 @@ editor or word processor, you can edit it for input in graphic
 programs <i>etc</i>.
 </p>
 <p>You can try the various demonstration models provided in the
-&lsquo;<tt>samples</tt>&rsquo; directory and observe the output you obtain. You can
+&lsquo;<tt>examples</tt>&rsquo; directory and observe the output you obtain. You can
 then start programming you own models and doing simulations. The next
 sections of this manual reference the syntax for model definition and
 simulation specifications. 
@@ -1471,7 +1482,7 @@ is created only temporarily and erased after that).
 </p>
 <a name="index-Examples"></a>
 <p>Several examples of model simulation files are included in the
-&lsquo;<tt>mcsim/samples</tt>&rsquo; directory. Some of them are reproduced in Appendix
+&lsquo;<tt>mcsim/examples</tt>&rsquo; directory. Some of them are reproduced in Appendix
 (see section <a href="#Examples">Examples</a>).
 </p>
 
@@ -1484,7 +1495,7 @@ is created only temporarily and erased after that).
 </td></tr>
 <tr><td align="left" valign="top"><a href="#Reading-SBML-models">5.4 Reading SBML models and applying a template</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">  how to specify a list of SBML models and template model
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Working-with-deSolve">5.5 Working with the <em>R</em> package <em>deSolve</em></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> how to use an MCSim model compiler for R deSolve 
+<tr><td align="left" valign="top"><a href="#Working-with-deSolve">5.5 Working with the <em>R</em> package <em>deSolve</em></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> how to use an MCSim model compiler for R deSolve
 </td></tr>
 </table>
 
@@ -1760,6 +1771,8 @@ Variable assignments have the following syntax:
 <table><tr><td>&nbsp;</td><td><pre class="example">&lt;variable-name&gt; '=' &lt;constant-value-or-expression&gt; ';'
 </pre></td></tr></table>
 
+<p><a name="Standard-functions"></a>
+</p>
 <p>The equal sign is needed. The right-hand side expression can be a valid
 C mathematical expression including numerical constants, already defined
 variables, standard ANSI C mathematical functions ( <code>acos</code>,
@@ -1820,8 +1833,8 @@ and NOT operations have not yet been implemented. You can use:
 <a name="index-Square-brackets"></a>
 <a name="index-_0027_005b_005d_0027-_0028square-brackets_0029-notation"></a>
 <a name="index-_0027_002d_0027-_0028hyphen_0029-sign"></a>
-<a name="Vectors"></a>
-Vectors: You can use vectors (arrays) in your code to simplify it.
+<a name="Vectors"></a> Vectors: You can use vectors (arrays) in your model
+code or simulation definition files to simplify it.
 
 <p><i>Declaring vectors</i>: To declare a state variable, an input, an
 output, or a parameter as a vector, use the one of the two following
@@ -1933,7 +1946,7 @@ CalcOutputs {
 <p>and will assign value 1 to &lsquo;<samp>x[2]</samp>&rsquo;, 2 to &lsquo;<samp>x[3]</samp>&rsquo;, <i>etc</i>. On
 the right-hand side, more complicated bracketed expressions like
 &lsquo;<samp>[(2*i-1)/(i+3)]</samp>&rsquo; can be used. Another, working, example of vector
-use is given in the &lsquo;<tt>mcsim/samples/pde2</tt>&rsquo; directory.
+use is given in the &lsquo;<tt>mcsim/examples/pde2</tt>&rsquo; directory.
 </p>
 <p><i>Alternative &rsquo;underscore&rsquo; (&rsquo;_&rsquo;) syntax</i>: Individual vector components
 can be declared and used (everywhere in the model file) with the
@@ -2133,7 +2146,7 @@ setup with <em>GNU MCSim</em>. Use state variables and specify a
 but here again, <code>t</code> can be used to represent anything you
 want. For partial differential equations some problems might be solved
 by implementing line methods (see examples in
-&lsquo;<tt>mcsim/samples/pde1</tt>&rsquo; and &lsquo;<tt>mcsim/samples/pde2</tt>&rsquo;)...
+&lsquo;<tt>mcsim/examples/pde1</tt>&rsquo; and &lsquo;<tt>mcsim/examples/pde2</tt>&rsquo;)...
 </p>
 <p>You can use <em>GNU MCSim</em> for discrete-time dynamic models (or difference
 models). That is a bit tricky. Assignments in the <code>CalcOutputs</code>
@@ -2147,7 +2160,7 @@ also want the calls to <code>Dynamics</code> to be precisely scheduled, so it
 is best to use the <code>Euler</code> integration routine (see section <a href="#Integrate_0028_0029-specification"><code>Integrate()</code> specification</a>) which uses a constant step. Since <code>Euler</code> may call
 repeatedly <code>Dynamics</code> at any given time, you want to guard against
 untimely updating... Altogether, we recommend that you examine the
-sample files in the &lsquo;<tt>mcsim/samples/discrete</tt>&rsquo; directory provided
+example files in the &lsquo;<tt>mcsim/examples/discrete</tt>&rsquo; directory provided
 with the source code for <em>GNU MCSim</em>.
 </p>
 
@@ -2381,21 +2394,26 @@ deviation, in the range [<var>a</var>,<var>b</var>]. Explicit specification of
 <a name="index-Function_002c-UniformRandom_0028_0029"></a>
 <a name="index-Random-number_002c-uniform"></a>
 <code>UniformRandom(<var>min</var>, <var>max</var>)</code>: returns a uniformly
-distributed random variable, sampled between min and max. The algorithm
-used is that of Park and Miller (Barry, 1996; Park and Miller, 1988;
-Vattulainen et al., 1994) (see section <a href="#Bibliographic-References">Bibliographic References</a>). A default
-random generator seed (314159265.3589793) is used.
+distributed random variable, sampled between min and max.
 
 </li></ul>
 
-<p>Note: for all the above random number generating functions, a default
-random generator seed is used. It can be changed with the function
-<code>SetSeed</code>. Note also that assignment of a random number
-generating function to a state variable derivative will define a form
-of stochastic differential equation. <em>GNU MCSim</em>&rsquo;s integration
-routines are not particularly suited to the resolution of such
-equations. If you wish to try it anyway, you may want to consider
-using the &quot;robust&quot; Euler method (see section <a href="#Integrate_0028_0029-specification"><code>Integrate()</code> specification</a>).
+<p><a name="Random-Generator"></a>
+Note: If you have linked Graph_Sampler with GNU Scientific Library
+(gls), all the above random number generating functions use an
+extremely long period random number generator: the “Mersenne twister”
+generator (gsl_rng_mt19937). Otherwise, the random generator used is
+that of Park and Miller (Barry, 1996; Park and Miller, 1988;
+Vattulainen et al., 1994) (see section <a href="#Bibliographic-References">Bibliographic References</a>). A
+default random generator seed (314159265.3589793) is used in both
+cases. It can be changed with the function <code>SetSeed</code>.
+</p>
+<p>Note also that assignment of a random number generating function to a
+state variable derivative will define a form of stochastic
+differential equation. <em>GNU MCSim</em>&rsquo;s integration routines are not
+particularly suited to the resolution of such equations. If you wish
+to try it anyway, you may want to consider using the &quot;robust&quot; Euler
+method (see section <a href="#Integrate_0028_0029-specification"><code>Integrate()</code> specification</a>).
 </p>
 
 
@@ -2428,6 +2446,7 @@ variables. Inputs can be initialized to a constant or to a standard
 mathematical expression, or assigned one of the following input
 functions:
 </p>
+
 <ul>
 <li>
 <a name="index-PerDose_0028_0029-function"></a>
@@ -2437,9 +2456,10 @@ functions:
 <var>&lt;period&gt;</var> and lasts for <var>&lt;exposure-time&gt;</var> time
 units. Syntax:
 
-<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerDose(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, 
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerDose(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;,
                            &lt;exposure-time&gt;);
 </pre></td></tr></table>
+
 
 </li><li>
 <a name="index-PerExp_0028_0029-function"></a>
@@ -2454,6 +2474,46 @@ start. Syntax:
 <table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerExp(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;,
                           &lt;decay-constant&gt;);
 </pre></td></tr></table>
+
+
+</li><li>
+<a name="index-PerTransit_0028_0029-function"></a>
+<a name="index-Function_002c-PerTransit_0028_0029"></a>
+<a name="PerTransit"></a>
+<code>PerTransit()</code> models a delayed input mechanism in which a
+substance has to go through a chain of (linear) transfer compartments
+before being actually input (see Savic et al., 2007)
+(see section <a href="#Bibliographic-References">Bibliographic References</a>).
+The actual input is computed as:
+
+<table><tr><td>&nbsp;</td><td><pre class="example">((K_tr * t)^n) * exp(-K_tr * t) / n!
+</pre></td></tr></table>
+
+<p>where
+<i>K_tr</i>
+is the transit rate constant from compartment to compartment, and
+<i>n</i> is the number of &ldquo;apparent&rdquo; transit compartments (a positive real
+number). Factorial <i>n</i> is computed using Stirling&rsquo;s formula. This is
+a popular absorption model in pharmacokinetics, where the number of
+<i>n</i> and the transfer rate constant are estimated from data.
+</p>
+<p>The function <code>PerTransit()</code> has 5 arguments: a <var>&lt;magnitude&gt;</var>;
+a <var>&lt;period&gt;</var> (for multiple dosing) at the beginning of which input
+is reset. Note that the input does not accumulate across periods, it
+resets at each period start; an <var>&lt;initial-time-in-period&gt;</var> in
+<var>&lt;period&gt;</var> at which dosing actually starts; a
+<var>&lt;transfer-rate-constant&gt;</var>, as defined above; a
+<var>&lt;number-of-input-compartments&gt;</var>. Its syntax is:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">&lt;input variable&gt; = PerTransit(&lt;magnitude&gt;, &lt;period&gt;,
+                              &lt;initial-time-in-period&gt;,
+                              &lt;transfer-rate-constant&gt;,
+                              &lt;number-of-input-compartments&gt;);
+</pre></td></tr></table>
+
+<p>An demonstration of its use is given in
+&lsquo;<tt>mcsim/examples/test_transit_input</tt>&rsquo;.
+</p>
 
 </li><li>
 <a name="index-NDoses_0028_0029-function"></a>
@@ -2476,6 +2536,7 @@ use it as a default). Syntax:
 the simulation (typically time zero), even if the magnitude at that
 first time is zero.
 </p>
+
 </li><li>
 <a name="index-Spikes_0028_0029-function"></a>
 <a name="index-Function_002c-Spikes_0028_0029"></a>
@@ -2598,8 +2659,8 @@ section will define a function (subroutine) that will be called by
 <em>GNU MCSim</em> after the assignments specified in each
 <code>Simulation</code> section are done (see section <a href="#Simulation-sections"><code>Simulation</code> sections</a>). They
 are the last initializations performed. The model file in
-&lsquo;<tt>mcsim/samples/perc</tt>&rsquo; gives an example of the use of
-<code>Initialize</code> (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a>, in Appendix).
+&lsquo;<tt>mcsim/examples/perc</tt>&rsquo; gives an example of the use of
+<code>Initialize</code> (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</a>, in Appendix).
 </p>
 <p>All model variables and parameters, except inputs, can be changed in
 this section. Modifications to state variables affect initial values
@@ -2655,7 +2716,7 @@ differential equations.
 <p>Additional parameters (to those declared in the global section) may be
 used for any calculations within the section. They will be declared as
 local temporary variables. (Note, for example, the use of
-&lsquo;<samp>Cout_fat</samp>&rsquo; and &lsquo;<samp>Cout_wp</samp>&rsquo; in the &lsquo;<tt>perc.model</tt>&rsquo; sample
+&lsquo;<samp>Cout_fat</samp>&rsquo; and &lsquo;<samp>Cout_wp</samp>&rsquo; in the &lsquo;<tt>perc.model</tt>&rsquo; example
 file). Local variables are not accessible from the simulation program,
 or from other sections of the model definition file, so don&rsquo;t try to
 output them.
@@ -2857,7 +2918,7 @@ referred to as <code>t</code>, as in:
 
 <p>For your model file to be readable and understandable, it is useful to
 use a consistent notation style. The example file &lsquo;<tt>perc.model</tt>&rsquo;
-tries to follow such a style (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a>). For example we
+tries to follow such a style (see section <a href="#perc_002emodel">&lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</a>). For example we
 suggest that:
 </p>
 <ul>
@@ -2963,7 +3024,7 @@ just an example). They just have to be valid filenames.
 SBML_List.in</code> on your shell command line.  A &lsquo;<tt>model.c</tt>&rsquo; file is
 produced, suitable for further compilation by <code>makemcsim</code>. SBML
 model files are typically ASCII text files with a <i>xml</i> extension
-(for examples see &lsquo;<tt>mcsim/sim/samples/SBML</tt>&rsquo;).  SBML Level 1 and
+(for examples see &lsquo;<tt>mcsim/sim/examples/SBML</tt>&rsquo;).  SBML Level 1 and
 Level 2 are recognized (but some features of Level 2 are not yet
 understood by <code>mod</code>, such as <code>functionDefinition</code>,
 <code>unit</code>, <code>rateRule</code> and a few others.) Omitted reaction
@@ -3143,20 +3204,20 @@ functions <code>initParms</code>, <code>initStates</code> and the variable
 <var>Outputs</var>,  which can be handy in <em>R</em> scripts:
 </p>
 <ul>
-<li> 
+<li>
 <code>initParms()</code> without parameters reset the model parameters to
 their default values. The <var>newparms</var> parameter takes a vector of named
 parameters and values, assign the given values to the corresponding
 model parameters and reset the others to their default values.
 
-</li><li> 
+</li><li>
 <code>initStates()</code> with just the <var>parms</var> parameter reset the model
 initial states to their default values. If the <var>newparms</var> parameter
 is used it takes a vector of named states and values, assign the given
 values as initial values to the corresponding model state variables and
 reset the others to their default values.
 
-</li><li> 
+</li><li>
 <var>Outputs</var> is simply an array of output variable names.
 
 </li></ul>
@@ -3199,7 +3260,7 @@ the executable program.
 </p>
 
 <p>You may want to first give a look at the examples given in the
-&lsquo;<tt>mcsim/samples</tt>&rsquo; directory. An sample file &lsquo;<tt>perc.lsodes.in</tt>&rsquo;,
+&lsquo;<tt>mcsim/examples</tt>&rsquo; directory. An example file &lsquo;<tt>perc.lsodes.in</tt>&rsquo;,
 which works with the perchloroethylene model &lsquo;<tt>perc.model</tt>&rsquo;, is also
 given in an Appendix to this manual (see section <a href="#perc_002elsodes_002ein">&lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a>).
 </p>
@@ -3329,7 +3390,7 @@ outputs are to be printed at which times, can all be changed in a given
 <code>Simulation</code> section.
 </p>
 <p>In simple cases, the general layout of the file is therefore (see also
-the sample file in <a href="#perc_002elsodes_002ein">&lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a>):
+the example file in <a href="#perc_002elsodes_002ein">&lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a>):
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">
 # Input file (text after # are comments)
@@ -3430,7 +3491,8 @@ values; mathematical expressions are not allowed.
 </li><li>
 Input variables&rsquo; assignments can use any input function (including the
 <code>NDoses()</code> and <code>Spikes()</code> functions), an <code>Events()</code>
-specification or a constant values.
+specification (see section <a href="#Events_0028_0029-specification"><code>Events()</code> specification for state discontinuities</a>) or a constant
+values.
 
 </li><li>
 Output variables cannot receive assignments.
@@ -3497,6 +3559,7 @@ previously (see section <a href="#Input-functions">Input functions</a>). Briefly
 <table><tr><td>&nbsp;</td><td><pre class="example">PerDose(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, &lt;exposure-time&gt;);
 </pre></td></tr></table>
 
+
 </li><li>
 <a name="index-PerExp_0028_0029-function-1"></a>
 <a name="index-Function_002c-PerExp_0028_0029-1"></a>
@@ -3505,6 +3568,16 @@ previously (see section <a href="#Input-functions">Input functions</a>). Briefly
 <table><tr><td>&nbsp;</td><td><pre class="example">PerExp(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time&gt;, &lt;decay-constant&gt;);
 </pre></td></tr></table>
 
+
+<a name="index-PerTransit_0028_0029-function-1"></a>
+<a name="index-Function_002c-PerTransit_0028_0029-1"></a>
+<p><code>PerTransit()</code>:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">PerTransit(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time-in-period&gt;,
+           &lt;decay-constant&gt;, &lt;number-of-input-compartments&gt;);
+</pre></td></tr></table>
+
+
 </li><li>
 <a name="index-NDoses_0028_0029-function-1"></a>
 <a name="index-Function_002c-NDoses_0028_0029-1"></a>
@@ -3512,6 +3585,7 @@ previously (see section <a href="#Input-functions">Input functions</a>). Briefly
 
 <table><tr><td>&nbsp;</td><td><pre class="example">NDoses(&lt;n&gt;, &lt;list-of-magnitudes&gt;, &lt;list-of-initial-times&gt;);
 </pre></td></tr></table>
+
 
 </li><li>
 <a name="index-Spikes_0028_0029-function-1"></a>
@@ -3662,11 +3736,13 @@ quotes, should be a valid file name for your operating system.
 
 
 <p>The integrator settings can be changed with the <code>Integrate</code>
-specification. Two integration routines are provided: <code>Lsodes</code>
-(which originates from the SLAC Fortran library and is originally based
-on Gear&rsquo;s routine) (Gear, 1971b; Gear, 1971a; Press et al., 1989)
-(see section <a href="#Bibliographic-References">Bibliographic References</a>) and <code>Euler</code> (Press et al.,
-1989).
+specification. Three integration routines are provided: <code>Lsodes</code>
+(which originates from the SLAC Fortran library and is originally
+based on Gear&rsquo;s routine) (Gear, 1971b; Gear, 1971a; Press et al.,
+1989) (see section <a href="#Bibliographic-References">Bibliographic References</a>), <code>Cvodes</code> (from the
+Sundials library <a href="https://computation.llnl.gov/projects/sundials">https://computation.llnl.gov/projects/sundials</a>)
+which may be more stable than <code>Lsodes</code> in difficult cases,
+and <code>Euler</code> (Press et al., 1989).
 </p>
 
 <p>The syntax for <code>Lsodes</code> is:
@@ -3698,6 +3774,15 @@ to choose one of them <i>a priori</i>. In our experience, a good starting
 point for <var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> is about
 1e-6.
 </p>
+
+<p>The syntax for <code>Cvodes</code> is similar to that of <code>Lsodes</code>; the
+<var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> have the same meaning as above, but for
+the moment the last flag is not used (you should leave it at
+zero):
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">Integrate(Cvodes, &lt;rtol&gt;, &lt;atol&gt;, &lt;unused&gt;);
+</pre></td></tr></table>
+
 
 <p>The syntax for <code>Euler</code> is:
 </p>
@@ -3923,6 +4008,7 @@ convergence, and then restart the chain with the flag at 2).
 <a name="index-InvTemperature_0028_0029-specification"></a>
 <a name="index-Specification_002c-InvTemperature_0028_0029"></a>
 <a name="index-Tempered-MCMC"></a>
+<a name="Tempered-MCMC"></a>
 With <var>&lt;simTypeFlag&gt;</var> equal to 3 or 4, component by component
 simulated tempering is performed (Geyer and Thompson, 1995)
 (see section <a href="#Bibliographic-References">Bibliographic References</a>). With option 3, the whole posterior
@@ -3938,7 +4024,7 @@ annealing scheme). By default 5 inverse temperatures are used (0.4,
 
 <p>The first number of the specification gives the number of perks to use
 and is followed by a list of them. Those should be numbers in the
-interval ]0,infinity[. Values above 1 lead in fact to simulated
+interval [0,infinity[. Values above 1 lead in fact to simulated
 annealing (sharpening of the posterior distribution), suitable for
 optimization (see Amzal et al. 2006) (see section <a href="#Bibliographic-References">Bibliographic References</a>). For simulated tempering (including thermodynamic
 integration you will want to keep perks lower or equal to 1. You usually
@@ -4139,7 +4225,7 @@ given.
 </p>
 <p>The input file must then contain two sets of <code>Simulation</code>
 definitions. You should look at the sample optimal design files
-provided in &lsquo;<tt>mcsim/samples</tt>&rsquo;.
+provided in &lsquo;<tt>mcsim/examples</tt>&rsquo;.
 </p>
 <p>The first set specifies all experimental conditions and the set of
 observation times to optimize, for one or several output variables
@@ -4329,6 +4415,7 @@ standard deviation, the latter being strictly positive.
 </li><li>
 <a name="index-Normal_005fcv-distribution"></a>
 <a name="index-Distribution_002c-Normal_005fcv"></a>
+<a name="Normal_005fcv"></a>
 <code>Normal_cv</code>, is the normal distribution with the coefficient of
 variation instead of the standard deviation as second
 parameter.
@@ -4370,7 +4457,8 @@ freedom (an integer), its mean, and its standard deviation.
 <a name="index-Distribution_002c-TruncInvGamma"></a>
 <code>TruncInvGamma</code> (truncated inverse gamma distribution), needs
 four strictly positive real parameters: the shape, the scale, the
-minimum and the maximum.
+minimum and the maximum. To use it you need to have the GNU Scientific
+Library (<code>gsl</code>) to be installed.
 
 </li><li>
 <a name="index-TruncLogNormal-distribution"></a>
@@ -4752,13 +4840,13 @@ a dummy input variable. For example:
 
 <p>and in the simulation specification file you can request, within a
 <code>Simulation</code> specification:
-</p><table><tr><td>&nbsp;</td><td><pre class="example">events_v1 = Events (v1, 2, 1,   9, 
-                           Add, Add, 
-                           1,   4); 
+</p><table><tr><td>&nbsp;</td><td><pre class="example">events_v1 = Events (v1, 2, 1,   9,
+                           Add, Add,
+                           1,   4);
 
-events_v2 = Events (v2, 2, 1,        5, 
-                           Multiply, Replace, 
-                           2,        6); 
+events_v2 = Events (v2, 2, 1,        5,
+                           Multiply, Replace,
+                           2,        6);
 </pre></td></tr></table>
 
 <p>At time 1, a value of 1 will be added to the state variable <var>v1</var> and
@@ -5166,7 +5254,7 @@ to form a total of three instances of <var>A</var> (the original and its
 two clones). This convention saves a lot writing and effort
 in the long run.
 </p>
-<p>In the sample of code given above, the parameter <var>A</var>, defined at the
+<p>In the example of code given above, the parameter <var>A</var>, defined at the
 top level, will be simply moved to sub-level 1 (cloning is not necessary
 since there is only on sub-level directly included in the top level).
 Within sub-level 1, the normally-distributed <var>A</var> will be cloned once
@@ -5533,6 +5621,12 @@ ones are hard to find. Communications of the ACM <b>31</b>:1192-1201.
 (1989). Numerical Recipes (2nd ed.). Cambridge University Press,
 Cambridge.
 </p>
+<p>Savic R.M., Jonker D.M., Kerbusch T., Karlsson
+M.O. (2007). Implementation of a transit compartment model for
+describing drug absorption in pharmacokinetic studies. Journal of
+Pharmacokinetics and Pharmacodynamics <b>34</b>:711–726.
+doi:10.1007/s10928-007-9066-0.
+</p>
 <p>Smith A.F.M. (1991). Bayesian computational methods. Philosophical
 Transactions of the Royal Society of London, Series A <b>337</b>:369-386.
 </p>
@@ -5574,55 +5668,56 @@ your models and input files:
 </p>
 <ul>
 <li>  Add
-</li><li>  Beta                         
-</li><li>  BetaRandom                   
-</li><li>  Binomial                     
+</li><li>  Beta
+</li><li>  BetaRandom
+</li><li>  Binomial
 </li><li>  BinomialBetaRandom
-</li><li>  BinomialRandom               
+</li><li>  BinomialRandom
 </li><li>  CDFNormal
 </li><li>  CalcDelay
 </li><li>  CalcOutputs
 </li><li>  Cauchy
 </li><li>  CauchyRandom
-</li><li>  Chi2                         
+</li><li>  Chi2
 </li><li>  Chi2Random
 </li><li>  Compartment
-</li><li>  Data                         
-</li><li>  DefaultSim                   
-</li><li>  Density                      
-</li><li>  Distrib                      
-</li><li>  dt                           
-</li><li>  Dynamics                     
+</li><li>  Cvodes
+</li><li>  Data
+</li><li>  DefaultSim
+</li><li>  Density
+</li><li>  Distrib
+</li><li>  dt
+</li><li>  Dynamics
 </li><li>  End
 </li><li>  erfc
 </li><li>  Euler
 </li><li>  Events
-</li><li>  ExpRandom                    
-</li><li>  Experiment                   
-</li><li>  Exponential                  
-</li><li>  GGammaRandom                 
-</li><li>  Gamma                        
-</li><li>  GammaRandom                  
-</li><li>  GetSeed                      
+</li><li>  ExpRandom
+</li><li>  Experiment
+</li><li>  Exponential
+</li><li>  GGammaRandom
+</li><li>  Gamma
+</li><li>  GammaRandom
+</li><li>  GetSeed
 </li><li>  Gibbs
 </li><li>  HalfCauchy
 </li><li>  HalfNormal
 </li><li>  IFN
 </li><li>  Initialize
 </li><li>  Inline
-</li><li>  Inputs                       
-</li><li>  Integrate                    
-</li><li>  InvGGammaRandom              
+</li><li>  Inputs
+</li><li>  Integrate
+</li><li>  InvGGammaRandom
 </li><li>  InvGamma
 </li><li>  InvTemperature
 </li><li>  Jacobian
-</li><li>  Level                        
-</li><li>  Likelihood                   
-</li><li>  lnDFNormal                   
-</li><li>  lnGamma                      
-</li><li>  LogNormal                    
-</li><li>  LogNormalRandom              
-</li><li>  LogNormal_v                  
+</li><li>  Level
+</li><li>  Likelihood
+</li><li>  lnDFNormal
+</li><li>  lnGamma
+</li><li>  LogNormal
+</li><li>  LogNormalRandom
+</li><li>  LogNormal_v
 </li><li>  LogUniform
 </li><li>  LogUniformRandom
 </li><li>  Lsodes
@@ -5706,11 +5801,11 @@ simulation input files.
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top"><a href="#linear_002emodel">B.1 &lsquo;<tt>linear.model</tt>&rsquo;</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">   a simple algebraic model
 </td></tr>
-<tr><td align="left" valign="top"><a href="#g_t1cpt_002emodel">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A sample model description file</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">     a one-compartment pharmacokinetic model
+<tr><td align="left" valign="top"><a href="#g_t1cpt_002emodel">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A example model description file</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">     a one-compartment pharmacokinetic model
 </td></tr>
-<tr><td align="left" valign="top"><a href="#perc_002emodel">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">     a multi-compartment pharmacokinetic model
+<tr><td align="left" valign="top"><a href="#perc_002emodel">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">     a multi-compartment pharmacokinetic model
 </td></tr>
-<tr><td align="left" valign="top"><a href="#perc_002elsodes_002ein">B.4 &lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> a sample simulation input file
+<tr><td align="left" valign="top"><a href="#perc_002elsodes_002ein">B.4 &lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> an example simulation input file
 </td></tr>
 </table>
 
@@ -5774,8 +5869,8 @@ CalcOutputs { y = A + B * t + NormalRandom(0,SD_true); }
 <td valign="middle" align="left">[<a href="#Concept-Index" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
-<a name="g_t1cpt_002emodel_003a-A-sample-model-description-file"></a>
-<h2 class="section">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A sample model description file</h2>
+<a name="g_t1cpt_002emodel_003a-A-example-model-description-file"></a>
+<h2 class="section">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A example model description file</h2>
 
 
 <table><tr><td>&nbsp;</td><td><pre class="example"># One Compartment Model
@@ -5860,8 +5955,8 @@ End.
 <td valign="middle" align="left">[<a href="#Concept-Index" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
-<a name="perc_002emodel_003a-A-sample-model-description-file"></a>
-<h2 class="section">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</h2>
+<a name="perc_002emodel_003a-A-example-model-description-file"></a>
+<h2 class="section">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</h2>
 
 
 <table><tr><td>&nbsp;</td><td><pre class="example">#---------------------------------------------------------
@@ -6369,6 +6464,8 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PerDose_0028_0029-1">Function, <code>PerDose()</code></a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PerExp_0028_0029">Function, <code>PerExp()</code></a></td><td valign="top"><a href="#Input-functions">5.3.5 Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PerExp_0028_0029-1">Function, <code>PerExp()</code></a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Function_002c-PerTransit_0028_0029">Function, <code>PerTransit()</code></a></td><td valign="top"><a href="#Input-functions">5.3.5 Input functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Function_002c-PerTransit_0028_0029-1">Function, <code>PerTransit()</code></a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PiecewiseRandom_0028_0029">Function, <code>PiecewiseRandom()</code></a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PoissonRandom_0028_0029">Function, <code>PoissonRandom()</code></a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-SetSeed_0028_0029">Function, <code>SetSeed()</code></a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
@@ -6436,7 +6533,7 @@ END.
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e4_002e0">Major changes in version 5.4.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e4_002e0">2.3 Major changes introduced with version 5.4.0</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e5_002e0">2.4 Major changes introduced with version 5.5.0</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-X_002eY_002eZ">Major changes in version X.Y.Z</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-X_002eY_002eZ">2.6 Major changes introduced with version X.Y.Z</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e0_002e0">Major changes in version 6.0.0</a></td><td valign="top"><a href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-makemcsim-script"><code>makemcsim</code> script</a></td><td valign="top"><a href="#Using-makemcsim">5.2 Using <code>makemcsim</code> to fully process model files</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations">Markov-chain Monte Carlo simulations</a></td><td valign="top"><a href="#Types-of-simulations">2.2 Types of simulations</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations-1">Markov-chain Monte Carlo simulations</a></td><td valign="top"><a href="#MCMC_0028_0029-specification"><code>MCMC()</code> specification</a></td></tr>
@@ -6479,6 +6576,8 @@ END.
 <tr><td></td><td valign="top"><a href="#index-PerDose_0028_0029-function-1"><code>PerDose()</code> function</a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PerExp_0028_0029-function"><code>PerExp()</code> function</a></td><td valign="top"><a href="#Input-functions">5.3.5 Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PerExp_0028_0029-function-1"><code>PerExp()</code> function</a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-PerTransit_0028_0029-function"><code>PerTransit()</code> function</a></td><td valign="top"><a href="#Input-functions">5.3.5 Input functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-PerTransit_0028_0029-function-1"><code>PerTransit()</code> function</a></td><td valign="top"><a href="#Input-functions-revisited">6.2.2 Input functions (revisited)</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Piecewise-distribution"><code>Piecewise</code> distribution</a></td><td valign="top"><a href="#Distrib_0028_0029-specification"><code>Distrib()</code> specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PiecewiseRandom_0028_0029-function"><code>PiecewiseRandom()</code> function</a></td><td valign="top"><a href="#Special-functions">5.3.4 Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Pitfalls">Pitfalls</a></td><td valign="top"><a href="#Common-Pitfalls">7. Common Pitfalls</a></td></tr>
@@ -6679,7 +6778,7 @@ END.
     <li><a name="toc-Major-changes-introduced-with-version-5_002e4_002e0" href="#Major-changes-introduced-with-version-5_002e4_002e0">2.3 Major changes introduced with version 5.4.0</a></li>
     <li><a name="toc-Major-changes-introduced-with-version-5_002e5_002e0" href="#Major-changes-introduced-with-version-5_002e5_002e0">2.4 Major changes introduced with version 5.5.0</a></li>
     <li><a name="toc-Major-changes-introduced-with-version-5_002e6_002e0" href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></li>
-    <li><a name="toc-Major-changes-introduced-with-version-X_002eY_002eZ" href="#Major-changes-introduced-with-version-X_002eY_002eZ">2.6 Major changes introduced with version X.Y.Z</a></li>
+    <li><a name="toc-Major-changes-introduced-with-version-6_002e0_002e0" href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></li>
   </ul></li>
   <li><a name="toc-Installation-1" href="#Installation">3. Installation</a>
   <ul class="toc">
@@ -6757,8 +6856,8 @@ END.
   <li><a name="toc-Examples-1" href="#Examples">B. Examples</a>
   <ul class="toc">
     <li><a name="toc-linear_002emodel-1" href="#linear_002emodel">B.1 &lsquo;<tt>linear.model</tt>&rsquo;</a></li>
-    <li><a name="toc-1cpt_002emodel_003a-A-sample-model-description-file" href="#g_t1cpt_002emodel">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A sample model description file</a></li>
-    <li><a name="toc-perc_002emodel_003a-A-sample-model-description-file" href="#perc_002emodel">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A sample model description file</a></li>
+    <li><a name="toc-1cpt_002emodel_003a-A-example-model-description-file" href="#g_t1cpt_002emodel">B.2 &lsquo;<tt>1cpt.model</tt>&rsquo;: A example model description file</a></li>
+    <li><a name="toc-perc_002emodel_003a-A-example-model-description-file" href="#perc_002emodel">B.3 &lsquo;<tt>perc.model</tt>&rsquo;: A example model description file</a></li>
     <li><a name="toc-perc_002elsodes_002ein-1" href="#perc_002elsodes_002ein">B.4 &lsquo;<tt>perc.lsodes.in</tt>&rsquo;</a></li>
   </ul></li>
   <li><a name="toc-Concept-Index-1" href="#Concept-Index">Concept Index</a></li>
@@ -6774,7 +6873,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>Me</em> on <em>February 23, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>February 24, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6876,7 +6975,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>Me</em> on <em>February 23, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>February 24, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
