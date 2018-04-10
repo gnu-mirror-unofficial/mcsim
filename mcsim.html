@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on February 24, 2018 by texi2html 1.82
+<!-- Created on April 10, 2018 by texi2html 1.82
 texi2html was written by: 
             Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -1773,18 +1773,18 @@ Variable assignments have the following syntax:
 
 <p><a name="Standard-functions"></a>
 </p>
-<p>The equal sign is needed. The right-hand side expression can be a valid
-C mathematical expression including numerical constants, already defined
-variables, standard ANSI C mathematical functions ( <code>acos</code>,
-<code>asin</code>, <code>atan</code>, <code>atan2</code>, <code>ceil</code>, <code>cos</code>,
-<code>cosh</code>, <code>exp</code>, <code>fabs</code>, <code>floor</code>, <code>fmax</code>,
-<code>fmin</code>, <code>fmod</code>, <code>log</code>, <code>log10</code>, <code>pow</code>,
-<code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, ), and
-<em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot; (see section <a href="#Special-functions">Special functions</a>)
-or &quot;<em>input functions</em>&quot; (see section <a href="#Input-functions">Input functions</a>). Special functions
-can take already defined variables, constant values or expressions as
-parameters. Input functions can only be used on the right hand side of
-assignments to input variables.
+<p>The equal sign is needed. The right-hand side expression can be a
+valid C mathematical expression including numerical constants, already
+defined variables, standard ANSI C mathematical functions (
+<code>acos</code>, <code>asin</code>, <code>atan</code>, <code>atan2</code>, <code>ceil</code>,
+<code>cos</code>, <code>cosh</code>, <code>exp</code>, <code>fabs</code>, <code>floor</code>,
+<code>fmax</code>, <code>fmin</code>, <code>fmod</code>, <code>log</code>, <code>log10</code>,
+<code>pow</code>, <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>,
+<code>tanh</code>, ), and <em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot;
+(see section <a href="#Special-functions">Special functions</a>) or &quot;<em>input functions</em>&quot; (see section <a href="#Input-functions">Input functions</a>). Special functions can take already defined variables,
+constant numerical values or expressions as parameters. Input
+functions can only be used on the right hand side of assignments to
+input variables.
 </p>
 <p>Colon conditional assignments have the following syntax:
 <a name="index-Colon-conditional-assignment"></a>
@@ -2532,9 +2532,15 @@ use it as a default). Syntax:
                           &lt;list-of-initial-times&gt;);
 </pre></td></tr></table>
 
-<p>Note that the list of times <em>must</em> begin at the starting time of
-the simulation (typically time zero), even if the magnitude at that
-first time is zero.
+<p>Instead of lists of magnitudes and times, you can use vectors
+specifying them, as in:
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="example">My_input = NDoses(10, My_magnitudes[1-10], My_initial_times[1-10]);
+</pre></td></tr></table>
+
+<p>Note that the list or vector of times <em>must</em> begin at the
+starting time of the simulation (typically time zero), even if the
+magnitude at that first time is zero.
 </p>
 
 </li><li>
@@ -3486,12 +3492,12 @@ file, even if the structural model does not use them.
 
 </li><li>
 Assignments to state variables or parameters can only use constant
-values; mathematical expressions are not allowed.
+numerical values; mathematical expressions are not allowed.
 
 </li><li>
 Input variables&rsquo; assignments can use any input function (including the
 <code>NDoses()</code> and <code>Spikes()</code> functions), an <code>Events()</code>
-specification (see section <a href="#Events_0028_0029-specification"><code>Events()</code> specification for state discontinuities</a>) or a constant
+specification (see section <a href="#Events_0028_0029-specification"><code>Events()</code> specification for state discontinuities</a>) or a constant numerical
 values.
 
 </li><li>
@@ -4110,8 +4116,8 @@ sampling, can be accommodated in this way.
 </p>
 <p>This command specifies an output filename, the name of a text file
 containing the chosen parameter values, the number of simulations to
-perform and a list of model parameters to read in. It has the following
-syntax:
+perform and a list of model parameters to read in. Parameters can mix
+scalar and vector notations. It has the following syntax:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">SetPoints(&quot;&lt;OutputFilename&gt;&quot;, &quot;&lt;SetPointsFilename&gt;&quot;, &lt;nRuns&gt;,
           &lt;parameter identifier&gt;, &lt;parameter identifier&gt;, ...);
@@ -4133,11 +4139,11 @@ Carlo output files for additional <code>SetPoints</code>
 simulations).
 </p>
 <p>The variable <var>&lt;nRuns&gt;</var> should be less or equal to the number of
-lines (minus one) in the set points file. If a zero is given, all lines
-of the file are read. Finally, a comma-separated list of the parameters
-to be read in the <var>SetPointsFilename</var> is given. The format of the
-output file of set points simulations is discussed below
-(see section <a href="#Analyzing-simulation-output">Analyzing simulation output</a>).
+lines (minus one) in the set points file. If a zero is given, all
+lines of the file are read. Finally, a comma-separated list of the
+parameters or vectors to be read in the <var>SetPointsFilename</var> is
+given. The format of the output file of set points simulations is
+discussed below (see section <a href="#Analyzing-simulation-output">Analyzing simulation output</a>).
 </p>
 <p>Following the <code>SetPoints()</code> specification, <code>Distrib()</code>
 statements can be given for parameters not already in the list
@@ -4739,7 +4745,7 @@ input variable or parameter defined in the global section of the model
 description file. Output variables cannot receive assignments in
 simulation input files.
 </p>
-<p>State variables and parameters can only take constant values
+<p>State variables and parameters can only take constant numerical values
 (see section <a href="#General-input-file-syntax">General input file syntax</a>). For state variables, this sets the
 initial value only. So, for example, in a <code>Simulation</code> section the
 parameter <code>Speed</code>, if properly defined, can be set using:
@@ -4750,8 +4756,8 @@ parameter <code>Speed</code>, if properly defined, can be set using:
 <p>This overrides any previously assigned values, even if randomly sampled,
 for the specified parameter.
 </p>
-<p>Inputs can be redefined with input functions (see section <a href="#Input-functions-revisited">Input functions (revisited)</a>) or constant values. Input functions can reference other
-variables (eventually randomly sampled), as in:
+<p>Inputs can be redefined with input functions (see section <a href="#Input-functions-revisited">Input functions (revisited)</a>) or constant numerical values. Input functions can
+reference other variables (eventually randomly sampled), as in:
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="example">Q_in = PerExp(InMag, 60, 0, RateConst);
 </pre></td></tr></table>
@@ -6873,7 +6879,7 @@ END.
 </tr></table>
 <h1>About This Document</h1>
 <p>
-  This document was generated by <em>Me</em> on <em>February 24, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>April 10, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
 </p>
 <p>
   The buttons in the navigation panels have the following meaning:
@@ -6975,7 +6981,7 @@ END.
 <hr size="1">
 <p>
  <font size="-1">
-  This document was generated by <em>Me</em> on <em>February 24, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
+  This document was generated by <em>Me</em> on <em>April 10, 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.82</em></a>.
  </font>
  <br>
 
