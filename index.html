@@ -108,10 +108,34 @@ The gzipped tar archive contains:
 </ul>
 
 <p>
-GNU MCSim development is hosted on savannah.gnu.org. 
-See the <a href="http://savannah.gnu.org/projects/mcsim">MCSim project page on Savannah</a>, 
-where the latest development sources are publicly available.
+GNU MCSim development is hosted on savannah.gnu.org.  See
+the <a href="http://savannah.gnu.org/projects/mcsim">MCSim project
+page on Savannah</a>, where the latest development sources are
+publicly available.
 </p>
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- Verification -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<h3><a id="verifying">Verifying GNU MCSim Signature</a></h3>
+
+<p>
+To verify the signature of the GNU MCSim tarball, please download both
+the mcsim-X.Y.Z.tar.gz and mcsim-X.Y.Z.tar.gz.sig files. The key used
+to sign the official releases can be found
+<a href="http://savannah.gnu.org/project/memberlist-gpgkeys.php?group=mcsim">
+here.</a>
+</p>
+
+<p>
+The signature can be verified with the following steps:
+</p>
+
+<pre class="emph-box">
+gpg --import mcsim-keyring
+gpg --verify mcsim-X.Y.Z.tar.gz.sig
+</pre>
 
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -428,7 +452,7 @@ Commons Attribution-NoDerivatives 4.0 International License</a>.</p>
 
 <p class="unprintable">Updated:
 <!-- timestamp start -->
-$Date: 2018/05/05 09:40:08 $
+$Date: 2018/08/23 10:25:10 $
 <!-- timestamp end -->
 </p>
 </div>
