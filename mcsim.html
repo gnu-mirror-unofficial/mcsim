@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created by GNU Texinfo 6.1, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>GNU MCSim User&rsquo;s Manual</title>
 
 <meta name="description" content="GNU MCSim User&rsquo;s Manual">
@@ -9,7 +10,6 @@
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="#Top" rel="start" title="Top">
 <link href="#Concept-Index" rel="index" title="Concept Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
@@ -61,7 +61,7 @@ Next: <a href="#Table-of-Contents" accesskey="n" rel="next">Table of Contents</a
 <h1 class="node-heading">Top</h1>
 
 
-<p>GNU MCSim manual, version 6.0.1
+<p>GNU MCSim manual, version 6.1.0
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -141,6 +141,7 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   <li><a name="toc-Major-changes-introduced-with-version-5_002e5_002e0" href="#Major-changes-introduced-with-version-5_002e5_002e0">2.4 Major changes introduced with version 5.5.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-5_002e6_002e0" href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e0_002e0" href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></li>
+  <li><a name="toc-Major-changes-introduced-with-version-6_002e1_002e0" href="#Major-changes-introduced-with-version-6_002e1_002e0">2.7 Major changes introduced with version 6.1.0</a></li>
 </ul></li>
 <li><a name="toc-Installation-1" href="#Installation">3 Installation</a>
 <ul class="no-bullet">
@@ -270,7 +271,7 @@ of this license document, but changing it is not allowed.
 
 </pre></div>
 
-<ol>
+<ol start="0">
 <li> PREAMBLE
 
 <p>The purpose of this License is to make a manual, textbook, or other
@@ -443,7 +444,7 @@ Version filling the role of the Document, thus licensing distribution
 and modification of the Modified Version to whoever possesses a copy
 of it.  In addition, you must do these things in the Modified Version:
 </p>
-<ol>
+<ol type="A" start="1">
 <li> Use in the Title Page (and on the covers, if any) a title distinct
 from that of the Document, and from those of previous versions
 (which should, if there were any, be listed in the History section
@@ -781,9 +782,10 @@ portable.
 </li><li> Systems Biology Markup Language (SBML) models are read by libSBML
 if it is installed.
 
-</li><li> Tempered MCMC (for hard, multimodal posterior densities, and also for
-rapid and guaranteed convergence) and stochastic optimizations are
-offered as options of the <code>MCMC()</code> specification.
+</li><li> Tempered MCMC (useful for hard, multimodal posterior densities, for
+rapid and guaranteed convergence, and for model choice) and stochastic
+optimizations are offered as options of the <code>MCMC()</code>
+specification.
 
 </li></ul>
 
@@ -821,8 +823,10 @@ unknown).
 print (as <code>Print()</code> does).
 
 </li><li> In MCMC simulation, the jump kernel is now output in a file with the
-<var>.kernel</var> extension. If simulations are restarted, the jump kernel
-can be restored to its saved value.
+<var>.kernel</var> extension. If the simulations are restarted in a
+continuation mode and if a kernel file with the same name as the restart
+file (with an added <var>.kernel</var> extension) is present, the jump kernel
+will restored to its saved value.
 
 </li><li> Delay differential equations can now be coded and solved using the
 <code>CalDelay</code> function.
@@ -857,7 +861,7 @@ used in your models, see <a href="#Standard-functions">Standard functions</a>.
 input simulation files.
 
 </li><li> If you use the GNU Scientific Library (<code>libgsl</code>), the
-very long-period âMersenne twisterâ random number generator is now
+very long-period &ldquo;Mersenne twister&rdquo; random number generator is now
 used, see <a href="#Random-Generator">Random Generator</a>. Otherwise the Park and Miller
 generator is used, as before.
 
@@ -886,6 +890,27 @@ used to specify times and magnitudes in <code>Events</code> (see <a href="#Event
 </li><li> Minor bugs were fixed (see the
 <a href="http://savannah.gnu.org/projects/mcsim">http://savannah.gnu.org/projects/mcsim</a> repository for
 details).
+
+</li></ul>
+
+
+<a name="Major-changes-introduced-with-version-6_002e1_002e0"></a>
+<h3 class="section">2.7 Major changes introduced with version 6.1.0</h3>
+<a name="index-Major-changes-in-version-6_002e1_002e0"></a>
+
+<p>In <code>sim</code>:
+</p>
+<ul>
+<li> In the case of posterior tempered MCMC (<var>simTypeFlag</var> equal to 3)
+or thermodynamic integration (<var>simTypeFlag</var> equal to 4), the
+inverse temperature (perk) scale is determined automatically (unless
+you specific your own scale). The scale optimization is rather
+efficient and often reaches perk 0, which offers garanteed convergence
+with only one chain and estimation of the target posterior&rsquo;s
+normalization constant (hence Bayes factors for model choice).
+
+</li><li> <code>UserSpecifiedLL</code> can be used to specify an arbitrary data
+likelihood.
 
 </li></ul>
 
@@ -1522,7 +1547,7 @@ defined variables, standard ANSI C mathematical functions (
 <code>cos</code>, <code>cosh</code>, <code>exp</code>, <code>fabs</code>, <code>floor</code>,
 <code>fmax</code>, <code>fmin</code>, <code>fmod</code>, <code>log</code>, <code>log10</code>,
 <code>pow</code>, <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>,
-<code>tanh</code>, ), and <em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot;
+<code>tanh</code>), and <em>GNU MCSim</em>&rsquo;s &quot;<em>special functions</em>&quot;
 (see <a href="#Special-functions">Special functions</a>) or &quot;<em>input functions</em>&quot; (see <a href="#Input-functions">Input functions</a>). Special functions can take already defined variables,
 constant numerical values or expressions as parameters. Input
 functions can only be used on the right hand side of assignments to
@@ -2289,7 +2314,7 @@ Next: <a href="#Model-initialization" accesskey="n" rel="next">Model initializat
 <p><code>Inline()</code> functions can be placed in the various sections of a
 model file to introduce standard C code (or whatever) in your
 models. Text placed between the parentheses of an <code>Inline</code>
-function will be passed <em>as is</em> to the C compiler.  That text can
+function will be passed <em>as is</em> to the C compiler. That text can
 span several lines but its size should not exceed MAX_EQN (defined in
 <samp>lex.h</samp>); In case it does, you can increase MAX_EQN (and
 recompile <samp>mod</samp>...) or you can split you text between any number
@@ -2302,8 +2327,21 @@ that the code passed can be compiled without errors!
 <pre class="example">Inline( printf(&quot;hello/n&quot;); );
 </pre></div>
 
-<p>Note also that the inlined code is likely to be dependent on whether
-or not you are using the <code>-R</code> option of <code>mod</code>.
+<p>You can use C compiler (in fact preprocessor) directives, such
+<code>#include</code> directives, inside <code>Inline</code> statements, provided
+that you use the <code>\#</code> escape sequence instead of simply the
+<code>#</code> character (otherwise it is confused with a <em>GNU MCSim</em>
+comment and Hell breaks loose).
+</p>
+<p>Example:
+</p>
+<div class="example">
+<pre class="example">Inline( \#include &lt;gsl/gsl_interp.h&gt; );
+</pre></div>
+
+<p>Note also that the inlined code is likely to
+be dependent on whether or not you are using the <code>-R</code> option of
+<code>mod</code>.
 </p>
 
 <hr>
@@ -3492,15 +3530,17 @@ convergence, and then restart the chain with the flag at 2).
 </li><li> <a name="index-InvTemperature_0028_0029-specification"></a>
 <a name="index-Specification_002c-InvTemperature_0028_0029"></a>
 <a name="index-Tempered-MCMC"></a>
-<a name="Tempered-MCMC"></a>With <var>&lt;simTypeFlag&gt;</var> equal to 3 or 4, component by component
-simulated tempering is performed (Geyer and Thompson, 1995)
-(see <a href="#Bibliographic-References">Bibliographic References</a>). With option 3, the whole posterior
-is tempered (as in Geyer and Thompson) (see <a href="#Bibliographic-References">Bibliographic References</a>). With option 4, only the likelihood is tempered
-(thermodynamic integration, as in Calderhead and Girolami (2009). In
-those cases, a grid of inverse temperatures (perks) is used (along an
-annealing scheme). By default 5 inverse temperatures are used (0.4,
-0.512, 0.64, 0.8, 1), but you can define your own scale with the
-<code>InvTemperature()</code> specification, with the following syntax:
+<a name="Tempered-MCMC"></a>With <var>&lt;simTypeFlag&gt;</var> equal to 3 or 4,
+component by component simulated tempering is performed (Geyer and
+Thompson, 1995) (see <a href="#Bibliographic-References">Bibliographic References</a>). With option 3, the
+whole posterior is tempered (as in Geyer and Thompson)
+(see <a href="#Bibliographic-References">Bibliographic References</a>). With option 4, only the likelihood
+is tempered (thermodynamic integration, as in Calderhead and Girolami
+(2009). In those cases, a grid of inverse temperatures (perks) is
+first determined automatically for you (diagnostic are printed out to
+the file <samp>...out.perks</samp>). You can define your own scale with the
+<code>InvTemperature()</code> specification, with the following
+syntax:
 
 <div class="example">
 <pre class="example">InvTemperature(&lt;nValues&gt;, &lt;value 1&gt;, &lt;...&gt;, &lt;value n&gt;);
@@ -3904,7 +3944,7 @@ superior to 1), the minimum and the maximum in natural space. For
 example:
 
 <div class="example">
-<pre class="example">Distrib(Var, TruncLogNormal, 1, 2.718, 0.01, 10)
+<pre class="example">Distrib(Var, TruncLogNormal, 1, 2.718, 0.01, 10);
 </pre></div>
 
 <p>samples &lsquo;<samp>Var</samp>&rsquo; such that
@@ -3943,6 +3983,24 @@ variance instead of the standard deviation as second parameter.
 <code>Uniform</code>, with two shape parameters: the minimum and the maximum
 of the sampling range (real numbers).
 
+</li><li> <a name="index-UserSpecifiedLL-distribution"></a>
+<a name="index-Distribution_002c-UserSpecifiedLL"></a>
+<code>UserSpecifiedLL</code> can be used to specify a data likelihood. It
+allows the user to compute the log-likelihood of the data inside the
+model definition file (in the <code>Dynamics</code> or <code>CalcOutputs</code>
+sections). It uses only one parameters: the calculated
+log-likelihood. For example:
+
+<div class="example">
+<pre class="example">Likelihood(LL, UserSpecifiedLL, Prediction(LL));
+...
+Print (LL, 1);
+Data  (LL, 1);
+</pre></div>
+
+<p>In this case, the data is not actually used by the model, and must be passed
+as parameter(s) to the model.
+</p>
 </li></ul>
 
 <p>The shape parameters of the above distributions can symbolically
@@ -4080,9 +4138,10 @@ analysis to perform. Syntax:
 
 <p>The following keywords can be used: <code>DefaultSim</code> (the list of
 specified simulations is simulated), <code>MonteCarlo</code>, <code>MCMC</code>
-(previously <code>Gibbs</code>), <code>SetPoints</code>. If <code>MonteCarlo</code>,
-<code>MCMC</code>, or <code>SetPoints</code> analyses are requested, additional
-specifications are needed (see below).
+(previously <code>Gibbs</code>, which is now deprecated),
+<code>SetPoints</code>. If <code>MonteCarlo</code>, <code>MCMC</code>, or
+<code>SetPoints</code> analyses are requested, additional specifications are
+needed (see below).
 </p>
 
 
@@ -4518,21 +4577,25 @@ Next: <a href="#Data_0028_0029-specification" accesskey="n" rel="next">Data() sp
 <p>Markov chain Monte Carlo simulations require the definition of a
 statistical model structured with &quot;<em>levels</em>&quot;. Think for example of
 the definition of a prior distribution as a top level in a hierarchy,
-with the data likelihood being at the lowest level. The hierarchy levels
-are defined in <em>GNU MCSim</em> with the help of <code>Level</code> sections. At
-least one <code>Level</code> section must be defined in the simulation input
-file (you cannot use <code>Level</code> in a structural model definition
-file). A <code>Level</code> section starts with the corresponding keyword and
-is enclosed in curly braces (&rsquo;{}&rsquo;). It can include any number of
-sub-levels or <code>Simulations</code> sections. <code>Simulations</code> (where the
-data are specified) form the lowest level of the hierarchy
-(see <a href="#Simulation-sections">Simulation sections</a>). In terms of structure, <code>Simulation</code>
-sections behave like <code>Level</code> sections (in particular with regard to
-&quot;<em>cloning</em>&quot; of random variables, see below) except that they cannot
-include further levels. There must be one and only one top <code>Level</code>
-and at most 10 nested sub-levels in the hierarchy. This limit of 10 can
-be increased (up to 255) by changing MAX_LEVELS in the header file
-<samp>sim.h</samp> and re-installing <em>GNU MCSim</em>.
+with the data likelihood being at the lowest level. The hierarchy
+levels are defined in <em>GNU MCSim</em> with the help of <code>Level</code>
+sections. At least one <code>Level</code> section must be defined in the
+simulation input file (you cannot use <code>Level</code> in a structural
+model definition file). A <code>Level</code> section starts with the
+corresponding keyword and is enclosed in curly braces (&rsquo;{}&rsquo;). It can
+include any number of sub-levels or <code>Simulations</code>
+sections. <code>Simulations</code> (where the data are specified) form the
+lowest level of the hierarchy (see <a href="#Simulation-sections">Simulation sections</a>). In terms
+of structure, <code>Simulation</code> sections behave like <code>Level</code>
+sections (in particular with regard to &quot;<em>cloning</em>&quot; of random
+variables, see below) except that they cannot include further
+levels. There must be one and only one top <code>Level</code> and at most 10
+nested sub-levels in the hierarchy. No parameter assignement or
+distribution specification should occur outside a <code>Level</code>,
+otherwise it will be ignored (which is probably not what you
+want). This limit of 10 can be increased (up to 255) by changing
+MAX_LEVELS in the header file <samp>sim.h</samp> and re-installing <em>GNU
+MCSim</em>.
 </p>
 <p>A <code>Level</code> can specify or change the sampling distribution of any
 model parameter properly defined in the global section of the structural
@@ -4946,7 +5009,6 @@ your models and input files:
 </li><li> Gamma
 </li><li> GammaRandom
 </li><li> GetSeed
-</li><li> Gibbs
 </li><li> HalfCauchy
 </li><li> HalfNormal
 </li><li> IFN
@@ -5597,6 +5659,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Truncnormal_005fcv">Distribution, <code>Truncnormal_cv</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Truncnormal_005fv">Distribution, <code>Truncnormal_v</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Uniform">Distribution, <code>Uniform</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Distribution_002c-UserSpecifiedLL">Distribution, <code>UserSpecifiedLL</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Documentation-license">Documentation license</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Licenses">Licenses</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Dt_0028_0029-operator"><code>Dt()</code> operator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Dynamics-section">Dynamics section</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Dynamics-section">Dynamics section</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Dynamics-section">Dynamics section</a></td></tr>
@@ -5711,6 +5774,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e0_002e0">Major changes in version 6.0.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e1_002e0">Major changes in version 6.1.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-makemcsim-script"><code>makemcsim</code> script</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations">Markov-chain Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations-1">Markov-chain Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#MCMC_0028_0029-specification">MCMC() specification</a></td></tr>
@@ -5866,6 +5930,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Underscore-use-for-template-models">Underscore use for template models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Reading-SBML-models">Reading SBML models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Uniform-distribution"><code>Uniform</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-UniformRandom_0028_0029-function"><code>UniformRandom()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-UserSpecifiedLL-distribution"><code>UserSpecifiedLL</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Using-deSolve">Using deSolve</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Working-with-deSolve">Working with deSolve</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-V">V</a></th><td></td><td></td></tr>
