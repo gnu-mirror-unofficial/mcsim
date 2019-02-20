@@ -52,21 +52,16 @@ C, which allows you to:
 <p>
 <b>
 <span style="color: red"> 
-May 5th, 2018 - Release of GNU MCSim version 6.0.1.
+February 19th, 2019 - Release of GNU MCSim version 6.1.0.
 </span>
 </b>
 </p>
 <p>
-Version 6.0.1 fixes minor problems of version 6.0.0. Version 6.0.0
-brought several major extensions: The Jacobian matrix of your model's
-derivatives can be used by the Lsodes integrator instead of numerical
-differentiation. The Sundials library Cvodes integrator can be called
-in a Integrate specification. The vector notation can now be used in
-input simulation files. If you use the GNU Scientific Library
-(recommended), the very long-period "Mersenne twister" random number
-generator is used. Two new distributions, Normal_cv and
-TruncNormal_cv, can be used to draw normal random variates with
-specified mean and coefficient of variation.
+  Version 6.1.0 offers an automatic setting of the inverse-temperature scale
+  in simulated tempering MCMC. This greatly facilitates the uses of this
+  powerful algorithm (convergence is reached faster, only one chain needs to be
+  run if inverse-temperature zero is in the scale, Bayes factors can be
+  calculated for model choice).
 </p>
 
 
@@ -452,7 +447,7 @@ Commons Attribution-NoDerivatives 4.0 International License</a>.</p>
 
 <p class="unprintable">Updated:
 <!-- timestamp start -->
-$Date: 2018/08/23 10:25:10 $
+$Date: 2019/02/20 09:05:07 $
 <!-- timestamp end -->
 </p>
 </div>
