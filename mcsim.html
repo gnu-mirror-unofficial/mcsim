@@ -142,6 +142,7 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   <li><a name="toc-Major-changes-introduced-with-version-5_002e6_002e0" href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e0_002e0" href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e1_002e0" href="#Major-changes-introduced-with-version-6_002e1_002e0">2.7 Major changes introduced with version 6.1.0</a></li>
+  <li><a name="toc-Coming-soon_002e_002e_002e" href="#Coming-soon_002e_002e_002e">2.8 Coming soon...</a></li>
 </ul></li>
 <li><a name="toc-Installation-1" href="#Installation">3 Installation</a>
 <ul class="no-bullet">
@@ -161,7 +162,7 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   <li><a name="toc-Syntax-of-the-model-description-file" href="#Syntax-of-mod-files">5.3 Syntax of the model description file</a>
   <ul class="no-bullet">
     <li><a name="toc-General-syntax-1" href="#General-syntax">5.3.1 General syntax</a></li>
-    <li><a name="toc-Global-variable-declarations-1" href="#Global-variable-declarations">5.3.2 Global variable declarations</a></li>
+    <li><a name="toc-Declarations-of-global-variables-1" href="#Declarations-of-global-variables">5.3.2 Declarations of global variables</a></li>
     <li><a name="toc-Model-types-1" href="#Model-types">5.3.3 Model types</a></li>
     <li><a name="toc-Special-functions-1" href="#Special-functions">5.3.4 Special functions</a></li>
     <li><a name="toc-Input-functions-1" href="#Input-functions">5.3.5 Input functions</a></li>
@@ -915,6 +916,25 @@ likelihood.
 </li></ul>
 
 
+<a name="Coming-soon_002e_002e_002e"></a>
+<h3 class="section">2.8 Coming soon...</h3>
+<a name="index-Major-changes-in-next-version"></a>
+
+<p>In <code>sim</code>:
+</p>
+<ul>
+<li> NegativeBinomial.
+
+</li><li> The efficiency of the truncated normal and log-normal samplers has
+been improved by using C. Robert 1995 algorithm
+(see <a href="#Bibliographic-References">Bibliographic References</a>).
+
+</li><li> Now users can use preprocessor directives in Inline() statements,
+for example to use GSL code in such statements.
+
+</li></ul>
+
+
 <hr>
 <a name="Installation"></a>
 <div class="header">
@@ -1436,7 +1456,7 @@ examples see <a href="#Examples">Examples</a>):
 <pre class="example">
 
 # Model description file (this is a comment)
-&lt;Global variable specifications&gt;
+&lt;Declarations of global variables&gt;
 Initialize {
   &lt;Equations for initializing or scaling model parameters&gt;
 }
@@ -1467,7 +1487,7 @@ or tabs. Text after the <code>End</code> keyword is ignored.
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#General-syntax" accesskey="1">General syntax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Global-variable-declarations" accesskey="2">Global variable declarations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Declarations-of-global-variables" accesskey="2">Declarations of global variables</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Model-types" accesskey="3">Model types</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -1495,7 +1515,7 @@ or tabs. Text after the <code>End</code> keyword is ignored.
 <a name="General-syntax"></a>
 <div class="header">
 <p>
-Next: <a href="#Global-variable-declarations" accesskey="n" rel="next">Global variable declarations</a>, Up: <a href="#Syntax-of-mod-files" accesskey="u" rel="up">Syntax of mod files</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Declarations-of-global-variables" accesskey="n" rel="next">Declarations of global variables</a>, Up: <a href="#Syntax-of-mod-files" accesskey="u" rel="up">Syntax of mod files</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="General-syntax-1"></a>
 <h4 class="subsection">5.3.1 General syntax</h4>
@@ -1519,13 +1539,12 @@ All commands can span several lines and are terminated by a semi-colon
 
 </li><li> <a name="index-Variable-names"></a>
 Four types of variables are used: state variables, output variables,
-input variables, and parameters (see <a href="#Global-variable-declarations">Global variable declarations</a>).
-The name of a variable should be a valid C identifier, starting with a
-letter or underscore (<kbd>_</kbd>) and followed by any number of
-alpha-numeric characters or underscores, up to a maximum of 80. Variable
-names are case sensitive. Note that the name <kbd>IFN</kbd>, in capital
-letters, is reserved by the program and should not be used as parameter
-or variable name.
+input variables, and parameters (see <a href="#Declarations-of-global-variables">Declarations of global variables</a>).  The name of a variable should be a valid C identifier,
+starting with a letter or underscore (<kbd>_</kbd>) and followed by any
+number of alpha-numeric characters or underscores, up to a maximum of
+80. Variable names are case sensitive. Note that the names <kbd>IFN</kbd>
+and <kbd>IGS</kbd>, in capital letters, are reserved by the program and
+should not be used as a parameter or variable name.
 
 </li><li> <a name="index-Assignment"></a>
 <a name="index-_0027_003d_0027-sign"></a>
@@ -1665,7 +1684,7 @@ the implicit variable &rsquo;time&rsquo;.
 <p><i>Vectorization of equations</i>: The equations specifying the model,
 which consist in assignments, can be vectorized in the
 <code>Initialize</code>, <code>Dynamics</code> and <code>CalcOutputs</code> sections
-(but not in the global section) (see <a href="#Global-variable-declarations">Global variable declarations</a>). Vectorization allows you to specify an operation for an
+(but not in the global section) (see <a href="#Declarations-of-global-variables">Declarations of global variables</a>). Vectorization allows you to specify an operation for an
 entire vector or parts of it. The following syntax should be
 used:
 <a name="index-Vectorization"></a>
@@ -1747,13 +1766,13 @@ The <code>End</code> keyword must used to indicate model termination.
 
 
 <hr>
-<a name="Global-variable-declarations"></a>
+<a name="Declarations-of-global-variables"></a>
 <div class="header">
 <p>
 Next: <a href="#Model-types" accesskey="n" rel="next">Model types</a>, Previous: <a href="#General-syntax" accesskey="p" rel="prev">General syntax</a>, Up: <a href="#Syntax-of-mod-files" accesskey="u" rel="up">Syntax of mod files</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<a name="Global-variable-declarations-1"></a>
-<h4 class="subsection">5.3.2 Global variable declarations</h4>
+<a name="Declarations-of-global-variables-1"></a>
+<h4 class="subsection">5.3.2 Declarations of global variables</h4>
 <a name="index-Parameter-declaration"></a>
 
 
@@ -1770,15 +1789,17 @@ defined in the <code>Dynamics</code> section (see <a href="#Dynamics-section">Dy
 allowed).
 
 </li><li> <a name="index-Input-variables"></a>
-Inputs are variables independent of the others variables, but eventually
-varying with time (for example an exposure concentration to a
+Inputs are variables independent of the others variables, and may
+change with time (for example an exposure concentration to a
 chemical).
 
 </li><li> <a name="index-Output-variables"></a>
-Outputs are dependent model variables (obtainable at any time as
-analytical functions of the states, inputs or parameters) that do not
-have dynamics. They must receive assignments in either the <code>Dynamics</code>
-or <code>CalcOutputs</code> sections.
+Outputs are dependent model variables, obtainable at any time as
+analytical functions of the states, inputs or parameters. They must
+receive assignments in either the <code>Dynamics</code> or
+<code>CalcOutputs</code> sections. You should not assume that their past
+values are accessible and correct: they have to be calculated in the
+same section where they are used and before being used.
 
 </li></ul>
 
@@ -1851,7 +1872,7 @@ declarations come first, is strongly suggested to avoid confusing
 results. Note again that the name <code>IFN</code>, in capital letters, is
 reserved by the program and should not be used as parameter or
 variable name.  Finally, if a parameter is defined several times, only
-the first definition is taken into account (a warning is issued, but
+the first definition is taken into account (a warning is issued,
 beware of it).
 </p>
 
@@ -1860,7 +1881,7 @@ beware of it).
 <a name="Model-types"></a>
 <div class="header">
 <p>
-Next: <a href="#Special-functions" accesskey="n" rel="next">Special functions</a>, Previous: <a href="#Global-variable-declarations" accesskey="p" rel="prev">Global variable declarations</a>, Up: <a href="#Syntax-of-mod-files" accesskey="u" rel="up">Syntax of mod files</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Special-functions" accesskey="n" rel="next">Special functions</a>, Previous: <a href="#Declarations-of-global-variables" accesskey="p" rel="prev">Declarations of global variables</a>, Up: <a href="#Syntax-of-mod-files" accesskey="u" rel="up">Syntax of mod files</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Model-types-1"></a>
 <h4 class="subsection">5.3.3 Model types</h4>
@@ -2042,6 +2063,15 @@ log(<var>mean</var>) and standard deviation log(<var>sd</var>));
 <code>LogUniformRandom(<var>a</var>, <var>b</var>)</code>: returns variate log-uniformly
 distributed on the interval [<var>a</var>,<var>b</var>];
 
+</li><li> <a name="index-NegativeBinomialRandom_0028_0029-function"></a>
+<a name="index-Function_002c-NegativeBinomialRandom_0028_0029"></a>
+<a name="index-Random-number_002c-negative-binomial"></a>
+<code>NegativeBinomialRandom(<var>r</var>, <var>p</var>)</code>: returns a negative
+binomial random variable with prescribed number of failures, <var>r</var>,
+until trials are stopped, and probability of success, <var>p</var>,
+for each trial
+
+
 </li><li> <a name="index-NormalRandom_0028_0029-function"></a>
 <a name="index-Function_002c-NormalRandom_0028_0029"></a>
 <a name="index-Random-number_002c-normal"></a>
@@ -2158,7 +2188,7 @@ functions:
 <li> <a name="index-PerDose_0028_0029-function"></a>
 <a name="index-Function_002c-PerDose_0028_0029"></a>
 <code>PerDose()</code> specifies a periodic input of constant
-<var>&lt;magnitude&gt;</var>.  The input begins at <var>&lt;initial-time&gt;</var> in the
+<var>&lt;magnitude&gt;</var>. The input begins exactly at <var>&lt;initial-time&gt;</var> in the
 <var>&lt;period&gt;</var> and lasts for <var>&lt;exposure-time&gt;</var> time
 units. Syntax:
 
@@ -2254,12 +2284,14 @@ magnitude at that first time is zero.
 </li><li> <a name="index-Spikes_0028_0029-function"></a>
 <a name="index-Function_002c-Spikes_0028_0029"></a>
 <code>Spikes()</code> specifies a number of instantaneous inputs of variable
-magnitude and their exact times of occurrence. The first argument,
-<var>&lt;n&gt;</var>, is the number of inputs and input times. Next come a list of
-magnitudes and a list of times. Each list is comma-separated.
-Currently this function can only be used in the simulation description
-file, and not in the model description file (which simply implies that
-you cannot use it as a default). Syntax:
+magnitude and their exact times of occurrence. However, a spike
+occuring exactly at the final simulation time will be ignored (see
+below the Note on discontinuity). The first argument, <var>&lt;n&gt;</var>, is
+the number of inputs and input times. Next come a list of magnitudes
+and a list of times. Each list is comma-separated. Currently this
+function can only be used in the simulation description file, and not
+in the model description file (which simply implies that you cannot
+use it as a default). Syntax:
 
 <div class="example">
 <pre class="example">&lt;input variable&gt; = Spikes(&lt;n&gt;, &lt;list-of-magnitudes&gt;,
@@ -2289,7 +2321,10 @@ before each simulation specified by a <code>Simulation</code> section
 period,
 <i>e.g.</i> 1e10.
 The first period starts at the initial time of the simulation.
-Magnitudes change exactly at the times given.
+</p>
+<p>Note on discontinuities: Magnitudes change exactly at the times
+given. At a discontinuity, the time point belongs to the NEW time period
+UNLESS we are at the final time.
 </p>
 <p>Input variables assigned input functions can be combined to give a lot
 of flexibility (<i>e.g.</i>, an input variable can be declared as the sum
@@ -2466,17 +2501,17 @@ change with time, you can declare it as an output variable in the global
 section. Assignments to states, inputs or parameters in this section
 causes an error message like the following to be issued:
 </p>
+<div class="example">
+<pre class="example">Error: line 48: 'YourParm' used in invalid context.
+Parameters cannot be defined in Dynamics{} section.
+</pre></div>
+
 <p>Note also that, in <code>Dynamics</code>, output variables should be assigned
 a value or equation before being used. You cannot assume that the value
 computed during a previous call to the function is valid, because the
 integrator may have taken too long a time step, for example. The
 integrator keeps track of state variables only.
 </p>
-<div class="example">
-<pre class="example">Error: line 48: 'YourParm' used in invalid context.
-Parameters cannot be defined in Dynamics{} section.
-</pre></div>
-
 
 
 <hr>
@@ -2559,11 +2594,19 @@ Only output and local variables can be defined in CalcOutputs section.
 </pre></div>
 
 <p>Any reference to an input or state variable will use the current value
-(at the time of output). The <code>dt()</code> operator can appear in the
-right-hand side of equations, and refers to current values of the
-derivatives (see <a href="#Dynamics-section">Dynamics section</a>). Like in the
-<code>Dynamics</code> section, the integration variable can be accessed if
-referred to as <code>t</code>, as in:
+(at the time of output). Note that <code>CalcOutputs</code> code is called
+only on the correct state trajectory, but you cannot reuse past values
+of outputs in your code, for example forming cumulative sums such as:
+</p>
+<div class="example">
+<pre class="example">a = a + b;
+</pre></div>
+
+<p>The <code>dt()</code> operator can appear in the right-hand side
+of equations, and refers to current values of the derivatives
+(see <a href="#Dynamics-section">Dynamics section</a>). Like in the <code>Dynamics</code> section, the
+integration variable can be accessed if referred to as <code>t</code>, as
+in:
 </p>
 <div class="example">
 <pre class="example">Qx_out = DQx * t;
@@ -2984,6 +3027,19 @@ enclosed in <code>Level</code> sections. (The keyword <code>Experiment</code> is
 now obsolete but can still be used as a synonym for
 <code>Simulation</code>.)
 </p>
+<p>It is important to note that all simulations are fundamentally
+dynamic, and that time is the explicit independent variable. There can
+be time-discontuities in your simulations if a input changes
+instantaneously (see <a href="#Input-functions">Input functions</a>). At a discontinuity, the
+time point belongs to the new time period unless we are at the final
+time. Current simulation time can be accessed in your model using
+variable <code>t</code>. It is possible to ignore time and write models
+which do not consider it, but inputs and outputs of such models will
+still refer to time. For example, you are required to specify at least
+one output time to print results from your model, even though time is
+inconsequent. In that case you can use an arbitrary time or sets of
+times.
+</p>
 <p>Each <code>Simulation</code> section defines simulation conditions, from an
 initial time (or whatever the dependent variable represents,
 see <a href="#Model-types">Model types</a>) to a final time. Initial values of the model state
@@ -3148,10 +3204,10 @@ previously (see <a href="#Input-functions">Input functions</a>). Briefly, these 
 </pre></div>
 
 
-<a name="index-PerTransit_0028_0029-function-1"></a>
+</li><li> <a name="index-PerTransit_0028_0029-function-1"></a>
 <a name="index-Function_002c-PerTransit_0028_0029-1"></a>
-<p><code>PerTransit()</code>:
-</p>
+<code>PerTransit()</code>:
+
 <div class="example">
 <pre class="example">PerTransit(&lt;magnitude&gt;, &lt;period&gt;, &lt;initial-time-in-period&gt;,
            &lt;decay-constant&gt;, &lt;number-of-input-compartments&gt;);
@@ -3178,7 +3234,9 @@ previously (see <a href="#Input-functions">Input functions</a>). Briefly, these 
 </li></ul>
 
 <p>In addition, they can be assigned a <code>Events()</code> specification
-(see <a href="#Events_0028_0029-specification">Events() specification</a>).
+(see <a href="#Events_0028_0029-specification">Events() specification</a>). Again, at a discontinuity, the time
+point belongs to the new time period unless we are at the final
+time.
 </p>
 <hr>
 <a name="Global-specifications"></a>
@@ -3277,12 +3335,14 @@ Next: <a href="#MonteCarlo_0028_0029-specification" accesskey="n" rel="next">Mon
 <a name="index-Specification_002c-Integrate_0028_0029"></a>
 <a name="index-Lsodes-integrator"></a>
 <a name="index-Integration-routine_002c-Lsodes"></a>
+<a name="index-Cvodes-integrator"></a>
+<a name="index-Integration-routine_002c-Cvodes"></a>
 <a name="index-Euler-integrator"></a>
 <a name="index-Integration-routine_002c-Euler"></a>
 
 
 <p>The integrator settings can be changed with the <code>Integrate</code>
-specification. Three integration routines are provided: <code>Lsodes</code>
+specification. Three integration routines can be used: <code>Lsodes</code>
 (which originates from the SLAC Fortran library and is originally
 based on Gear&rsquo;s routine) (Gear, 1971b; Gear, 1971a; Press et al.,
 1989) (see <a href="#Bibliographic-References">Bibliographic References</a>), <code>Cvodes</code> (from the
@@ -3297,11 +3357,12 @@ and <code>Euler</code> (Press et al., 1989).
 <pre class="example">Integrate(Lsodes, &lt;rtol&gt;, &lt;atol&gt;, &lt;method&gt;);
 </pre></div>
 
-<p>where <var>&lt;rtol&gt;</var> is a scalar specifying the relative error tolerance for each
-integration step. The scalar <var>&lt;atol&gt;</var> specifies the absolute error
-tolerance parameter. Those tolerances are used for all state variables. The
-estimated local error for a state variable <var>y</var> is controlled so as
-to be roughly less (in magnitude) than
+<p>where <var>&lt;rtol&gt;</var> is a floating point scalar specifying the relative
+error tolerance for each integration step. The floating point scalar
+<var>&lt;atol&gt;</var> specifies the absolute error tolerance parameter. Those
+tolerances are used for all state variables. The estimated local error
+for a state variable <var>y</var> is controlled so as to be roughly less
+(in magnitude) than
 <var>rtol</var>*|<var>y</var>| + <var>atol</var>.
 Thus the local error test passes if, for each state variable, either
 the absolute error is less than <var>&lt;atol&gt;</var>, or the relative error is
@@ -3322,25 +3383,37 @@ point for <var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> is about
 1e-6.
 </p>
 
-<p>The syntax for <code>Cvodes</code> is similar to that of <code>Lsodes</code>; the
-<var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> have the same meaning as above, but for
-the moment the last flag is not used (you should leave it at
-zero):
+<p>The syntax for <code>Cvodes</code> is:
 </p>
 <div class="example">
-<pre class="example">Integrate(Cvodes, &lt;rtol&gt;, &lt;atol&gt;, &lt;unused&gt;);
+<pre class="example">Integrate(Cvodes, &lt;rtol&gt;, &lt;atol&gt;, &lt;maxsteps&gt;, &lt;maxnef&gt;, &lt;maxcor&gt;,
+          &lt;maxncf&gt;, &lt;nlscoef&gt;);
 </pre></div>
 
+<p><var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> have the same meaning as for <code>Lsodes</code>,
+above.
+</p>
+<p>The <var>&lt;maxsteps&gt;</var> is an integer secifying the maximum number of
+internal steps taken before exiting a Cvodes call; the default value
+in Sundials is 500. <var>maxnef</var> is an integer specifying the maximum
+number of error test failures accepted; the default value in Sundials
+is 7. <var>maxcor</var> is an integer giving the maximum number of
+nonlinear iterations attempted; the default value in Sundials is
+3. <var>maxncf</var> is again an integer specifying the maximum number of
+convergence failures accepted; the default value in Sundials is
+10. Finally, <var>nlscoef</var> is a floating point scaler corresponding to
+the coefficient of the nonlinear convergence test; the default value
+in Sundials is 0.1.
+</p>
 
 <p>The syntax for <code>Euler</code> is:
 </p>
 <div class="example">
-<pre class="example">Integrate(Euler, &lt;time-step&gt;, 0, 0);
+<pre class="example">Integrate(Euler, &lt;time-step&gt;);
 </pre></div>
 
 <p>where <var>&lt;time-step&gt;</var> is a scalar specifying the constant time
-increment for each integration step. The next two scalars are reserved
-for future use and should be set to zero.
+increment for each integration step.
 </p>
 <p>Note: if the <code>Integrate()</code> specification is not used, the default
 integration method is <code>Lsodes</code> with parameters
@@ -3538,9 +3611,8 @@ whole posterior is tempered (as in Geyer and Thompson)
 is tempered (thermodynamic integration, as in Calderhead and Girolami
 (2009). In those cases, a grid of inverse temperatures (perks) is
 first determined automatically for you (diagnostic are printed out to
-the file <samp>...out.perks</samp>). You can define your own scale with the
-<code>InvTemperature()</code> specification, with the following
-syntax:
+the file <samp>...out.perks</samp>), unless you define your own perks scale with the
+<code>InvTemperature()</code> specification:
 
 <div class="example">
 <pre class="example">InvTemperature(&lt;nValues&gt;, &lt;value 1&gt;, &lt;...&gt;, &lt;value n&gt;);
@@ -3550,20 +3622,21 @@ syntax:
 and is followed by a list of them. Those should be numbers in the
 interval [0,infinity[. Values above 1 lead in fact to simulated
 annealing (sharpening of the posterior distribution), suitable for
-optimization (see Amzal et al. 2006) (see <a href="#Bibliographic-References">Bibliographic References</a>). For simulated tempering (including thermodynamic
-integration you will want to keep perks lower or equal to 1. You usually
-want to include the value 1 (since temperature = 1 corresponds to your
-target distribution.) At perk zero, the posterior distribution is
-uniform for all parameters (in the case of posterior tempering), or to
-the prior (in the case of likelihood tempering). Each time the simulated
-Markov chain reaches perk zero is a regeneration time (Geyer and
-Thompson, 1995). Samples obtained at perk 1 between regeneration times
-are guaranteed to be from the posterior distribution, so that only one
-chains needs to be run and convergence need not to be checked (a
-significant advantage of simulated tempering). Simulated tempering is
-also adapted to problems with multiple maxima of the posterior
-distribution, in which standard samplers or Hamiltonian MCMC usually get
-stuck in a local mode.
+optimization (see Amzal et al. 2006) (see <a href="#Bibliographic-References">Bibliographic References</a>). For simulated tempering, including thermodynamic
+integration, you should have perks lower or equal to 1. You usually
+want to include the value 1 (since that perk corresponds to your
+target distribution). At perk zero, the posterior distribution is
+uniform for all parameters in the case of posterior tempering, or
+equal to the prior in the case of likelihood tempering. Each time the
+simulated Markov chain reaches perk zero is a regeneration time (Geyer
+and Thompson, 1995). Samples obtained at perk 1 between regeneration
+times are guaranteed to be from the posterior distribution, so that
+only one chains needs to be run and convergence need not to be checked
+(a significant advantage of simulated tempering). Simulated tempering
+is also adapted to problems with multiple maxima of the posterior
+distribution, in which standard samplers or Hamiltonian MCMC usually
+get stuck in a local mode. See <a href="#Analyzing-simulation-output">Analyzing simulation output</a> for
+the output format of tempered MCMC simulations.
 </p>
 </li><li> Finally with <var>&lt;simTypeFlag&gt;</var> set to 5, GNU MCSim does stochastic
 optimization (an MCMC in which only, but all, jumps leading posterior
@@ -3893,6 +3966,13 @@ maximum of the sampling range (real numbers) in natural space.
 <code>Normal</code>, takes two reals numbers as parameters: the mean and the
 standard deviation, the latter being strictly positive.
 
+</li><li> <a name="index-NegativeBinomial-distribution"></a>
+<a name="index-Distribution_002c-NegativeBinomial"></a>
+<code>NegativeBinomial</code>, needs two positive or null numbers: the number
+of failures <var>r</var> until trials are stopped and probability of success
+(<var>p</var>, a real in the interval [0;1]) for each trial.
+
+
 </li><li> <a name="index-Normal_005fcv-distribution"></a>
 <a name="index-Distribution_002c-Normal_005fcv"></a>
 <a name="Normal_005fcv"></a><code>Normal_cv</code>, is the normal distribution with the coefficient of
@@ -3998,14 +4078,17 @@ Print (LL, 1);
 Data  (LL, 1);
 </pre></div>
 
-<p>In this case, the data is not actually used by the model, and must be passed
-as parameter(s) to the model.
+<p>In this case, the <code>Data()</code> statements are not actually used by
+the model. They must still be provided, with arbitrary data values
+(except that you should not use the missing data code, -1 by
+default). The actual data values must be passed as parameter(s) to the
+model. 
 </p>
 </li></ul>
 
-<p>The shape parameters of the above distributions can symbolically
-reference other model parameters, even if distributions for these have
-already been defined. For example:
+<p>The shape parameters of the above distributions, if they are defined,
+can symbolically reference other model parameters, even if
+distributions for these have already been defined. For example:
 </p>
 <div class="example">
 <pre class="example">Distrib(A, Normal, 0, 1);
@@ -4746,8 +4829,29 @@ sections. For example, the second instance of a parameter called
 at the second instance of the second level of the hierarchy is labeled
 <var>name</var>(<var>2.1</var>), etc.
 </p>
-<p>The tab-delimited file can easily be imported into your favorite
-spreadsheet, graphic or statistical package for further analysis.
+<p>If tempered Markov chain Monte Carlo simulations have been requested,
+the overall output format is the same as above, with the addition of a
+column of perk index (the lowest perk having index zero), and columns
+of log-pseudoprior values (one column per perk, starting with the
+log-pseudoprior of the lowest perk). Those extra colums are labelled
+&lsquo;<samp>IndexT</samp>&rsquo;, &lsquo;<samp>LnPseudoPrior(1)</samp>&rsquo;, &lsquo;<samp>LnPseudoPrior(2)</samp>&rsquo;,
+etc. and come just after the parameters. The samples at the highest
+perk (typically, perk 1) can be found by selecting the highest value of
+&lsquo;<samp>IndexT</samp>&rsquo;.
+</p>
+<p>In addition, in the case of tempered MCMC, an history of the perks
+values computed is saved with the same name as the output file, with a
+<var>.perks</var> extension. It lists perk values, counts of samples and
+log-pseudoprior at each perk, attempted jumps and successful jumps
+between perks. This can help check the perk schedule optimisation (in
+particular whether perk zero has been reached) and the behavior of the
+chain over perks values. If the perks are correctly spaced, there
+should be about equal number of samples at each perk, and jumps
+between perks should be frequent.
+</p>
+<p>Those tab-delimited files can easily be imported into your favorite
+spreadsheet, graphic or statistical package for further
+analysis.
 </p>
 
 
@@ -4943,6 +5047,9 @@ ones are hard to find. Communications of the ACM <b>31</b>:1192-1201.
 (1989). Numerical Recipes (2nd ed.). Cambridge University Press,
 Cambridge.
 </p>
+<p>Robert C.P. (1995). Simulation of truncated normal variables.
+Statistics and Computing. <b>5</b>(2):121-125. doi:10.1007/BF00143942.
+</p>
 <p>Savic R.M., Jonker D.M., Kerbusch T., Karlsson
 M.O. (2007). Implementation of a transit compartment model for
 describing drug absorption in pharmacokinetic studies. Journal of
@@ -5033,6 +5140,8 @@ your models and input files:
 </li><li> MCMC
 </li><li> MonteCarlo
 </li><li> Multiply
+</li><li> NegativeBinomial
+</li><li> NegativeBinomialRandom
 </li><li> NDoses
 </li><li> Normal
 </li><li> NormalRandom
@@ -5614,6 +5723,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Complementary-error-function">Complementary error function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Conditional-assignment">Conditional assignment</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Cumulative-density-function_002c-Normal">Cumulative density function, Normal</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Cvodes-integrator"><code>Cvodes</code> integrator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-D">D</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Data_0028_0029-qualifier_002c-for-use-in-Distrib_0028_0029"><code>Data()</code> qualifier, for use in <code>Distrib()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
@@ -5642,6 +5752,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-LogNormal">Distribution, <code>LogNormal</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-LogNormal_005fv">Distribution, <code>LogNormal_v</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Loguniform">Distribution, <code>Loguniform</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Distribution_002c-NegativeBinomial">Distribution, <code>NegativeBinomial</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal">Distribution, <code>Normal</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal_005fcv">Distribution, <code>Normal_cv</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Distribution_002c-Normal_005fv">Distribution, <code>Normal_v</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
@@ -5699,6 +5810,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Function_002c-LogUniformRandom_0028_0029">Function, <code>LogUniformRandom()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-NDoses_0028_0029">Function, <code>NDoses()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-NDoses_0028_0029-1">Function, <code>NDoses()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions-revisited">Input functions revisited</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Function_002c-NegativeBinomialRandom_0028_0029">Function, <code>NegativeBinomialRandom()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-NormalRandom_0028_0029">Function, <code>NormalRandom()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PerDose_0028_0029">Function, <code>PerDose()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Function_002c-PerDose_0028_0029-1">Function, <code>PerDose()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions-revisited">Input functions revisited</a></td></tr>
@@ -5740,9 +5852,10 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Input-functions">Input functions</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Input-functions-1">Input functions</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Input-functions-2">Input functions</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions-revisited">Input functions revisited</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Input-variables">Input variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Global-variable-declarations">Global variable declarations</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Input-variables">Input variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Installation">Installation</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installation">Installation</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Integrate_0028_0029-specification"><code>Integrate()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Integration-routine_002c-Cvodes">Integration routine, <code>Cvodes</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Integration-routine_002c-Euler">Integration routine, <code>Euler</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Integration-routine_002c-Lsodes">Integration routine, <code>Lsodes</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Integration-variable">Integration variable</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Dynamics-section">Dynamics section</a></td></tr>
@@ -5770,6 +5883,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Lsodes-integrator"><code>Lsodes</code> integrator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-M">M</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-next-version">Major changes in next version</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e4_002e0">Major changes in version 5.4.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
@@ -5796,6 +5910,8 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><th><a name="Concept-Index_cp_letter-N">N</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-NDoses_0028_0029-function"><code>NDoses()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-NDoses_0028_0029-function-1"><code>NDoses()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions-revisited">Input functions revisited</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-NegativeBinomial-distribution"><code>NegativeBinomial</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-NegativeBinomialRandom_0028_0029-function"><code>NegativeBinomialRandom()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Normal-cumulative-density-function">Normal cumulative density function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Normal-density-function">Normal density function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Normal-distribution"><code>Normal</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
@@ -5806,12 +5922,12 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><th><a name="Concept-Index_cp_letter-O">O</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-OptimalDesign_0028_0029-specification"><code>OptimalDesign()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#OptimalDesign_0028_0029-specification">OptimalDesign() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Output-specification">Output specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Output-calculations">Output calculations</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Output-variables">Output variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Global-variable-declarations">Global variable declarations</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Output-variables">Output variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-OutputFile_0028_0029-specification"><code>OutputFile()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#OutputFile_0028_0029-specification">OutputFile() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Overview">Overview</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-P">P</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Parameter-declaration">Parameter declaration</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Global-variable-declarations">Global variable declarations</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Parameter-declaration">Parameter declaration</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Parameter-scaling">Parameter scaling</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-initialization">Model initialization</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PerDose_0028_0029-function"><code>PerDose()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PerDose_0028_0029-function-1"><code>PerDose()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions-revisited">Input functions revisited</a></td></tr>
@@ -5846,6 +5962,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-inverse_002dgamma">Random number, inverse-gamma</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-lognormal">Random number, lognormal</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-loguniform">Random number, loguniform</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Random-number_002c-negative-binomial">Random number, negative binomial</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-normal">Random number, normal</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-piecewise">Random number, piecewise</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-number_002c-Poisson">Random number, Poisson</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
@@ -5897,7 +6014,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Square-brackets">Square brackets</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-StartTime_0028_0029-specification"><code>StartTime()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#StartTime_0028_0029-specification">StartTime() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-State-discontinuities">State discontinuities</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Events_0028_0029-specification">Events() specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-State-variables">State variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Global-variable-declarations">Global variable declarations</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-State-variables">State variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Statistical-models">Statistical models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-statistical-models">Setting-up statistical models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Structural-models">Structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Structural-models-1">Structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-types">Model types</a></td></tr>
