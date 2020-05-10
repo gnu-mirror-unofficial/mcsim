@@ -4108,10 +4108,13 @@ extensions of the above <code>Distrib()</code> specification syntax.
 <a name="index-Density_0028_0029-specification"></a>
 <a name="index-Specification_002c-Density_0028_0029"></a>
 </p>
-<p>First, when <code>Distrib()</code> is used to specify the distribution of a
-model parameter, that parameter can also appear as a shape
-parameter, if a distribution has already been specified for the
-parameter at an upper <code>Level</code> of the file. For example:
+<p>First, when <code>Distrib()</code> is used to specify the prior or
+conditional distribution of a model parameter (in a Bayesian
+framework), that parameter can also appear as a shape parameter, if a
+distribution has already been specified for the parameter at an upper
+<code>Level</code> of the file.
+</p>
+<p>For example:
 </p>
 <div class="example">
 <pre class="example">Level {                      # upper level
@@ -4133,15 +4136,25 @@ and variance for their &quot;<em>child</em>&quot; parameter, <var>A</var>, when 
 its turn to be randomly sampled. This forms the basis of the
 specification of multilevel (hierarchical) models (see <a href="#Setting_002dup-statistical-models">Setting-up statistical models</a>).
 </p>
+<p>Note that the keyword <code>Density()</code> can be used instead of
+<code>Distrib()</code> to make more understandable MCMC input
+files. <code>Density()</code> and <code>Distrib()</code> are equivalent and have
+the same syntax. We recommend its use.
+</p>
 <p>Next, in MCMC simulations, you usually assign a probability
-distribution (or a likelihood) to the data you are trying to
-analyze. Typically, your model&rsquo;s state and/or output variables will
-attempt to predict some aspect of the observed data distributions
-(mean, variance, <i>etc.</i>). <em>GNU MCSim</em> gives you the possibility to
+distribution (<i>i.e.</i>, a likelihood) to the data you
+analyze. Typically, your model&rsquo;s state and/or output variables will be
+used to predict some aspect of the observed data distributions (mean,
+variance, <i>etc.</i>). <em>GNU MCSim</em> gives you the possibility to
 specify a distribution for your data, using model parameters, input,
 state, or output model variables, or even other data, to define the
 distribution shape. This is achieved through the use of the
-<code>Data()</code> and <code>Prediction()</code> &quot;<em>qualifiers</em>&quot;.
+<code>Data()</code> and <code>Prediction()</code> &quot;<em>qualifiers</em>&quot;. In that
+case, the keyword <code>Likelihood()</code> should be used instead of
+<code>Distrib()</code> (the two keywords are equivalent and have the same
+syntax, but we recommend that you use <code>Likelihood()</code> to make your
+MCMC input files more understandable and make it clear that the data
+are <i>not</i> sampled, but only assigned a likelihood).
 </p>
 <p><code>Data()</code> can be used at the first position of a <code>Distrib()</code>
 statement, or as a distribution shape parameter. It uses the following
@@ -4169,21 +4182,21 @@ through <code>Print()</code> or <code>PrintStep()</code> specifications
 [see <a href="#Print_0028_0029-specification">Print() specification</a> and <a href="#PrintStep_0028_0029-specification">PrintStep() specification</a>).
 </p>
 <p>Here are some example of use of <code>Data()</code> and <code>Prediction()</code>
-in the extended syntax of a <code>Distrib()</code> specification:
+in the extended syntax of a <code>Likelihood()</code> specification:
 </p>
 <div class="example">
-<pre class="example">Distrib (Data(y), Normal,   Prediction(y), 0.01);
+<pre class="example">Likelihood (Data(y), Normal,   Prediction(y), 0.01);
 ...
 Data (y, 0.1, 2,  5,  3,  9.2);
 Print(y, 10,  20, 40, 60, 100);
 
-Distrib (Data(y), Normal,   Prediction(y), Prediction(sigma));
+Likelihood (Data(y), Normal,   Prediction(y), Prediction(sigma));
 ...
 Data (y, 1.01, 1.20, 0.97, 0.80, 1.02);
 PrintStep(y,     10, 50, 10);
 PrintStep(sigma, 10, 50, 10);
 
-Distrib (Data(R), Binomial, Prediction(P), Data(N));
+Likelihood (Data(R), Binomial, Prediction(P), Data(N));
 ...
 Data (R, 0,  2,  5, 5,  8, 9, 10, 10);
 Data (N, 10, 10, 9, 10, 9, 9, 11, 10);
@@ -4191,12 +4204,9 @@ Print(P, 10, 20, 30,40, 50,60,70, 80);
 
 </pre></div>
 
-<p>(these could not appear all as such in an input file, they would need to
-be embedded in <code>Level</code> and <code>Simulation</code> sections.)
-</p>
-<p>Last, for more readable input files, two keywords, <code>Density()</code> and
-<code>Likelihood()</code>, can be used instead of <code>Distrib()</code>. They are
-equivalent to <code>Distrib()</code> and have the same syntax.
+<p>(all these statements could not appear as such in an input file, they
+would need to be embedded in <code>Level</code> and <code>Simulation</code>
+sections.)
 </p>
 
 
