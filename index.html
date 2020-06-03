@@ -61,16 +61,14 @@ C, which allows you to:
 <p>
 <b>
 <span style="color: red"> 
-February 19th, 2019 - Release of GNU MCSim version 6.1.0.
+June 3rd, 2020 - Release of GNU MCSim version 6.2.0.
 </span>
 </b>
 </p>
 <p>
-  Version 6.1.0 offers an automatic setting of the inverse-temperature scale
-  in simulated tempering MCMC. This greatly facilitates the uses of this
-  powerful algorithm (convergence is reached faster, only one chain needs to be
-  run if inverse-temperature zero is in the scale, Bayes factors can be
-  calculated for model choice).
+Version 6.2.0 offers various extensions, but most notably
+parallelization of Monte Carlo, SetPoints and MCMC simulations, if you
+have a multi-processor machine and MPI installed.
 </p>
 
 
@@ -216,6 +214,12 @@ files and will probably not work. We provide CVODES version 2.7.0
 <a href="cvodes-2.7.0.tar.gz">here</a>. It is also distributed by Ubuntu
 (as of March 11, 2020), or you can fetch it from the archives of the
 <a href="https://computing.llnl.gov/projects/sundials">Sundials web site</a>.
+</p>
+
+<p>
+Version 6.2.0 and later releases can take advantage of
+multi-processors machines to run parallel simulations. You need to
+install a MPI library (for example from the Open MPI project).
 </p>
 
 <p>
@@ -475,7 +479,7 @@ Commons Attribution-NoDerivatives 4.0 International License</a>.</p>
 
 <p class="unprintable">Updated:
 <!-- timestamp start -->
-$Date: 2020/03/11 07:47:09 $
+$Date: 2020/06/03 19:54:20 $
 <!-- timestamp end -->
 </p>
 </div>
