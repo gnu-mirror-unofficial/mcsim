@@ -61,7 +61,7 @@ Next: <a href="#Table-of-Contents" accesskey="n" rel="next">Table of Contents</a
 <h1 class="node-heading">Top</h1>
 
 
-<p>GNU MCSim manual, version 6.1.0
+<p>GNU MCSim manual, version 6.2.0
 </p>
 <p><em>GNU MCSim</em> is a general purpose modeling and simulation program
 which can performs &quot;standard&quot; or &quot;Markov chain&quot; Monte Carlo
@@ -89,7 +89,7 @@ Reference Manual
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Working-Through-an-Example" accesskey="5">Working Through an Example</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">highly recommended!
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Setting_002dup-Structural-Models" accesskey="6">Setting-up Structural Models</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">use and syntax of model definition files
+<tr><td align="left" valign="top">&bull; <a href="#Writing-and-Compiling-Structural-Models" accesskey="6">Writing and Compiling Structural Models</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">syntax and compilation of models
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Running-Simulations" accesskey="7">Running Simulations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">syntax of simulation specification files
 </td></tr>
@@ -142,7 +142,7 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   <li><a name="toc-Major-changes-introduced-with-version-5_002e6_002e0" href="#Major-changes-introduced-with-version-5_002e6_002e0">2.5 Major changes introduced with version 5.6.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e0_002e0" href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e1_002e0" href="#Major-changes-introduced-with-version-6_002e1_002e0">2.7 Major changes introduced with version 6.1.0</a></li>
-  <li><a name="toc-Coming-soon_002e_002e_002e" href="#Coming-soon_002e_002e_002e">2.8 Coming soon...</a></li>
+  <li><a name="toc-Major-changes-introduced-with-version-6_002e2_002e0" href="#Major-changes-introduced-with-version-6_002e2_002e0">2.8 Major changes introduced with version 6.2.0</a></li>
 </ul></li>
 <li><a name="toc-Installation-1" href="#Installation">3 Installation</a>
 <ul class="no-bullet">
@@ -155,10 +155,10 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   </ul></li>
 </ul></li>
 <li><a name="toc-Working-Through-an-Example-1" href="#Working-Through-an-Example">4 Working Through an Example</a></li>
-<li><a name="toc-Setting_002dup-Structural-Models-1" href="#Setting_002dup-Structural-Models">5 Setting-up Structural Models</a>
+<li><a name="toc-Writing-and-Compiling-Structural-Models-1" href="#Writing-and-Compiling-Structural-Models">5 Writing and Compiling Structural Models</a>
 <ul class="no-bullet">
   <li><a name="toc-Using-mod-to-preprocess-model-description-files" href="#Using-mod">5.1 Using <code>mod</code> to preprocess model description files</a></li>
-  <li><a name="toc-Using-makemcsim-to-fully-process-model-files" href="#Using-makemcsim">5.2 Using <code>makemcsim</code> to fully process model files</a></li>
+  <li><a name="toc-Using-makemcsim-to-preprocess-and-compile-model-files" href="#Using-makemcsim">5.2 Using <code>makemcsim</code> to preprocess and compile model files</a></li>
   <li><a name="toc-Syntax-of-the-model-description-file" href="#Syntax-of-mod-files">5.3 Syntax of the model description file</a>
   <ul class="no-bullet">
     <li><a name="toc-General-syntax-1" href="#General-syntax">5.3.1 General syntax</a></li>
@@ -682,7 +682,7 @@ simulations.
 <ol>
 <li> You create with any text editor (<i>e.g.</i>, <code>emacs</code>) a model
 description file. The reference section on <code>mod</code>, later in this
-manual gives you the syntax to use (see <a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a>). This syntax allows you to describe the model variables,
+manual gives you the syntax to use (see <a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a>). This syntax allows you to describe the model variables,
 parameters, equations, inputs and outputs in a C-like fashion without
 having you to actually know how to write a C program.
 
@@ -916,23 +916,43 @@ likelihood.
 </li></ul>
 
 
-<a name="Coming-soon_002e_002e_002e"></a>
-<h3 class="section">2.8 Coming soon...</h3>
-<a name="index-Major-changes-in-next-version"></a>
+<a name="Major-changes-introduced-with-version-6_002e2_002e0"></a>
+<h3 class="section">2.8 Major changes introduced with version 6.2.0</h3>
+<a name="index-Major-changes-in-version-6_002e2_002e0"></a>
+
+<p>In <code>mod</code>:
+</p>
+<ul>
+<li> You can use C preprocessor directives (<em>i.e.</em>, <code>#include</code>)
+in <code>Inline()</code> statements. That you allows you, for example, to
+use GSL code in such statements or import large C code sections in
+your models.
+
+</li><li> The function <code>NegativeBinomialRandom()</code> is available to generate
+corresponding random variates in your models.
+
+</li></ul>
+
 
 <p>In <code>sim</code>:
 </p>
 <ul>
-<li> NegativeBinomial.
+<li> GNU MCSim can now run Monte Carlo, SetPoints and MCMC simulations
+(monitoring their convergence in real time) in parallel on
+multiprocessor architectures if a MPI library (Open MPI or MPICH, for
+example) is installed.
+
+</li><li> The negative binomial distribution is available for use in
+statistical models.
 
 </li><li> The efficiency of the truncated normal and log-normal samplers has
 been improved by using C. Robert 1995 algorithm
 (see <a href="#Bibliographic-References">Bibliographic References</a>).
 
-</li><li> Now users can use preprocessor directives in Inline() statements,
-for example to use GSL code in such statements.
+</li><li> New options for the Cvodes integrator are available.
 
 </li></ul>
+
 
 
 <hr>
@@ -966,6 +986,12 @@ them.)
 on your system, we recommend that you use version 3.3.2 (or higher) of
 libSBML. LibSBML needs an XML parser library (either Expat, Xerces, or
 libxml2). The Expat library has worked well for us under Linux.
+</p>
+<p>Version 6.2.0 and higher of <em>GNU MCSim</em> can take advantage of
+(<code>MPI</code>), the message passing protocol, to parallelize
+Monte Carlo, Setpoints, or MCMC simulations on multiprocessor
+architectures. You will need to have a MPI library installed on your
+system.
 </p>
 <p>On any system we recommend the GNU <code>gcc</code> compiler (freeware). The
 automated installation script checks for the availability on your
@@ -1039,6 +1065,7 @@ subscribing).
 
 <a name="Unix-and-GNU_002fLinux-operating-systems"></a>
 <h4 class="subsection">3.3.1 Unix and GNU/Linux operating systems</h4>
+<a name="index-Parallelization"></a>
 
 <p>To install on a Unix or GNU/Linux machine, download (in binary mode)
 the distributed archive file to your machine. Place it in a directory
@@ -1100,6 +1127,17 @@ in a <samp>/bin</samp> directory in the <samp>/home/me</samp> directory, creatin
 it if necessary. The library <code>libmcsim.so</code> will be moved to the
 <samp>/home/me/lib</samp> directory, <i>etc</i>.
 </p>
+<p>If MPI is available on your system, parallelization of Monte Carlo
+runs will be enabled by default. To force the <samp>configure</samp> script
+to ignore MPI, you should type:
+</p>
+<div class="example">
+<pre class="example">./configure --with-mpi=no
+</pre></div>
+
+<p>See also the <samp>README</samp> and <samp>INSTALL</samp> text files located in
+the top directory of the distribution.
+</p>
 <p>On certain platforms (Linux...), you will also need to do one of
 the following:<br>
 1) run &rsquo;ldconfig&rsquo; (see the man page if this is unfamiliar)<br>
@@ -1138,7 +1176,7 @@ should make the compiler aware of the correct location of
 model. Linking with the GNU Scientific Library (<code>gsl</code>) is
 recommended (but not mandatory. In that case, define the
 <code>HAVE_LIBGSL</code> flag and link with the <code>-lgsl</code> and
-<code>-lgslcblas</code> (in that order!).
+<code>-lgslcblas</code> (in that order).
 </p>
 <p>You are now ready to use <em>GNU MCSim</em>. We recommend that you go
 through the next section of this manual, which walks you through an
@@ -1150,7 +1188,7 @@ example of model building and running.
 <a name="Working-Through-an-Example"></a>
 <div class="header">
 <p>
-Next: <a href="#Setting_002dup-Structural-Models" accesskey="n" rel="next">Setting-up Structural Models</a>, Previous: <a href="#Installation" accesskey="p" rel="prev">Installation</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Writing-and-Compiling-Structural-Models" accesskey="n" rel="next">Writing and Compiling Structural Models</a>, Previous: <a href="#Installation" accesskey="p" rel="prev">Installation</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Working-Through-an-Example-1"></a>
 <h2 class="chapter">4 Working Through an Example</h2>
@@ -1289,14 +1327,14 @@ simulation specifications.
 
 
 <hr>
-<a name="Setting_002dup-Structural-Models"></a>
+<a name="Writing-and-Compiling-Structural-Models"></a>
 <div class="header">
 <p>
 Next: <a href="#Running-Simulations" accesskey="n" rel="next">Running Simulations</a>, Previous: <a href="#Working-Through-an-Example" accesskey="p" rel="prev">Working Through an Example</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<a name="Setting_002dup-Structural-Models-1"></a>
-<h2 class="chapter">5 Setting-up Structural Models</h2>
-<a name="index-Setting_002dup-structural-models"></a>
+<a name="Writing-and-Compiling-Structural-Models-1"></a>
+<h2 class="chapter">5 Writing and Compiling Structural Models</h2>
+<a name="index-Writing-and-Compiling-structural-models"></a>
 <a name="index-Defining-models"></a>
 <a name="index-Model-definition-files"></a>
 <a name="index-Structural-models"></a>
@@ -1323,7 +1361,7 @@ is created only temporarily and erased after that).
 </p>
 
 <table class="menu" border="0" cellspacing="0">
-<tr><td align="left" valign="top">&bull; <a href="#Using-mod" accesskey="1">Using mod</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">how to process a model definition file
+<tr><td align="left" valign="top">&bull; <a href="#Using-mod" accesskey="1">Using mod</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">how to preprocess a model definition file
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Using-makemcsim" accesskey="2">Using makemcsim</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">a simple command to preprocess and compile a model
 </td></tr>
@@ -1341,7 +1379,7 @@ is created only temporarily and erased after that).
 <a name="Using-mod"></a>
 <div class="header">
 <p>
-Next: <a href="#Using-makemcsim" accesskey="n" rel="next">Using makemcsim</a>, Up: <a href="#Setting_002dup-Structural-Models" accesskey="u" rel="up">Setting-up Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Using-makemcsim" accesskey="n" rel="next">Using makemcsim</a>, Up: <a href="#Writing-and-Compiling-Structural-Models" accesskey="u" rel="up">Writing and Compiling Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Using-mod-to-preprocess-model-description-files"></a>
 <h3 class="section">5.1 Using <code>mod</code> to preprocess model description files</h3>
@@ -1374,14 +1412,16 @@ description of the model following the syntax described in the
 following (see <a href="#Syntax-of-mod-files">Syntax of mod files</a>).
 </p>
 <p>The following options are available:
-</p>
-<p>-h, -H    gives a short online help.
-</p>
-<p>-R        generate a C file of the format requested for use by the
+</p><ul>
+<li> -h, -H    gives a short online help.
+
+</li><li> -R        generate a C file of the format requested for use by the
           <code>deSolve</code> package of the <code>R</code> software for statistical
           analysis; <code>deSolve</code> implements differential equations solvers
           with interesting capabilities.
-</p>
+
+</li></ul>
+
 <p>Most error messages given by <code>mod</code> are self-explanatory. Where
 appropriate, they also give the line number in the model file where
 the error occurred. Beware, however, of cascades of errors generated
@@ -1398,10 +1438,10 @@ the authors of this manual.
 <a name="Using-makemcsim"></a>
 <div class="header">
 <p>
-Next: <a href="#Syntax-of-mod-files" accesskey="n" rel="next">Syntax of mod files</a>, Previous: <a href="#Using-mod" accesskey="p" rel="prev">Using mod</a>, Up: <a href="#Setting_002dup-Structural-Models" accesskey="u" rel="up">Setting-up Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Syntax-of-mod-files" accesskey="n" rel="next">Syntax of mod files</a>, Previous: <a href="#Using-mod" accesskey="p" rel="prev">Using mod</a>, Up: <a href="#Writing-and-Compiling-Structural-Models" accesskey="u" rel="up">Writing and Compiling Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<a name="Using-makemcsim-to-fully-process-model-files"></a>
-<h3 class="section">5.2 Using <code>makemcsim</code> to fully process model files</h3>
+<a name="Using-makemcsim-to-preprocess-and-compile-model-files"></a>
+<h3 class="section">5.2 Using <code>makemcsim</code> to preprocess and compile model files</h3>
 <a name="index-makemcsim-script"></a>
 
 
@@ -1426,19 +1466,34 @@ one; <i>i.e.,</i>typically, without the <samp>.model</samp> extension). The
 example, if you got error messages from <code>mod</code>), run <code>mod</code> on
 your model definition file.
 </p>
-<p>Two variants of <code>makemcsim</code> are also available: <code>makemcsims</code>,
-which creates a standalone version (no dynamic libraries needed), and
-<code>makemcsimd</code>, which creates a standalone version with debugging
-symbols included (so that you can use gdb, for example, to check what
-the code does).
+<p>Three variants of <code>makemcsim</code> are also available:
 </p>
+<ul>
+<li> <a name="index-makemcsimp-script"></a>
+<a name="index-Parallelized-code"></a>
+<a name="index-MPI"></a>
+<code>makemcsimp</code>, which creates a parallelized standalone version to
+run with a MPI wrapper, such as <code>mpirun</code> (no dynamic
+<samp>libmcsim.so</samp> library loaded).
+
+</li><li> <a name="index-makemcsims-script"></a>
+<code>makemcsims</code>, which creates a standalone version of your model
+(no dynamic <samp>libmcsim.so</samp> library loaded, no parallelization).
+
+</li><li> <a name="index-makemcsimd-script"></a>
+<code>makemcsimd</code>, which creates a non-parallelized standalone version
+with debugging symbols included (so that you can use <code>gdb</code>, for
+example, to check what the code actually does).
+
+</li></ul>
+
 
 
 <hr>
 <a name="Syntax-of-mod-files"></a>
 <div class="header">
 <p>
-Next: <a href="#Reading-SBML-models" accesskey="n" rel="next">Reading SBML models</a>, Previous: <a href="#Using-makemcsim" accesskey="p" rel="prev">Using makemcsim</a>, Up: <a href="#Setting_002dup-Structural-Models" accesskey="u" rel="up">Setting-up Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Reading-SBML-models" accesskey="n" rel="next">Reading SBML models</a>, Previous: <a href="#Using-makemcsim" accesskey="p" rel="prev">Using makemcsim</a>, Up: <a href="#Writing-and-Compiling-Structural-Models" accesskey="u" rel="up">Writing and Compiling Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Syntax-of-the-model-description-file"></a>
 <h3 class="section">5.3 Syntax of the model description file</h3>
@@ -2068,8 +2123,11 @@ distributed on the interval [<var>a</var>,<var>b</var>];
 <a name="index-Random-number_002c-negative-binomial"></a>
 <code>NegativeBinomialRandom(<var>r</var>, <var>p</var>)</code>: returns a negative
 binomial random variable with prescribed number of failures, <var>r</var>,
-until trials are stopped, and probability of success, <var>p</var>,
+until trials are stopped, and probability of failure, <var>p</var>,
 for each trial
+The probability mass function of this distribution for the number $k$ of
+successes is equal to:
+ C(k+r-1, k)*pow(p,r)*pow(1-p,k)
 
 
 </li><li> <a name="index-NormalRandom_0028_0029-function"></a>
@@ -2322,7 +2380,7 @@ period,
 <i>e.g.</i> 1e10.
 The first period starts at the initial time of the simulation.
 </p>
-<p>Note on discontinuities: Magnitudes change exactly at the times
+<p><em>Note on discontinuities</em>: Magnitudes change exactly at the times
 given. At a discontinuity, the time point belongs to the NEW time period
 UNLESS we are at the final time.
 </p>
@@ -2374,9 +2432,9 @@ comment and Hell breaks loose).
 <pre class="example">Inline( \#include &lt;gsl/gsl_interp.h&gt; );
 </pre></div>
 
-<p>Note also that the inlined code is likely to
-be dependent on whether or not you are using the <code>-R</code> option of
-<code>mod</code>.
+<p>This can be useful to include large amounts of C code. Note also that
+the inlined code is likely to be dependent on whether or not you are
+using the <code>-R</code> option of <code>mod</code>.
 </p>
 
 <hr>
@@ -2673,7 +2731,7 @@ good comments, however...
 <a name="Reading-SBML-models"></a>
 <div class="header">
 <p>
-Next: <a href="#Working-with-deSolve" accesskey="n" rel="next">Working with deSolve</a>, Previous: <a href="#Syntax-of-mod-files" accesskey="p" rel="prev">Syntax of mod files</a>, Up: <a href="#Setting_002dup-Structural-Models" accesskey="u" rel="up">Setting-up Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Working-with-deSolve" accesskey="n" rel="next">Working with deSolve</a>, Previous: <a href="#Syntax-of-mod-files" accesskey="p" rel="prev">Syntax of mod files</a>, Up: <a href="#Writing-and-Compiling-Structural-Models" accesskey="u" rel="up">Writing and Compiling Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Reading-SBML-models-and-applying-a-template"></a>
 <h3 class="section">5.4 Reading SBML models and applying a template</h3>
@@ -2856,7 +2914,7 @@ model.
 <a name="Working-with-deSolve"></a>
 <div class="header">
 <p>
-Previous: <a href="#Reading-SBML-models" accesskey="p" rel="prev">Reading SBML models</a>, Up: <a href="#Setting_002dup-Structural-Models" accesskey="u" rel="up">Setting-up Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="#Reading-SBML-models" accesskey="p" rel="prev">Reading SBML models</a>, Up: <a href="#Writing-and-Compiling-Structural-Models" accesskey="u" rel="up">Writing and Compiling Structural Models</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Working-with-the-R-package-deSolve"></a>
 <h3 class="section">5.5 Working with the <em>R</em> package <em>deSolve</em></h3>
@@ -2911,7 +2969,7 @@ model is given in the <samp>example/R</samp> folder.
 <a name="Running-Simulations"></a>
 <div class="header">
 <p>
-Next: <a href="#Common-Pitfalls" accesskey="n" rel="next">Common Pitfalls</a>, Previous: <a href="#Setting_002dup-Structural-Models" accesskey="p" rel="prev">Setting-up Structural Models</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Common-Pitfalls" accesskey="n" rel="next">Common Pitfalls</a>, Previous: <a href="#Writing-and-Compiling-Structural-Models" accesskey="p" rel="prev">Writing and Compiling Structural Models</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <a name="Running-Simulations-1"></a>
 <h2 class="chapter">6 Running Simulations</h2>
@@ -2962,12 +3020,12 @@ that of the model description file.
 </p>
 <p>Assume that your model <samp>a.model</samp> has been preprocessed and compiled
 by <code>makemcsim</code> (see <a href="#Using-makemcsim">Using makemcsim</a>) to generate an executable
-<samp>mcsim_my</samp>. If you have renamed the executable file, substitute
-<samp>mcsim_my</samp> by the name of your executable in the following. In
+<samp>mcsim_a</samp> (if you have renamed the executable file, substitute
+<samp>mcsim_my</samp> by the name of your executable in the following). In
 Unix the command-line syntax to run that executable is simply:
 </p>
 <div class="example">
-<pre class="example">mcsim_a [input-file [output-file]]
+<pre class="example">mcsim_a [run-time options] [input-file [output-file]]
 </pre></div>
 
 <p>where the brackets indicate optional arguments. If no input and output
@@ -2983,7 +3041,38 @@ input file. For the output filename, the program will then use the
 name you have specified in the input file, if any, or a default
 name.
 </p>
-<p>When the program starts up, it announces which model description file
+<p>The following run-time options are available:
+</p><ul>
+<li> <code>-c</code> displays the Gelman-Rubin&rsquo;s MCMC convergence diagnostic as
+simulated chains progress in parallel on different processors (if MPI
+is used).
+
+</li><li> <code>-D=print-hierarchy</code> or <code>-D print-hierarchy</code> prints out the
+details of a multilevel statistical model for debugging (see <a href="#Level-sections">Level sections</a>).
+
+</li><li> <code>-h</code> or <code>-H</code> display a short help on the program use.
+
+</li><li> <code>-i=&lt;arg&gt;</code> or <code>-i &lt;arg&gt;</code>, where <code>arg</code> is an integer,
+prints out the number of simulations done, every <code>&lt;arg&gt;</code>
+iteration.
+
+</li></ul>
+
+<p><em>Note on parallelized code:</em> If your model has been preprocessed and
+compiled by <code>makemcsimp</code> (see <a href="#Using-makemcsim">Using makemcsim</a>) to generate a
+parallelization-enabled executable <samp>mcsim_a</samp>, you should run it
+with a specific wrapper like <code>mpirun</code>:
+</p>
+<div class="example">
+<pre class="example">mpirun -np 50 mcsim_a [run-time options] [input-file [output-file]]
+</pre></div>
+
+<p>The particular wrapper to use depends on the MPI library installed on
+your system. In the case of Open MP <code>mpirun</code>, the number of
+processors to use is specified by the <code>-np</code> option (50 processors
+in the example above).
+</p>
+<p>When the program starts, it announces which model description file
 was used to create it. While the input file is read or while
 simulations are running, some informations will be printed on your
 computer screen. They can help you check that the input file is
@@ -3350,7 +3439,6 @@ Sundials library <a href="https://computation.llnl.gov/projects/sundials">https:
 which may be more stable than <code>Lsodes</code> in difficult cases,
 and <code>Euler</code> (Press et al., 1989).
 </p>
-
 <p>The syntax for <code>Lsodes</code> is:
 </p>
 <div class="example">
@@ -3390,8 +3478,8 @@ point for <var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> is about
           &lt;maxncf&gt;, &lt;nlscoef&gt;);
 </pre></div>
 
-<p><var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> have the same meaning as for <code>Lsodes</code>,
-above.
+<p><var>&lt;atol&gt;</var> and <var>&lt;rtol&gt;</var> have the same meaning as for
+<code>Lsodes</code>, above.
 </p>
 <p>The <var>&lt;maxsteps&gt;</var> is an integer secifying the maximum number of
 internal steps taken before exiting a Cvodes call; the default value
@@ -3403,8 +3491,13 @@ nonlinear iterations attempted; the default value in Sundials is
 convergence failures accepted; the default value in Sundials is
 10. Finally, <var>nlscoef</var> is a floating point scaler corresponding to
 the coefficient of the nonlinear convergence test; the default value
-in Sundials is 0.1.
+in Sundials is 0.1:
 </p>
+<p>Example of use:
+</p><div class="example">
+<pre class="example">Integrate(Cvodes, 1E-6, 1E-6, 500, 7, 3, 10, 0.1);
+</pre></div>
+
 
 <p>The syntax for <code>Euler</code> is:
 </p>
@@ -3477,7 +3570,14 @@ silently within those bounds). Here is an example of use:
 (see <a href="#Distrib_0028_0029-specification">Distrib() specification</a>). The format of the output file of
 Monte Carlo simulations is discussed later (see <a href="#Analyzing-simulation-output">Analyzing simulation output</a>).
 </p>
-
+<p><em>Note on parallelized code</em>: If your model has been preprocessed
+and compiled by <code>makemcsimp</code> (see <a href="#Using-makemcsim">Using makemcsim</a>) to
+generate a parallelization-enabled executable, the number of Monte
+Carlo simulations requested will be split evenlly between the
+recruited processors and computed in parallel. The number of
+processors to use should specified on the calling command-line with
+the <code>-np</code> option (see <a href="#Using-the-compiled-program">Using the compiled program</a>).
+</p>
 
 <hr>
 <a name="MCMC_0028_0029-specification"></a>
@@ -3516,7 +3616,7 @@ with convergence issues.
 setup:
 </p>
 <ul class="no-bullet">
-<li>- a <i>structural model</i> (see <a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a>),
+<li>- a <i>structural model</i> (see <a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a>),
 
 </li><li>- a <i>statistical model</i> (see <a href="#Setting_002dup-statistical-models">Setting-up statistical models</a>),
 
@@ -3573,7 +3673,18 @@ INPUT_MISSING_VALUE in the header file <samp>mc.h</samp> and recompiling the
 entire library.
 </p>
 <p>The integer <var>&lt;nRuns&gt;</var> gives the total number of runs to be
-performed, including the runs eventually read in the restart file.
+performed (<em>i.e.</em>, the number of posterior samples to draw),
+including the runs eventually read in the restart file.
+</p>
+<p><em>Note on parallelized code</em>: If your model has been preprocessed
+and compiled by <code>makemcsimp</code> (see <a href="#Using-makemcsim">Using makemcsim</a>) to
+generate a parallelization-enabled executable, <em>GNU MCSim</em> will
+run, in parallel, as many simulated Markov chains (of length
+<var>&lt;nRuns&gt;</var>) as there are available processors. The number of
+processors to use (hence, of chains to run) should specified on the
+calling command-line with the <code>-np</code> option (see <a href="#Using-the-compiled-program">Using the compiled program</a>). You can assess the chains&rsquo; convergence in real
+time with the Gelman-Rubin&rsquo;s MCMC convergence diagnostic with the
+run-time command line option <code>-c</code> (see <a href="#Using-the-compiled-program">Using the compiled program</a>)
 </p>
 <p>The next field, <var>&lt;simTypeFlag&gt;</var> should be between 0 and 4
 (included):
@@ -3733,6 +3844,14 @@ accordingly before to performing each simulation. The shape parameters
 of the distribution specifications can reference other parameters,
 including those of the list.
 </p>
+<p><em>Note on parallelized code</em>: If your model has been preprocessed
+and compiled by <code>makemcsimp</code> (see <a href="#Using-makemcsim">Using makemcsim</a>) to
+generate a parallelization-enabled executable, the number of
+<code>SetPoints</code> simulations requested will be split evenlly between
+the recruited processors and computed in parallel. The number of
+processors to use should specified on the calling command-line with
+the <code>-np</code> option (see <a href="#Using-the-compiled-program">Using the compiled program</a>).
+</p>
 
 
 <hr>
@@ -3750,7 +3869,7 @@ Next: <a href="#Distrib_0028_0029-specification" accesskey="n" rel="next">Distri
 <p>The &quot;<em>OptimalDesign</em>&quot; procedure optimizes the number and location of
 observation times for experimental conditions you specify, in order to
 minimize the variance of a parameter or an output you designate. It
-requires a structural model (see <a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a>), a
+requires a structural model (see <a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a>), a
 statistical model in the form of a <code>likelihood()</code> function
 (see <a href="#Setting_002dup-statistical-models">Setting-up statistical models</a>), and a random set of parameter
 vectors sampled from a prior distribution (using Monte Carlo or MCMC
@@ -4760,6 +4879,10 @@ priori uniformly distributed, and two &quot;dependents&quot; <var>A</var>(<var>1
 and <var>A</var>(<var>1.2</var>), <i>a priori</i> normally distributed around
 <var>A</var>(<var>1</var>).
 </p>
+<p>Note that you can check on the console screen the detail of the actual
+multilevel structure of your statistical model at run-time by using
+option <code>-D=print-hierarchy</code> (see <a href="#Using-the-compiled-program">Using the compiled program</a>).
+</p>
 
 
 <hr>
@@ -5739,7 +5862,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Data_0028_0029-qualifier_002c-for-use-in-Distrib_0028_0029"><code>Data()</code> qualifier, for use in <code>Distrib()</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Data_0028_0029-specification"><code>Data()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Data_0028_0029-specification">Data() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Default">Default</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Defining-models">Defining models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Defining-models">Defining models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Delay-differential-equations">Delay differential equations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Delay-differentials">Delay differentials</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Density-function_002c-Normal">Density function, Normal</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Density_0028_0029-specification"><code>Density()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
@@ -5792,7 +5915,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Error-handling">Error handling</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Error-handling">Error handling</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Euler-integrator"><code>Euler</code> integrator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Events-specification"><code>Events</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Events_0028_0029-specification">Events() specification</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Examples">Examples</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Examples">Examples</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Examples-1">Examples</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Examples">Examples</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Experiment-sections"><code>Experiment</code> sections</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Simulation-sections">Simulation sections</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Experimental-design-optimization">Experimental design optimization</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
@@ -5893,13 +6016,16 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Lsodes-integrator"><code>Lsodes</code> integrator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-M">M</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Major-changes-in-next-version">Major changes in next version</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e4_002e0">Major changes in version 5.4.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e0_002e0">Major changes in version 6.0.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e1_002e0">Major changes in version 6.1.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-6_002e2_002e0">Major changes in version 6.2.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-makemcsim-script"><code>makemcsim</code> script</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-makemcsimd-script"><code>makemcsimd</code> script</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-makemcsimp-script"><code>makemcsimp</code> script</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-makemcsims-script"><code>makemcsims</code> script</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations">Markov-chain Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Markov_002dchain-Monte-Carlo-simulations-1">Markov-chain Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#MCMC_0028_0029-specification">MCMC() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-MCMC-simulations"><code>MCMC</code> simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
@@ -5907,7 +6033,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-MCMC_0028_0029-specification"><code>MCMC()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#MCMC_0028_0029-specification">MCMC() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-mod-syntax"><code>mod</code> syntax</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Syntax-of-mod-files">Syntax of mod files</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-mod-usage"><code>mod</code> usage</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-mod">Using mod</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Model-definition-files">Model definition files</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Model-definition-files">Model definition files</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Model-types">Model types</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-types">Model types</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Models_002c-algebraic">Models, algebraic</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-types">Model types</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Models_002c-differential">Models, differential</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-types">Model types</a></td></tr>
@@ -5916,6 +6042,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Monte-Carlo-simulations">Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Monte-Carlo-simulations-1">Monte Carlo simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#MonteCarlo_0028_0029-specification">MonteCarlo() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-MonteCarlo_0028_0029-specification"><code>MonteCarlo()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#MonteCarlo_0028_0029-specification">MonteCarlo() specification</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-MPI">MPI</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-N">N</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-NDoses_0028_0029-function"><code>NDoses()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
@@ -5937,6 +6064,8 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Overview">Overview</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-P">P</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Parallelization">Parallelization</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installation">Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Parallelized-code">Parallelized code</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-makemcsim">Using makemcsim</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Parameter-declaration">Parameter declaration</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Parameter-scaling">Parameter scaling</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-initialization">Model initialization</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-PerDose_0028_0029-function"><code>PerDose()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Input-functions">Input functions</a></td></tr>
@@ -5994,7 +6123,6 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-SetPoints_0028_0029-specification"><code>SetPoints()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#SetPoints_0028_0029-specification">SetPoints() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-SetSeed_0028_0029-function"><code>SetSeed()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Setting_002dup-statistical-models">Setting-up statistical models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-statistical-models">Setting-up statistical models</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Setting_002dup-structural-models">Setting-up structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-SimType_0028_0029-specification"><code>SimType()</code> specification</a>:</td><td>&nbsp;</td><td valign="top"><a href="#SimType_0028_0029-specification">SimType() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Simulation-definition-files">Simulation definition files</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Running-Simulations">Running Simulations</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Simulation-file_002c-syntax">Simulation file, syntax</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Syntax-of-simulation-files">Syntax of simulation files</a></td></tr>
@@ -6026,7 +6154,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-State-discontinuities">State discontinuities</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Events_0028_0029-specification">Events() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-State-variables">State variables</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declarations-of-global-variables">Declarations of global variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Statistical-models">Statistical models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-statistical-models">Setting-up statistical models</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-Structural-models">Structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Setting_002dup-Structural-Models">Setting-up Structural Models</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Structural-models">Structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Structural-models-1">Structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Model-types">Model types</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-StudentT-distribution"><code>StudentT</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-StudentTRandom_0028_0029-function"><code>StudentTRandom()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
@@ -6067,6 +6195,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-W">W</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Working-Through-an-Example">Working Through an Example</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Working-Through-an-Example">Working Through an Example</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Writing-and-Compiling-structural-models">Writing and Compiling structural models</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Writing-and-Compiling-Structural-Models">Writing and Compiling Structural Models</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-X">X</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-xmcsim"><code>xmcsim</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#XMCSim">XMCSim</a></td></tr>
