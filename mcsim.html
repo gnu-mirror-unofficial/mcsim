@@ -143,6 +143,7 @@ Next: <a href="#Licenses" accesskey="n" rel="next">Licenses</a>, Previous: <a hr
   <li><a name="toc-Major-changes-introduced-with-version-6_002e0_002e0" href="#Major-changes-introduced-with-version-6_002e0_002e0">2.6 Major changes introduced with version 6.0.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e1_002e0" href="#Major-changes-introduced-with-version-6_002e1_002e0">2.7 Major changes introduced with version 6.1.0</a></li>
   <li><a name="toc-Major-changes-introduced-with-version-6_002e2_002e0" href="#Major-changes-introduced-with-version-6_002e2_002e0">2.8 Major changes introduced with version 6.2.0</a></li>
+  <li><a name="toc-Coming-soon" href="#Coming-soon">2.9 Coming soon</a></li>
 </ul></li>
 <li><a name="toc-Installation-1" href="#Installation">3 Installation</a>
 <ul class="no-bullet">
@@ -950,6 +951,21 @@ been improved by using C. Robert 1995 algorithm
 (see <a href="#Bibliographic-References">Bibliographic References</a>).
 
 </li><li> New options for the Cvodes integrator are available.
+
+</li></ul>
+
+
+
+<a name="Coming-soon"></a>
+<h3 class="section">2.9 Coming soon</h3>
+<a name="index-Major-changes-in-the-next-version"></a>
+
+<p>In <code>sim</code>:
+</p>
+<ul>
+<li> A new command-line option (<code>-p</code>) is available to specify the
+number of significant digits to be used when printing out
+results.
 
 </li></ul>
 
@@ -2164,6 +2180,14 @@ positive real number (seeds between 1.0 and 2147483646.0 are used as
 is, the others are rescaled within those bounds, and a warning is
 issued);
 
+<p>You need to call this function inside an <code>Inline()</code> statement,
+either in the <code>Initialize</code> or <code>Dynamics</code> sections of your
+model, like this:
+</p><div class="example">
+<pre class="example">rdm_seed = 87239;
+Inline( SetSeed(rdm_seed); );
+</pre></div>
+
 </li><li> <a name="index-StudentTRandom_0028_0029-function"></a>
 <a name="index-Function_002c-StudentTRandom_0028_0029"></a>
 <a name="index-Random-number_002c-Student-t"></a>
@@ -2582,7 +2606,8 @@ Next: <a href="#Output-calculations" accesskey="n" rel="next">Output calculation
 <h4 class="subsection">5.3.9 Delay differential equations</h4>
 <a name="index-Delay-differential-equations"></a>
 
-<p><em>GNU MCSim</em> can solve delay differential equations.
+<p><em>GNU MCSim</em>&rsquo;s <code>Lsodes</code> and <code>Euler</code> integrators can
+solve delay differential equations.
 </p>
 <p>Delay differential equations are equations that depend on <em>past</em>
 values of the state variables, say at time <var>t-tau</var> instead of at
@@ -3012,6 +3037,7 @@ Next: <a href="#Syntax-of-simulation-files" accesskey="n" rel="next">Syntax of s
 </div>
 <a name="Using-the-compiled-program-1"></a>
 <h3 class="section">6.1 Using the compiled program</h3>
+<a name="index-Running-GNU-MCSim"></a>
 
 
 <p><em>GNU MCSim</em> provides several types of simulations for the models you
@@ -3042,6 +3068,7 @@ name you have specified in the input file, if any, or a default
 name.
 </p>
 <p>The following run-time options are available:
+<a name="index-command_002dline-options"></a>
 </p><ul>
 <li> <code>-c</code> displays the Gelman-Rubin&rsquo;s MCMC convergence diagnostic as
 simulated chains progress in parallel on different processors (if MPI
@@ -3052,9 +3079,14 @@ details of a multilevel statistical model for debugging (see <a href="#Level-sec
 
 </li><li> <code>-h</code> or <code>-H</code> display a short help on the program use.
 
-</li><li> <code>-i=&lt;arg&gt;</code> or <code>-i &lt;arg&gt;</code>, where <code>arg</code> is an integer,
+</li><li> <code>-i=&lt;arg&gt;</code> or <code>-i &lt;arg&gt;</code>, where <code>&lt;arg&gt;</code> is an integer,
 prints out the number of simulations done, every <code>&lt;arg&gt;</code>
 iteration.
+
+</li><li> <code>-p=&lt;arg&gt;</code> or <code>-p &lt;arg&gt;</code>, where <code>&lt;arg&gt;</code> is a positive
+integer, will use <code>&lt;arg&gt;</code> significant digits for printed
+results. If this option is not used, results are output by default
+with six significant digits.
 
 </li></ul>
 
@@ -4229,31 +4261,29 @@ extensions of the above <code>Distrib()</code> specification syntax.
 </p>
 <p>First, when <code>Distrib()</code> is used to specify the prior or
 conditional distribution of a model parameter (in a Bayesian
-framework), that parameter can also appear as a shape parameter, if a
-distribution has already been specified for the parameter at an upper
-<code>Level</code> of the file.
+framework), that parameter can depend on another parameter whose
+distribution has already been specified at an upper <code>Level</code> of
+the file.
 </p>
 <p>For example:
 </p>
 <div class="example">
 <pre class="example">Level {                      # upper level
-  Distrib(A, Normal,   0, 1);
-  Distrib(B, InvGamma, 2, 2);
+  Distrib(A_1, Normal,   0, 1);
+  Distrib(B_1, InvGamma, 2, 2);
   Level {                    # sub-level
-    Distrib(A, Normal_v, A, B);
+    Distrib(A_2, Normal_v, A_1, B_1);
     ...
   }                          # end sub-level
 }                            # end upper level
 </pre></div>
 
-<p>In that case, the parameter <var>A</var>, used for shape specification (as
-the mean of a Normal distribution) in the sub-level, refers to the
-&quot;<em>parent</em>&quot; <var>A</var> parameter, for which a standard Normal
-distribution is defined at the upper <code>Level</code>. The <em>sampled</em>
-values of the parent parameters <var>A</var> and <var>B</var> will be used as mean
-and variance for their &quot;<em>child</em>&quot; parameter, <var>A</var>, when it will be
-its turn to be randomly sampled. This forms the basis of the
-specification of multilevel (hierarchical) models (see <a href="#Setting_002dup-statistical-models">Setting-up statistical models</a>).
+<p>In that case, the parameter <var>A_1</var> is used as the mean of a Normal
+distribution in the sub-level. The <em>sampled</em> values of the parent
+parameters <var>A_1</var> and <var>B_1</var> will be used as mean and variance
+for their &quot;<em>child</em>&quot; parameter, <var>A_2</var>, when it will be its turn
+to be randomly sampled. This forms the basis of the specification of
+multilevel (hierarchical) models (see <a href="#Setting_002dup-statistical-models">Setting-up statistical models</a>).
 </p>
 <p>Note that the keyword <code>Density()</code> can be used instead of
 <code>Distrib()</code> to make more understandable MCMC input
@@ -4809,10 +4839,11 @@ want). This limit of 10 can be increased (up to 255) by changing
 MAX_LEVELS in the header file <samp>sim.h</samp> and re-installing <em>GNU
 MCSim</em>.
 </p>
-<p>A <code>Level</code> can specify or change the sampling distribution of any
-model parameter properly defined in the global section of the structural
-model description file. These distribution specifications apply to all
-sub-levels of the <code>Level</code> where they take place. For
+<p>A <code>Level</code> can define the sampling distribution of any model
+parameter properly defined in the global section of the structural
+model description file. These distribution specifications may depend
+on parameters whose distribution are defined in levels above. They apply
+to all sub-levels of the <code>Level</code> where they take place. For
 example:
 </p>
 <div class="example">
@@ -4820,10 +4851,10 @@ example:
 
 MCMC(&quot;samp.out&quot;, &quot;&quot;, &quot;&quot;, 1, 1, 1, 1, 1); # we are in an MCMC context
 Level { # this is the top level
-  Distrib(A, Uniform, 0, 1);
+  Distrib(A_top, Uniform, 0, 1);
   Likelihood(Data(y), Normal, Prediction(y), 1);
   Level { # sub-level 1
-    Distrib(A, Normal, A, 1);
+    Distrib(A, Normal, A_top, 1);
     Simulation { ... } # simulation 1
     Simulation { ... } # simulation 2
   } # End sub-level 1
@@ -4865,19 +4896,19 @@ to form a total of three instances of <var>A</var> (the original and its
 two clones). This convention saves a lot writing and effort
 in the long run.
 </p>
-<p>In the example of code given above, the parameter <var>A</var>, defined at the
-top level, will be simply moved to sub-level 1 (cloning is not necessary
-since there is only on sub-level directly included in the top level).
-Within sub-level 1, the normally-distributed <var>A</var> will be cloned once
-in order to create another normal variate with the same
+<p>In the example of code given above, the parameter <var>A_top</var>, defined
+at the top level, will be simply moved to sub-level 1 (cloning is not
+necessary since there is only on sub-level directly included in the
+top level).  Within sub-level 1, the normally-distributed <var>A</var> will
+be cloned once in order to create two normal variates with the same
 distribution. Each one of those two will be moved to a lower
 <code>Simulation</code>, where they will be conditioned by the data of that
-simulation only. A total of three variables of &quot;type&quot; <var>A</var> will be
-sampled and will be printed in the output file (coded so that the
-position in the hierarchy is apparent): the &quot;parent&quot; <var>A</var>(<var>1</var>), a
-priori uniformly distributed, and two &quot;dependents&quot; <var>A</var>(<var>1.1</var>)
-and <var>A</var>(<var>1.2</var>), <i>a priori</i> normally distributed around
-<var>A</var>(<var>1</var>).
+simulation only. A total of three variables, <var>A_top</var>,
+<var>A</var><var>.1</var> and <var>A</var><var>.2</var> will be sampled and printed in
+the output file (coded so that the position in the hierarchy is
+apparent): the &quot;parent&quot; <var>A_top</var>(<var>1</var>), a priori uniformly distributed,
+and two &quot;dependents&quot; <var>A</var>(<var>1.1</var>) and <var>A</var>(<var>1.2</var>), <i>a
+priori</i> normally distributed around <var>A_top</var>.
 </p>
 <p>Note that you can check on the console screen the detail of the actual
 multilevel structure of your statistical model at run-time by using
@@ -5849,6 +5880,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Chi2-distribution"><code>Chi2</code> distribution</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Distrib_0028_0029-specification">Distrib() specification</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Chi2Random_0028_0029-function"><code>Chi2Random()</code> function</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Colon-conditional-assignment">Colon conditional assignment</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-command_002dline-options">command-line options</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-the-compiled-program">Using the compiled program</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Comments">Comments</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Common-pitfalls">Common pitfalls</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Common-Pitfalls">Common Pitfalls</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Comparison-operators">Comparison operators</a>:</td><td>&nbsp;</td><td valign="top"><a href="#General-syntax">General syntax</a></td></tr>
@@ -6016,6 +6048,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Lsodes-integrator"><code>Lsodes</code> integrator</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Integrate_0028_0029-specification">Integrate() specification</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-M">M</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Major-changes-in-the-next-version">Major changes in the next version</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e4_002e0">Major changes in version 5.4.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e5_002e0">Major changes in version 5.5.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Major-changes-in-version-5_002e6_002e0">Major changes in version 5.6.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Overview">Overview</a></td></tr>
@@ -6113,6 +6146,7 @@ Previous: <a href="#Examples" accesskey="p" rel="prev">Examples</a>, Up: <a href
 <tr><td></td><td valign="top"><a href="#index-Random-seed_002c-reading-its-value">Random seed, reading its value</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Random-seed_002c-setting-its-value">Random seed, setting its value</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-functions">Special functions</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Reserved-keywords">Reserved keywords</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Keywords-List">Keywords List</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Running-GNU-MCSim">Running <em>GNU MCSim</em></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-the-compiled-program">Using the compiled program</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Running-simulations">Running simulations</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Running-Simulations">Running Simulations</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-S">S</a></th><td></td><td></td></tr>
